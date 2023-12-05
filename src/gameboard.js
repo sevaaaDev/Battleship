@@ -3,7 +3,6 @@ export default class Gameboard {
   constructor() {
     this.missedAttack = [];
     this.attack = [];
-    this.numOfShip = 0;
     this.board = this.#createBoard();
     this.ships = [];
   }
@@ -16,7 +15,6 @@ export default class Gameboard {
         this.board[i][y] = ship;
       }
     }
-    this.numOfShip++;
   }
 
   receiveAttack(x, y) {
