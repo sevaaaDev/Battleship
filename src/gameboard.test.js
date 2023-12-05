@@ -15,6 +15,7 @@ test("hit a ship", () => {
   const gameboard = new Gameboard();
   gameboard.placeShip(3, "x", 0, 1);
   expect(gameboard.receiveAttack(2, 1)).toBe(true);
+  expect(gameboard.attack).toEqual([{ x: 2, y: 1 }]);
 });
 
 test("missed a hit", () => {
@@ -24,11 +25,10 @@ test("missed a hit", () => {
   expect(gameboard.missedAttack).toEqual([{ x: 4, y: 1 }]);
 });
 
-test("all ship has sunk", () => {
+test("ship still there", () => {
   const gameboard = new Gameboard();
   gameboard.placeShip(3, "x", 0, 1);
   gameboard.receiveAttack(0, 1);
   gameboard.receiveAttack(1, 1);
-  gameboard.receiveAttack(2, 1);
-  expect(gameboard.isAllSunk()).toBe(true);
+  expect(gameboard.isAllSunk()).toBe(false);
 });
