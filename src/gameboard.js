@@ -1,4 +1,5 @@
 import Ship from "./ship";
+
 export default class Gameboard {
   constructor() {
     this.missedAttack = [];
@@ -8,12 +9,21 @@ export default class Gameboard {
   }
 
   placeShip(length, orientation, x, y) {
+    if (!this.#checkShip(length, orientation, x, y)) {
+      throw new Error("another ship already on there");
+    }
     let ship = new Ship(length);
     this.ships.push(ship);
     if (orientation === "x") {
-      for (let i = x; i < length; i++) {
-        this.board[i][y] = ship;
+      for (let i = 0; i < length; i++) {
+        this.board[x][y] = ship;
+        x++;
       }
+      return true;
+    }
+    for (let i = 0; i < length; i++) {
+      this.board[x][y] = ship;
+      y--;
     }
   }
 
@@ -45,5 +55,25 @@ export default class Gameboard {
       }
     }
     return arr;
+  }
+
+  #checkShip(length, orientation, x, y) {
+    let a = x;
+    let b = y;
+    if (orientation === "x") {
+      for (let i = 0; i < length; i++) {
+        if (this.board[x][y].length !== 0) {
+          return false;
+        }
+        a++;
+      }
+    }
+    for (let i = 0; i < length; i++) {
+      if (this.board[x][y].length !== 0) {
+        return false;
+      }
+      b--;
+    }
+    return true;
   }
 }
