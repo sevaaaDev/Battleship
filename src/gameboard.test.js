@@ -33,6 +33,11 @@ test("cant place a ship at the same place", () => {
   expect(() => gameboard.placeShip(3, "y", 0, 2)).toThrow(Error);
 });
 
+test("cant place a ship outside board", () => {
+  const gameboard = new Gameboard();
+  expect(() => gameboard.placeShip(3, "y", 0, 0)).toThrow(Error);
+});
+
 test("hit a ship", () => {
   const gameboard = new Gameboard();
   gameboard.placeShip(3, "x", 0, 1);

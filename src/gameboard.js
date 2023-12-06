@@ -9,7 +9,7 @@ export default class Gameboard {
   }
 
   placeShip(length, orientation, x, y) {
-    if (!this.#checkShip(length, orientation, x, y)) {
+    if (this.#checkShip(length, orientation, x, y)) {
       throw new Error("another ship already on there");
     }
     let ship = new Ship(length);
@@ -60,20 +60,16 @@ export default class Gameboard {
   #checkShip(length, orientation, x, y) {
     let a = x;
     let b = y;
-    if (orientation === "x") {
-      for (let i = 0; i < length; i++) {
-        if (this.board[x][y].length !== 0) {
-          return false;
-        }
-        a++;
-      }
-    }
     for (let i = 0; i < length; i++) {
-      if (this.board[x][y].length !== 0) {
-        return false;
+      if (!this.board[a][b] || this.board[a][b].length !== 0) {
+        return true;
+      }
+      if (orientation === "x") {
+        a++;
+        continue;
       }
       b--;
     }
-    return true;
+    return false;
   }
 }
