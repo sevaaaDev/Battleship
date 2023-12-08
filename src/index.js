@@ -6,16 +6,18 @@ export function game() {
   const computerGameboard = new Gameboard();
   playerGameboard.placeShip(1, "x", 0, 0);
   computerGameboard.placeShip(1, "x", 0, 0);
+  playRound();
   function playRound() {
     let x = prompt("x");
     let y = prompt("y");
     computerGameboard.receiveAttack(x, y);
     attackRandom(playerGameboard);
+    if (isAllSunk(computerGameboard, playerGameboard)) {
+      alert("end");
+      return;
+    }
+    playRound();
   }
-  if (isAllSunk(computerGameboard, playerGameboard)) {
-    return;
-  }
-  playRound();
 }
 
 function isAllSunk(comp, player) {
