@@ -1,4 +1,5 @@
 const path = require("path");
+const htmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -8,4 +9,10 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
   },
   devtool: "inline-source-map",
+  plugin: [
+    new htmlWebpackPlugin({
+      title: "Battleship",
+      filename: "index.html",
+    }),
+  ],
 };
