@@ -9,6 +9,9 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
   },
   devtool: "inline-source-map",
+  devServer: {
+    watchFiles: ["dist/**/*"],
+  },
   plugins: [
     new htmlWebpackPlugin({
       filename: "index.html",
