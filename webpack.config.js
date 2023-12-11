@@ -9,10 +9,18 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
   },
   devtool: "inline-source-map",
-  plugin: [
+  plugins: [
     new htmlWebpackPlugin({
-      title: "Battleship",
       filename: "index.html",
+      template: "src/template.html",
     }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+    ],
+  },
 };
