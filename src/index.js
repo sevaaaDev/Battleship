@@ -1,5 +1,6 @@
 import Gameboard from "./gameboard";
 import { attackRandom } from "./player";
+import "./style/style.css";
 
 export function game() {
   const playerGameboard = new Gameboard();
