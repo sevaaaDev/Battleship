@@ -13,7 +13,11 @@ export default class Gameboard {
       throw new Error("another ship already on there");
     }
     let ship = new Ship(length);
-    this.ships.push(ship);
+    this.ships.push({
+      ship,
+      x,
+      y,
+    });
     if (orientation === "x") {
       for (let i = 0; i < length; i++) {
         this.board[x][y] = ship;
@@ -40,7 +44,7 @@ export default class Gameboard {
 
   isAllSunk() {
     for (let ship of this.ships) {
-      if (!ship.isSunk()) {
+      if (!ship.ship.isSunk()) {
         return false;
       }
     }
