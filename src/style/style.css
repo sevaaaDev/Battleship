@@ -12,11 +12,11 @@ h1 {
 .container {
   margin: auto;
   display: flex;
-  /* flex-wrap: wrap-reverse; */
+  flex-wrap: wrap-reverse;
   justify-content: space-evenly;
   width: 90%;
-  border: 1px solid black;
-  /* padding: 1rem; */
+  /* border: 1px solid black; */
+  padding: 1rem;
   gap: 1rem;
 }
 
@@ -35,13 +35,20 @@ h1 {
 
 .playerBoard,
 .compBoard {
-  display: flex;
-  flex-wrap: wrap;
+  flex-grow: 1;
 }
 .board {
-  min-width: 290px;
-  min-height: 290px;
+  margin: auto;
+  min-width: 200px;
+  min-height: 200px;
   max-width: 400px;
   max-height: 400px;
+  border: 1px solid black;
+  display: grid;
+  aspect-ratio: 1;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.board div {
   border: 1px solid black;
 }
