@@ -3,6 +3,8 @@ import { attackRandom } from "./player";
 import { createDom } from "./dom";
 import "./style/style.css";
 
+// TODO: refactor the async attack animation
+// TODO: refactor randomAttack()
 
 function game() {
   const computerGameboard = new Gameboard();
