@@ -3,6 +3,7 @@ import { attackRandom } from "./player";
 import { createDom } from "./dom";
 import "./style/style.css";
 
+
 function game() {
   const computerGameboard = new Gameboard();
   document.addEventListener("click", (e) => {
@@ -17,9 +18,15 @@ function game() {
   playerGameboard.placeShip(3, "y", 2, 9);
   computerGameboard.placeShip(5, "x", 4, 2);
   createDom(playerGameboard, computerGameboard);
+  function playRound(x, y) {
     computerGameboard.receiveAttack(+x, +y);
-    attackRandom(playerGameboard);
-    createDom(playerGameboard, computerGameboard);
+    setTimeout(() => {
+      createDom(playerGameboard, computerGameboard);
+    }, 300);
+    setTimeout(() => {
+      attackRandom(playerGameboard);
+      createDom(playerGameboard, computerGameboard);
+    }, 1000);
     if (isAllSunk(computerGameboard, playerGameboard)) {
       alert("end");
       return;
