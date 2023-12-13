@@ -17,10 +17,6 @@ function game() {
   playerGameboard.placeShip(3, "y", 2, 9);
   computerGameboard.placeShip(5, "x", 4, 2);
   createDom(playerGameboard, computerGameboard);
-  playRound();
-  function playRound() {
-    let x = prompt("x");
-    let y = prompt("y");
     computerGameboard.receiveAttack(+x, +y);
     attackRandom(playerGameboard);
     createDom(playerGameboard, computerGameboard);
