@@ -33,12 +33,16 @@ export default class Gameboard {
   }
 
   receiveAttack(x, y) {
-    if (this.board[x][y].length !== 0) {
+    if (
+      typeof this.board[x][y] === "object" &&
+      !Array.isArray(this.board[x][y])
+    ) {
       this.board[x][y].hit();
       this.board[x][y] = "hit";
       this.attack.push({ x, y });
       return true;
     }
+    this.board[x][y] = "hit";
     this.missedAttack.push({ x, y });
     return false;
   }
