@@ -27,6 +27,11 @@ function populateGrid(board, data) {
       }
       for (let attack of data.missedAttack) {
         if (attack.x === x && attack.y === y) {
+          grid.style.backgroundColor = "blue";
+        }
+      }
+      for (let attack of data.attack) {
+        if (attack.x === x && attack.y === y) {
           grid.style.backgroundColor = "red";
         }
       }
