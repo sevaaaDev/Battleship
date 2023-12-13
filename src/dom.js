@@ -13,8 +13,16 @@ function populateGrid(board, data) {
       grid.setAttribute("data-x", x);
       grid.setAttribute("data-y", y);
       for (let ship of data.ships) {
-        if (ship.x === x && ship.y === y) {
-          grid.style.backgroundColor = "black";
+        if (ship.orientation === "x") {
+          let max = ship.x + ship.ship.length - 1;
+          if (x <= max && x >= ship.x && ship.y === y) {
+            grid.style.backgroundColor = "black";
+          }
+        } else {
+          let max = ship.y - (ship.ship.length - 1);
+          if (y >= max && y <= ship.y && ship.x === x) {
+            grid.style.backgroundColor = "black";
+          }
         }
       }
       for (let attack of data.missedAttack) {
