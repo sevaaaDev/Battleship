@@ -1,9 +1,12 @@
+import { attackBoard } from "./dom";
+
 function computer(gameboard, x, y) {
+  console.log(gameboard.board[x][y]);
   if (gameboard.board[x][y] === "hit") {
     attackRandom(gameboard);
     return;
   }
-  gameboard.receiveAttack(x, y);
+  attackBoard(gameboard, x, y, "comp");
 }
 
 export function attackRandom(gameboard) {

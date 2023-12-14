@@ -1,4 +1,4 @@
-export function createDom(playerData, compData) {
+export function createBoard(playerData, compData) {
   const playerBoard = document.querySelector(".playerBoard .board");
   const compBoard = document.querySelector(".compBoard .board");
   populateGrid(playerBoard, playerData);
