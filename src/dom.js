@@ -26,3 +26,18 @@ function populateGrid(board, data) {
 function resetGrid(board) {
   board.innerHTML = "";
 }
+export function attackBoard(gameboard, x, y, opt) {
+  let target = document.querySelector(
+    `.compBoard .board div[data-x="${x}"][data-y="${y}"]`,
+  );
+  if (opt === "comp") {
+    target = document.querySelector(
+      `.playerBoard .board div[data-x="${x}"][data-y="${y}"]`,
+    );
+  }
+  if (gameboard.receiveAttack(x, y)) {
+    target.style.backgroundColor = "red";
+    return;
+  }
+  target.style.backgroundColor = "blue";
+}
