@@ -12,6 +12,10 @@ function populateGrid(board, data) {
       const grid = document.createElement("div");
       grid.setAttribute("data-x", x);
       grid.setAttribute("data-y", y);
+      board.append(grid);
+      if (player === "comp") {
+        continue;
+      }
       for (let ship of data.ships) {
         for (let coord of ship.range) {
           if (x === coord.x && y === coord.y) {
