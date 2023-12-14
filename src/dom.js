@@ -2,7 +2,7 @@ export function createBoard(playerData, compData) {
   const playerBoard = document.querySelector(".playerBoard .board");
   const compBoard = document.querySelector(".compBoard .board");
   populateGrid(playerBoard, playerData);
-  populateGrid(compBoard, compData);
+  populateGrid(compBoard, compData, "comp");
 }
 
 function populateGrid(board, data, player) {
@@ -30,6 +30,7 @@ function populateGrid(board, data, player) {
 function resetGrid(board) {
   board.innerHTML = "";
 }
+
 export function attackBoard(gameboard, x, y, opt) {
   let target = document.querySelector(
     `.compBoard .board div[data-x="${x}"][data-y="${y}"]`,
