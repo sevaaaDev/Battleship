@@ -1,6 +1,6 @@
 import Gameboard from "./gameboard";
 import { attackRandom } from "./player";
-import { createDom } from "./dom";
+import { createBoard, attackBoard } from "./dom";
 import "./style/style.css";
 
 // TODO: refactor the async attack animation
@@ -19,7 +19,7 @@ function game() {
   const playerGameboard = new Gameboard();
   playerGameboard.placeShip(3, "y", 2, 9);
   computerGameboard.placeShip(5, "x", 4, 2);
-  createDom(playerGameboard, computerGameboard);
+  createBoard(playerGameboard, computerGameboard);
   function playRound(x, y) {
     computerGameboard.receiveAttack(+x, +y);
     setTimeout(() => {
