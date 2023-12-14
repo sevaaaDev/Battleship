@@ -15,16 +15,19 @@ export default class Gameboard {
     let ship = new Ship(length);
     this.ships.push({
       ship,
+      range: [],
     });
     if (orientation === "x") {
       for (let i = 0; i < length; i++) {
         this.board[x][y] = ship;
+        this.ships[this.ships.length - 1].range.push({ x, y });
         x++;
       }
       return true;
     }
     for (let i = 0; i < length; i++) {
       this.board[x][y] = ship;
+      this.ships[this.ships.length - 1].range.push({ x, y });
       y--;
     }
   }
