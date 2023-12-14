@@ -7,15 +7,16 @@ import "./style/style.css";
 // TODO: refactor randomAttack()
 
 function game() {
-  const computerGameboard = new Gameboard();
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", attackEnemy);
+  function attackEnemy(e) {
     if (e.target.matches(".compBoard .board div")) {
       const body = document.querySelector("body");
       body.style.pointerEvents = "none";
       playRound(e.target.dataset.x, e.target.dataset.y);
       body.removeAttribute("style");
     }
-  });
+  }
+  const computerGameboard = new Gameboard();
   const playerGameboard = new Gameboard();
   playerGameboard.placeShip(3, "y", 2, 9);
   computerGameboard.placeShip(5, "x", 4, 2);
