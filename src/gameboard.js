@@ -15,9 +15,6 @@ export default class Gameboard {
     let ship = new Ship(length);
     this.ships.push({
       ship,
-      orientation,
-      x,
-      y,
     });
     if (orientation === "x") {
       for (let i = 0; i < length; i++) {
