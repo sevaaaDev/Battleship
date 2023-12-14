@@ -23,16 +23,7 @@ function game() {
   computerGameboard.placeShip(5, "x", 4, 2);
   createBoard(playerGameboard, computerGameboard);
   function playRound(x, y) {
-    computerGameboard.receiveAttack(+x, +y);
-    setTimeout(() => {
-      createDom(playerGameboard, computerGameboard);
-    }, 300);
-    setTimeout(() => {
-      attackRandom(playerGameboard);
-      createDom(playerGameboard, computerGameboard);
-    }, 1000);
     if (isAllSunk(computerGameboard, playerGameboard)) {
-      alert("end");
       return;
     }
   }
