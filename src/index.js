@@ -19,6 +19,7 @@ function game() {
   const computerGameboard = new Gameboard();
   const playerGameboard = new Gameboard();
   playerGameboard.placeShip(3, "y", 2, 9);
+  playerGameboard.placeShip(2, "x", 2, 0);
   computerGameboard.placeShip(5, "x", 4, 2);
   createBoard(playerGameboard, computerGameboard);
   function playRound(x, y) {
