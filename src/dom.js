@@ -5,7 +5,7 @@ export function createBoard(playerData, compData) {
   populateGrid(compBoard, compData);
 }
 
-function populateGrid(board, data) {
+function populateGrid(board, data, player) {
   resetGrid(board);
   for (let y = 9; y >= 0; y--) {
     for (let x = 0; x < 10; x++) {
