@@ -23,7 +23,14 @@ function game() {
   computerGameboard.placeShip(5, "x", 4, 2);
   createBoard(playerGameboard, computerGameboard);
   function playRound(x, y) {
+    attackBoard(computerGameboard, x, y);
     if (isAllSunk(computerGameboard, playerGameboard)) {
+      document.removeEventListener("click", attackEnemy);
+      return;
+    }
+    attackRandom(playerGameboard);
+    if (isAllSunk(computerGameboard, playerGameboard)) {
+      document.removeEventListener("click", attackEnemy);
       return;
     }
   }
