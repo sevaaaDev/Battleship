@@ -1,6 +1,6 @@
 import Gameboard from "./gameboard";
-import { attackRandom } from "./player";
-import { createBoard, attackBoard } from "./dom";
+import { Computer, Player } from "./player";
+import { createBoard, displayWinner } from "./dom";
 import "./style/style.css";
 
 // TODO: refactor the async attack animation
