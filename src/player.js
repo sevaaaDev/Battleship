@@ -9,8 +9,30 @@ function computer(gameboard, x, y) {
   attackBoard(gameboard, x, y, "comp");
 }
 
-export function attackRandom(gameboard) {
+function attackRandom(gameboard) {
   const x = Math.floor(Math.random() * 10);
   const y = Math.floor(Math.random() * 10);
   computer(gameboard, x, y);
+}
+
+export class Computer {
+  constructor() {}
+
+  attack(gameboard) {
+    attackRandom(gameboard);
+    if (gameboard.isAllSunk()) {
+      return true;
+    }
+  }
+}
+
+export class Player {
+  constructor() {}
+
+  attack(gameboard, x, y) {
+    attackBoard(gameboard, x, y);
+    if (gameboard.isAllSunk()) {
+      return true;
+    }
+  }
 }
