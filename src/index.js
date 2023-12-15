@@ -8,6 +8,7 @@ import "./style/style.css";
 
 function game() {
   document.addEventListener("click", attackEnemy);
+  document.addEventListener("click", restart);
   function attackEnemy(e) {
     if (e.target.matches(".compBoard .board div")) {
       playRound(e.target.dataset.x, e.target.dataset.y);
