@@ -10,10 +10,7 @@ function game() {
   document.addEventListener("click", attackEnemy);
   function attackEnemy(e) {
     if (e.target.matches(".compBoard .board div")) {
-      const body = document.querySelector("body");
-      body.style.pointerEvents = "none";
       playRound(e.target.dataset.x, e.target.dataset.y);
-      body.removeAttribute("style");
     }
   }
   const computerGameboard = new Gameboard();
