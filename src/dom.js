@@ -46,3 +46,8 @@ export function attackBoard(gameboard, x, y, opt) {
   }
   target.style.backgroundColor = "blue";
 }
+
+export function displayWinner(winner) {
+  let displayText = document.querySelector(".info");
+  displayText.innerText = `${winner} Won`;
+}
