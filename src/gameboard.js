@@ -47,6 +47,13 @@ export default class Gameboard {
     return false;
   }
 
+  clear() {
+    this.board = this.#createBoard();
+    this.ships = [];
+    this.attack = [];
+    this.missedAttack = [];
+  }
+
   isAllSunk() {
     for (let ship of this.ships) {
       if (!ship.ship.isSunk()) {
