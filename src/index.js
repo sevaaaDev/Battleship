@@ -23,22 +23,17 @@ function game() {
   computerGameboard.placeShip(5, "x", 4, 2);
   createBoard(playerGameboard, computerGameboard);
   function playRound(x, y) {
-    attackBoard(computerGameboard, x, y);
-    if (isAllSunk(computerGameboard, playerGameboard)) {
+    console.log("a");
+    if (player.attack(computerGameboard, x, y)) {
       document.removeEventListener("click", attackEnemy);
+      displayWinner("You");
       return;
     }
-    attackRandom(playerGameboard);
-    if (isAllSunk(computerGameboard, playerGameboard)) {
+    if (computer.attack(playerGameboard)) {
       document.removeEventListener("click", attackEnemy);
+      displayWinner("Computer");
       return;
     }
-  }
-}
-
-function isAllSunk(comp, player) {
-  if (comp.isAllSunk() || player.isAllSunk()) {
-    return true;
   }
 }
 
