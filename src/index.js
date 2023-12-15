@@ -11,6 +11,13 @@ function game() {
   function attackEnemy(e) {
     if (e.target.matches(".compBoard .board div")) {
       playRound(e.target.dataset.x, e.target.dataset.y);
+  function restart(e) {
+    if (e.target.matches(".restartBtn")) {
+      computerGameboard.clear();
+      playerGameboard.clear();
+      createBoard(playerGameboard, computerGameboard);
+
+      return;
     }
   }
   const computerGameboard = new Gameboard();
