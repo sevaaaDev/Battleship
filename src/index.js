@@ -17,8 +17,8 @@ function game() {
       computerGameboard.clear();
       playerGameboard.clear();
       createBoard(playerGameboard, computerGameboard);
-
-      return;
+      document.removeEventListener("click", attackEnemy);
+      document.addEventListener("click", attackEnemy);
     }
   }
   const computerGameboard = new Gameboard();
