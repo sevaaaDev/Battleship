@@ -15,7 +15,7 @@ h1 {
   flex-wrap: wrap-reverse;
   justify-content: space-evenly;
   width: 90%;
-  /* border: 1px solid black; */
+  align-items: center;
   padding: 1rem;
   gap: 1rem;
 }
