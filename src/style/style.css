@@ -54,3 +54,10 @@ h1 {
   border: 1px solid black;
   cursor: crosshair;
 }
+
+.board div[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+.board div[aria-disabled="true"]:active {
+  pointer-events: none;
+}
