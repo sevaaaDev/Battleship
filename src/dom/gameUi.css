@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-h1 {
+.title {
   text-align: center;
   margin: 1rem 0 1rem;
 }
@@ -20,7 +20,7 @@ h1 {
   gap: 1rem;
 }
 
-.container > div > h3 {
+.name {
   text-align: center;
   margin-bottom: 0.5rem;
 }
@@ -60,4 +60,8 @@ h1 {
 }
 .board div[aria-disabled="true"]:active {
   pointer-events: none;
+}
+
+.restartBtn {
+  background: grey;
 }
