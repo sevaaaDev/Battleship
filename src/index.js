@@ -1,12 +1,14 @@
 import Gameboard from "./gameboard";
 import { Computer, Player } from "./player";
 import { createBoard, displayWinner } from "./dom";
+import { displayGame } from "./dom/game";
 import "./style/style.css";
 
 // TODO: refactor the async attack animation
 // TODO: refactor randomAttack()
 
 function game() {
+  displayGame();
   document.addEventListener("click", attackEnemy);
   document.addEventListener("click", restart);
   function attackEnemy(e) {
