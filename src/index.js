@@ -12,6 +12,9 @@ function game() {
   function attackEnemy(e) {
     if (e.target.matches(".compBoard .board div")) {
       playRound(e.target.dataset.x, e.target.dataset.y);
+      e.target.setAttribute("aria-disabled", true);
+    }
+  }
   function restart(e) {
     if (e.target.matches(".restartBtn")) {
       computerGameboard.clear();
