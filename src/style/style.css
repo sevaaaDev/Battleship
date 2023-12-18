@@ -52,4 +52,5 @@ h1 {
 
 .board div {
   border: 1px solid black;
+  cursor: crosshair;
 }
