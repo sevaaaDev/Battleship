@@ -1,6 +1,13 @@
+import styles from "./dom/gameUi.css";
+
 export function createBoard(playerData, compData) {
-  const playerBoard = document.querySelector(".playerBoard .board");
-  const compBoard = document.querySelector(".compBoard .board");
+  const playerBoard = document.querySelector(
+    `.${styles.playerBoard} .${styles.board}`,
+  );
+  console.log(playerBoard);
+  const compBoard = document.querySelector(
+    `.${styles.compBoard} .${styles.board}`,
+  );
   populateGrid(playerBoard, playerData);
   populateGrid(compBoard, compData, "comp");
 }
@@ -33,11 +40,11 @@ function resetGrid(board) {
 
 export function attackBoard(gameboard, x, y, opt) {
   let target = document.querySelector(
-    `.compBoard .board div[data-x="${x}"][data-y="${y}"]`,
+    `.${styles.compBoard} .${styles.board} div[data-x="${x}"][data-y="${y}"]`,
   );
   if (opt === "comp") {
     target = document.querySelector(
-      `.playerBoard .board div[data-x="${x}"][data-y="${y}"]`,
+      `.${styles.playerBoard} .${styles.board} div[data-x="${x}"][data-y="${y}"]`,
     );
   }
   if (gameboard.receiveAttack(x, y)) {
@@ -48,6 +55,6 @@ export function attackBoard(gameboard, x, y, opt) {
 }
 
 export function displayWinner(winner) {
-  let displayText = document.querySelector(".info");
+  let displayText = document.querySelector(`.${styles.info}`);
   displayText.innerText = `${winner} Won`;
 }

@@ -2,23 +2,27 @@ import Gameboard from "./gameboard";
 import { Computer, Player } from "./player";
 import { createBoard, displayWinner } from "./dom";
 import { displayGame } from "./dom/game";
-import "./style/style.css";
+import { startMenu } from "./dom/startMenu";
+import gameUistyle from "./dom/gameUi.css";
 
 // TODO: refactor the async attack animation
 // TODO: refactor randomAttack()
 
 function game() {
   displayGame();
+  // startMenu();
   document.addEventListener("click", attackEnemy);
   document.addEventListener("click", restart);
   function attackEnemy(e) {
-    if (e.target.matches(".compBoard .board div")) {
+    if (
+      e.target.matches(`.${gameUistyle.compBoard} .${gameUistyle.board} div`)
+    ) {
       playRound(e.target.dataset.x, e.target.dataset.y);
       e.target.setAttribute("aria-disabled", true);
     }
   }
   function restart(e) {
-    if (e.target.matches(".restartBtn")) {
+    if (e.target.matches(`.${gameUistyle.restartBtn}`)) {
       computerGameboard.clear();
       playerGameboard.clear();
       createBoard(playerGameboard, computerGameboard);
