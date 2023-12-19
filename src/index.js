@@ -10,6 +10,7 @@ import placeShipStyle from "./dom/placeShipUi.css";
 
 // TODO: refactor the async attack animation
 // TODO: refactor randomAttack()
+// TODO: refactor restart btn and place ship menu
 
 function game(playerGameboard) {
   displayGame();
