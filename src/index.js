@@ -4,13 +4,13 @@ import { createBoard, displayWinner } from "./dom";
 import { displayGame } from "./dom/game";
 import { startMenu } from "./dom/startMenu";
 import gameUistyle from "./dom/gameUi.css";
+import startMenuStyle from "./dom/startMenuUi.css";
 
 // TODO: refactor the async attack animation
 // TODO: refactor randomAttack()
 
 function game() {
   displayGame();
-  // startMenu();
   document.addEventListener("click", attackEnemy);
   document.addEventListener("click", restart);
   function attackEnemy(e) {
@@ -53,4 +53,10 @@ function game() {
   }
 }
 
-game();
+function showStartMenu() {
+  startMenu();
+  const button = document.querySelector(`.${startMenuStyle.start}`);
+  button.addEventListener("click", showPlaceShipMenu);
+}
+
+showStartMenu();
