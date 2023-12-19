@@ -5,11 +5,13 @@ import { displayGame } from "./dom/game";
 import { startMenu } from "./dom/startMenu";
 import gameUistyle from "./dom/gameUi.css";
 import startMenuStyle from "./dom/startMenuUi.css";
+import { placeShipUi } from "./dom/placeShip";
+import placeShipStyle from "./dom/placeShipUi.css";
 
 // TODO: refactor the async attack animation
 // TODO: refactor randomAttack()
 
-function game() {
+function game(playerGameboard) {
   displayGame();
   document.addEventListener("click", attackEnemy);
   document.addEventListener("click", restart);
@@ -31,11 +33,8 @@ function game() {
     }
   }
   const computerGameboard = new Gameboard();
-  const playerGameboard = new Gameboard();
   const player = new Player();
   const computer = new Computer();
-  playerGameboard.placeShip(3, "y", 2, 9);
-  playerGameboard.placeShip(2, "x", 2, 0);
   computerGameboard.placeShip(5, "x", 4, 2);
   createBoard(playerGameboard, computerGameboard);
   function playRound(x, y) {
@@ -57,6 +56,23 @@ function showStartMenu() {
   startMenu();
   const button = document.querySelector(`.${startMenuStyle.start}`);
   button.addEventListener("click", showPlaceShipMenu);
+}
+
+function showPlaceShipMenu(e, playerBoard = new Gameboard()) {
+  let total = 0;
+  placeShipUi(playerBoard);
+  document.addEventListener("click", placeShip);
+  function placeShip(e) {
+    if (e.target.matches(`.${placeShipStyle.board} div`)) {
+      total++;
+      playerBoard.placeShip(3, "x", e.target.dataset.x, e.target.dataset.y);
+      placeShipUi(playerBoard);
+      if (total == 3) {
+        document.removeEventListener("click", placeShip);
+        game(playerBoard);
+      }
+    }
+  }
 }
 
 showStartMenu();
