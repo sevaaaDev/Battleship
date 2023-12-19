@@ -9,6 +9,8 @@ export default class Gameboard {
   }
 
   placeShip(length, orientation, x, y) {
+    x = +x;
+    y = +y;
     if (this.#checkShip(length, orientation, x, y)) {
       throw new Error("another ship already on there");
     }
