@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.title {
+  text-align: center;
+  font-size: 5rem;
+}
+
+.start {
+  margin: auto;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  translate: 0px -10px;
+  box-shadow: 0px 10px black;
+}
+
+.start:active {
+  translate: 0px 10px;
+  box-shadow: 0px 1px black;
+}
