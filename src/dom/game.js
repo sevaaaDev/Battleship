@@ -3,6 +3,7 @@ import styles from "./gameUi.css";
 export function displayGame() {
   console.log(styles);
   const body = document.querySelector("body");
+  body.innerHTML = "";
   const title = document.createElement("h1");
   title.innerText = "Battleship";
   title.classList.add(styles.title);
