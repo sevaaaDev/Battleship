@@ -8,6 +8,9 @@ export function placeShipUi(data) {
       grid.setAttribute("data-x", x);
       grid.setAttribute("data-y", y);
       board.append(grid);
+      if (x > 7) {
+        grid.setAttribute("aria-disabled", true);
+      }
       for (let ship of data.ships) {
         for (let coord of ship.range) {
           if (x === coord.x && y === coord.y) {
