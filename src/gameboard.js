@@ -12,7 +12,8 @@ export default class Gameboard {
     x = +x;
     y = +y;
     if (this.#checkShip(length, orientation, x, y)) {
-      throw new Error("another ship already on there");
+      // throw new Error("another ship already on there");
+      return;
     }
     let ship = new Ship(length);
     this.ships.push({
@@ -79,7 +80,12 @@ export default class Gameboard {
     let a = x;
     let b = y;
     for (let i = 0; i < length; i++) {
-      if (!this.board[a][b] || this.board[a][b].length !== 0) {
+      if (
+        !this.board[a] ||
+        !this.board[a][b] ||
+        this.board[a][b].length !== 0
+      ) {
+        console.log(a);
         return true;
       }
       if (orientation === "x") {
