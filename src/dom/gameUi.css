@@ -65,3 +65,14 @@
 .restartBtn {
   background: grey;
 }
+
+.modal {
+  flex-direction: column;
+  margin: auto;
+  width: 600px;
+  aspect-ratio: 1;
+}
+
+.modal .board {
+  flex-grow: 1;
+}
