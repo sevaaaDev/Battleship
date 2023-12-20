@@ -28,6 +28,9 @@ function game() {
   document.addEventListener("click", restart);
   function placeShip(e) {
     if (e.target.matches(`dialog .${gameUistyle.board} div`)) {
+      if (e.target.ariaDisabled) {
+        return;
+      }
       playerGameboard.placeShip(3, "x", e.target.dataset.x, e.target.dataset.y);
       placeShipUi(playerGameboard);
     }
