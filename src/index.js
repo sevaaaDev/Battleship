@@ -12,10 +12,26 @@ import placeShipStyle from "./dom/placeShipUi.css";
 // TODO: refactor randomAttack()
 // TODO: refactor restart btn and place ship menu
 
-function game(playerGameboard) {
+function game() {
+  const playerGameboard = new Gameboard();
+  const computerGameboard = new Gameboard();
   displayGame();
+  const modal = document.querySelector("dialog");
+  modal.showModal();
+  modal.querySelector("button").addEventListener("click", () => {
+    modal.close();
+    createBoard(playerGameboard, computerGameboard);
+  });
+  placeShipUi(playerGameboard);
+  document.addEventListener("click", placeShip);
   document.addEventListener("click", attackEnemy);
   document.addEventListener("click", restart);
+  function placeShip(e) {
+    if (e.target.matches(`dialog .${gameUistyle.board} div`)) {
+      playerGameboard.placeShip(3, "x", e.target.dataset.x, e.target.dataset.y);
+      placeShipUi(playerGameboard);
+    }
+  }
   function attackEnemy(e) {
     if (
       e.target.matches(`.${gameUistyle.compBoard} .${gameUistyle.board} div`)
@@ -28,18 +44,16 @@ function game(playerGameboard) {
     if (e.target.matches(`.${gameUistyle.restartBtn}`)) {
       computerGameboard.clear();
       playerGameboard.clear();
-      createBoard(playerGameboard, computerGameboard);
-      document.removeEventListener("click", attackEnemy);
       document.addEventListener("click", attackEnemy);
+      modal.showModal();
+      placeShipUi(playerGameboard);
+      computerGameboard.placeShip(5, "x", 4, 2);
     }
   }
-  const computerGameboard = new Gameboard();
   const player = new Player();
   const computer = new Computer();
   computerGameboard.placeShip(5, "x", 4, 2);
-  createBoard(playerGameboard, computerGameboard);
   function playRound(x, y) {
-    console.log("a");
     if (player.attack(computerGameboard, x, y)) {
       document.removeEventListener("click", attackEnemy);
       displayWinner("You");
@@ -56,24 +70,7 @@ function game(playerGameboard) {
 function showStartMenu() {
   startMenu();
   const button = document.querySelector(`.${startMenuStyle.start}`);
-  button.addEventListener("click", showPlaceShipMenu);
-}
-
-function showPlaceShipMenu(e, playerBoard = new Gameboard()) {
-  let total = 0;
-  placeShipUi(playerBoard);
-  document.addEventListener("click", placeShip);
-  function placeShip(e) {
-    if (e.target.matches(`.${placeShipStyle.board} div`)) {
-      total++;
-      playerBoard.placeShip(3, "x", e.target.dataset.x, e.target.dataset.y);
-      placeShipUi(playerBoard);
-      if (total == 3) {
-        document.removeEventListener("click", placeShip);
-        game(playerBoard);
-      }
-    }
-  }
+  button.addEventListener("click", game);
 }
 
 showStartMenu();
