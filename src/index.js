@@ -10,19 +10,32 @@ import placeShipStyle from "./dom/placeShipUi.css";
 
 // TODO: refactor the async attack animation
 // TODO: refactor randomAttack()
-// TODO: refactor restart btn and place ship menu
 
 function game() {
   const playerGameboard = new Gameboard();
   const computerGameboard = new Gameboard();
+  const listOfShips = [5, 4, 3, 3, 2];
   displayGame();
   const modal = document.querySelector("dialog");
+  let orient = "x";
   modal.showModal();
-  modal.querySelector("button").addEventListener("click", () => {
+  const orientBtn = modal.querySelector("button");
+  orientBtn.addEventListener("click", () => {
+    if (orient === "x") {
+      orient = "y";
+      orientBtn.innerText = "Orientation : Y";
+      placeShipUi(orient, playerGameboard, listOfShips[0]);
+      return;
+    }
+    orient = "x";
+    orientBtn.innerText = "Orientation : X";
+    placeShipUi(orient, playerGameboard, listOfShips[0]);
+  });
+  modal.querySelector("#start").addEventListener("click", () => {
     modal.close();
     createBoard(playerGameboard, computerGameboard);
   });
-  placeShipUi(playerGameboard);
+  placeShipUi(orient, playerGameboard, listOfShips[0]);
   document.addEventListener("click", placeShip);
   document.addEventListener("click", attackEnemy);
   document.addEventListener("click", restart);
@@ -31,8 +44,18 @@ function game() {
       if (e.target.ariaDisabled) {
         return;
       }
-      playerGameboard.placeShip(3, "x", e.target.dataset.x, e.target.dataset.y);
-      placeShipUi(playerGameboard);
+      playerGameboard.placeShip(
+        listOfShips[0],
+        orient,
+        e.target.dataset.x,
+        e.target.dataset.y,
+      );
+      listOfShips.shift();
+      placeShipUi(orient, playerGameboard, listOfShips[0]);
+      if (listOfShips.length === 0) {
+        modal.close();
+        createBoard(playerGameboard, computerGameboard);
+      }
     }
   }
   function attackEnemy(e) {
@@ -48,8 +71,11 @@ function game() {
       computerGameboard.clear();
       playerGameboard.clear();
       document.addEventListener("click", attackEnemy);
+      orient = "x";
+      orientBtn.innerText = "Orientation : X";
       modal.showModal();
-      placeShipUi(playerGameboard);
+      listOfShips = [5, 4, 4, 3, 2];
+      placeShipUi(orient, playerGameboard, listOfShips[0]);
       computerGameboard.placeShip(5, "x", 4, 2);
     }
   }
