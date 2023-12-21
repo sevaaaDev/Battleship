@@ -15,6 +15,14 @@ export function placeShipUi(orient, data, shipLen) {
             grid.setAttribute("aria-disabled", true);
           }
         }
+        // if (y === ship.range[0].y) {
+        //   if (
+        //     x > ship.range[0].x - shipLen &&
+        //     x < ship.range[ship.ship.length - 1].x
+        //   ) {
+        //     grid.setAttribute("aria-disabled", true);
+        //   }
+        // }
       }
       if (orient === "x") {
         if (x > 10 - shipLen) {
