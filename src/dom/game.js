@@ -16,12 +16,12 @@ export function displayGame() {
     <div class="${styles.board}"></div>
   </div>
   <dialog class='${styles.modal}'>
-     <h2 class="${styles.title}">Place your Ship</h2>
+     <h2 class="${styles.title}">Place your Carrier</h2>
      <button type='button' class="${styles.button}">Orientation : X</button>
      <div class="${styles.container}">
        <div class='${styles.board}'></div>
      </div> 
-     <button type='button' class="${styles.button}" id="start" aria-disabled='true'>Start</button>
+     <!-- <button type='button' class="${styles.button}" id="start" aria-disabled='true'>Start</button> -->
   </dialog>
 </div>
 
