@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: blue;
+}
+
 .title {
   text-align: center;
   margin: 1rem 0 1rem;
@@ -44,19 +48,30 @@
   min-height: 200px;
   max-width: 400px;
   max-height: 400px;
-  border: 1px solid black;
+  gap: 2px;
   display: grid;
   aspect-ratio: 1;
   grid-template-columns: repeat(10, 1fr);
+  cursor: crosshair;
+  background-color: blue;
 }
 
 .board div {
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  border-radius: 8px;
   cursor: crosshair;
+  background-color: white;
 }
+
+/* .compBoard .board div { */
+/*   background-color: white; */
+/* } */
 
 .board div[aria-disabled="true"] {
   cursor: not-allowed;
+}
+.board div[aria-disabled="true"]:hover {
+  background-color: red;
 }
 .board div[aria-disabled="true"]:active {
   pointer-events: none;
@@ -75,4 +90,8 @@
 
 .modal .board {
   flex-grow: 1;
+}
+
+.board .hover {
+  background-color: green;
 }
