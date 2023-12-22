@@ -6,7 +6,6 @@ import { startMenu } from "./dom/startMenu";
 import gameUistyle from "./dom/gameUi.css";
 import startMenuStyle from "./dom/startMenuUi.css";
 import { placeShipUi } from "./dom/placeShip";
-import placeShipStyle from "./dom/placeShipUi.css";
 
 // TODO: refactor the async attack animation
 // TODO: refactor randomAttack()
