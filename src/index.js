@@ -111,24 +111,21 @@ function game() {
   }
   function placeShip(e) {
     if (e.target.matches(`dialog .${gameUistyle.board} div`)) {
+      let x = e.target.dataset.x;
+      let y = e.target.dataset.y;
       if (e.target.ariaDisabled) {
         return;
       }
-      playerGameboard.placeShip(
-        listOfShips[0],
-        orient,
-        e.target.dataset.x,
-        e.target.dataset.y,
-      );
-      listOfShips.shift();
-      placeShipUi(orient, playerGameboard, listOfShips[0]);
-      if (listOfShips.length === 0) {
+      playerGameboard.placeShip(listOfShips[index].length, orient, x, y);
+      placeShipUi(orient, playerGameboard);
       index++;
       if (index === 5) {
         modal.close();
         createBoard(playerGameboard, computerGameboard);
         return;
       }
+      const text = document.querySelector("dialog h2");
+      text.innerText = `Place Your ${listOfShips[index].name}`;
     }
   }
   function attackEnemy(e) {
