@@ -14,7 +14,28 @@ import placeShipStyle from "./dom/placeShipUi.css";
 function game() {
   const playerGameboard = new Gameboard();
   const computerGameboard = new Gameboard();
-  const listOfShips = [5, 4, 3, 3, 2];
+  const listOfShips = [
+    {
+      name: "Carrier",
+      length: 5,
+    },
+    {
+      name: "Battleship",
+      length: 4,
+    },
+    {
+      name: "Destroyer",
+      length: 3,
+    },
+    {
+      name: "Submarine",
+      length: 3,
+    },
+    {
+      name: "Patrol Boat",
+      length: 2,
+    },
+  ];
   displayGame();
   const modal = document.querySelector("dialog");
   let orient = "x";
