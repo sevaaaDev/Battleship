@@ -59,8 +59,56 @@ function game() {
   });
   placeShipUi(orient, playerGameboard, listOfShips[0]);
   document.addEventListener("click", placeShip);
+  document.addEventListener("mouseover", hover);
+  document.addEventListener("mouseout", cleanUp);
   document.addEventListener("click", attackEnemy);
   document.addEventListener("click", restart);
+  function cleanUp(e) {
+    if (e.target.matches(`dialog div.${gameUistyle.hover}`)) {
+      if (e.target.ariaDisabled) {
+        return;
+      }
+      let x = e.target.dataset.x;
+      let y = e.target.dataset.y;
+      for (let i = 0; i < listOfShips[index].length; i++) {
+        document
+          .querySelector(`dialog div[data-x="${x}"][data-y="${y}"]`)
+          .classList.remove(gameUistyle.hover);
+        if (orient === "x") {
+          x++;
+          continue;
+        }
+        y--;
+      }
+    }
+  }
+  function hover(e) {
+    if (e.target.matches(`dialog .${gameUistyle.board} div`)) {
+      if (e.target.ariaDisabled) {
+        return;
+      }
+      document.removeEventListener("mouseover", hover);
+      let x = e.target.dataset.x;
+      let y = e.target.dataset.y;
+      setTimeout(() => {
+        document.addEventListener("mouseover", hover);
+      }, 10);
+      if (playerGameboard.checkWater(listOfShips[index].length, orient, x, y)) {
+        e.target.setAttribute("aria-disabled", true);
+        return;
+      }
+      for (let i = 0; i < listOfShips[index].length; i++) {
+        document
+          .querySelector(`dialog div[data-x="${x}"][data-y="${y}"]`)
+          .classList.add(gameUistyle.hover);
+        if (orient === "x") {
+          x++;
+          continue;
+        }
+        y--;
+      }
+    }
+  }
   function placeShip(e) {
     if (e.target.matches(`dialog .${gameUistyle.board} div`)) {
       if (e.target.ariaDisabled) {
