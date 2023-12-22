@@ -45,18 +45,29 @@ function game() {
     if (orient === "x") {
       orient = "y";
       orientBtn.innerText = "Orientation : Y";
-      placeShipUi(orient, playerGameboard, listOfShips[0]);
+      placeShipUi(
+        orient,
+        playerGameboard,
+        listOfShips[index].length,
+        listOfShips[index].name,
+      );
       return;
     }
     orient = "x";
     orientBtn.innerText = "Orientation : X";
-    placeShipUi(orient, playerGameboard, listOfShips[0]);
+    placeShipUi(
+      orient,
+      playerGameboard,
+      listOfShips[index].length,
+      listOfShips[index].name,
+    );
   });
-  modal.querySelector("#start").addEventListener("click", () => {
-    modal.close();
-    createBoard(playerGameboard, computerGameboard);
-  });
-  placeShipUi(orient, playerGameboard, listOfShips[0]);
+  placeShipUi(
+    orient,
+    playerGameboard,
+    listOfShips[index].length,
+    listOfShips[index].name,
+  );
   document.addEventListener("click", placeShip);
   document.addEventListener("mouseover", hover);
   document.addEventListener("mouseout", cleanUp);
