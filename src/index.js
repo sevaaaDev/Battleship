@@ -12,6 +12,7 @@ import placeShipStyle from "./dom/placeShipUi.css";
 // TODO: refactor randomAttack()
 
 function game() {
+  let index = 0;
   const playerGameboard = new Gameboard();
   const computerGameboard = new Gameboard();
   const listOfShips = [
@@ -74,8 +75,11 @@ function game() {
       listOfShips.shift();
       placeShipUi(orient, playerGameboard, listOfShips[0]);
       if (listOfShips.length === 0) {
+      index++;
+      if (index === 5) {
         modal.close();
         createBoard(playerGameboard, computerGameboard);
+        return;
       }
     }
   }
@@ -97,6 +101,7 @@ function game() {
       modal.showModal();
       listOfShips = [5, 4, 4, 3, 2];
       placeShipUi(orient, playerGameboard, listOfShips[0]);
+      index = 0;
       computerGameboard.placeShip(5, "x", 4, 2);
     }
   }
