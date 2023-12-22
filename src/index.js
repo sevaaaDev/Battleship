@@ -99,9 +99,13 @@ function game() {
       orient = "x";
       orientBtn.innerText = "Orientation : X";
       modal.showModal();
-      listOfShips = [5, 4, 4, 3, 2];
-      placeShipUi(orient, playerGameboard, listOfShips[0]);
       index = 0;
+      placeShipUi(
+        orient,
+        playerGameboard,
+        listOfShips[index].length,
+        listOfShips[index].name,
+      );
       computerGameboard.placeShip(5, "x", 4, 2);
     }
   }
