@@ -1,7 +1,5 @@
 import styles from "./gameUi.css";
-export function placeShipUi(orient, data, shipLen, name) {
-  // const text = document.querySelector("dialog h2");
-  // text.innerText = `Place Your ${name}`;
+export function placeShipUi(data) {
   const board = document.querySelector(`dialog .${styles.board}`);
   board.innerHTML = "";
   for (let y = 9; y >= 0; y--) {
@@ -16,24 +14,7 @@ export function placeShipUi(orient, data, shipLen, name) {
             grid.style.backgroundColor = "black";
           }
         }
-        // if (y === ship.range[0].y) {
-        //   if (
-        //     x > ship.range[0].x - shipLen &&
-        //     x < ship.range[ship.ship.length - 1].x
-        //   ) {
-        //     grid.setAttribute("aria-disabled", true);
-        //   }
-        // }
       }
-      // if (orient === "x") {
-      //   if (x > 10 - shipLen) {
-      //     grid.setAttribute("aria-disabled", true);
-      //   }
-      //   continue;
-      // }
-      // if (y < -1 + shipLen) {
-      //   grid.setAttribute("aria-disabled", true);
-      // }
     }
   }
 }
