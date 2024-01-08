@@ -9,6 +9,8 @@ import { placeShipUi } from "./dom/placeShip";
 
 // TODO: refactor the async attack animation
 // TODO: refactor randomAttack()
+// TODO: create placeShip() for computer
+// TODO: board is a graph, u need 1 pixel gap for every ship placed
 
 function game() {
   let index = 0;
