@@ -4,10 +4,6 @@
   box-sizing: border-box;
 }
 
-body {
-  background-color: blue;
-}
-
 .title {
   text-align: center;
   margin: 1rem 0 1rem;
@@ -53,11 +49,10 @@ body {
   aspect-ratio: 1;
   grid-template-columns: repeat(10, 1fr);
   cursor: crosshair;
-  background-color: blue;
 }
 
 .board div {
-  /* border: 1px solid black; */
+  border: 1px solid black;
   border-radius: 8px;
   cursor: crosshair;
   background-color: white;
