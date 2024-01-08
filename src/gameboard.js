@@ -6,6 +6,7 @@ export default class Gameboard {
     this.attack = [];
     this.board = this.#createBoard();
     this.ships = [];
+    this.graph = this.#createGraph();
   }
 
   placeShip(length, orientation, x, y) {
@@ -64,6 +65,38 @@ export default class Gameboard {
       }
     }
     return true;
+  }
+
+  #createGraph() {
+    let graph = {};
+    for (let x = 0; x < 10; x++) {
+      for (let y = 0; y < 10; y++) {
+        let vertex = this.#returnPossibleMoves(x, y);
+        graph[`${x},${y}`] = vertex;
+      }
+    }
+    return graph;
+  }
+
+  #returnPossibleMoves(x, y) {
+    let arr = [];
+    arr.push(`${x + 1},${y}`);
+    arr.push(`${x - 1},${y}`);
+    arr.push(`${x},${y + 1}`);
+    arr.push(`${x},${y - 1}`);
+    arr.push(`${x + 1},${y + 1}`);
+    arr.push(`${x + 1},${y - 1}`);
+    arr.push(`${x - 1},${y + 1}`);
+    arr.push(`${x - 1},${y - 1}`);
+
+    return arr.filter((n) => {
+      let coor = n.split(",");
+      if (coor[0] < 10 && coor[0] > -1) {
+        if (coor[1] < 10 && coor[1] > -1) {
+          return true;
+        }
+      }
+    });
   }
   #createBoard() {
     let arr = [];
