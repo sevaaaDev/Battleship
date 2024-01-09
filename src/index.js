@@ -13,35 +13,14 @@ import { placeShipUi } from "./dom/placeShip";
 // TODO: board is a graph, u need 1 pixel gap for every ship placed
 
 function game() {
-  let index = 0;
   const playerGameboard = new Gameboard();
   const computerGameboard = new Gameboard();
-  const listOfShips = [
-    {
-      name: "Carrier",
-      length: 5,
-    },
-    {
-      name: "Battleship",
-      length: 4,
-    },
-    {
-      name: "Destroyer",
-      length: 3,
-    },
-    {
-      name: "Submarine",
-      length: 3,
-    },
-    {
-      name: "Patrol Boat",
-      length: 2,
-    },
-  ];
+  const getNextShip = getNextShipFactory();
   displayGame();
   const modal = document.querySelector("dialog");
   let orient = "x";
   modal.showModal();
+  let nextShip = getNextShip();
   const orientBtn = modal.querySelector("button");
   orientBtn.addEventListener("click", () => {
     if (orient === "x") {
@@ -88,7 +67,7 @@ function game() {
       setTimeout(() => {
         document.addEventListener("mouseover", hover);
       }, 10);
-      if (playerGameboard.checkWater(listOfShips[index].length, orient, x, y)) {
+      if (playerGameboard.checkWater(nextShip.length, orient, x, y)) {
         e.target.setAttribute("aria-disabled", true);
         return;
       }
@@ -111,10 +90,10 @@ function game() {
       if (e.target.ariaDisabled) {
         return;
       }
-      playerGameboard.placeShip(listOfShips[index].length, orient, x, y);
+      playerGameboard.placeShip(nextShip.length, orient, x, y);
+      nextShip = getNextShip();
       placeShipUi(playerGameboard);
-      index++;
-      if (index === 5) {
+      if (!nextShip) {
         modal.close();
         createBoard(playerGameboard, computerGameboard);
         return;
@@ -137,8 +116,8 @@ function game() {
       playerGameboard.clear();
       document.addEventListener("click", attackEnemy);
       orient = "x";
+      nextShip = getNextShip();
       modal.showModal();
-      index = 0;
       placeShipUi(playerGameboard);
       computerGameboard.placeShip(5, "x", 4, 2);
     }
@@ -158,6 +137,40 @@ function game() {
       return;
     }
   }
+}
+
+function getNextShipFactory() {
+  const listOfShips = [
+    {
+      name: "Carrier",
+      length: 5,
+    },
+    {
+      name: "Battleship",
+      length: 4,
+    },
+    {
+      name: "Destroyer",
+      length: 3,
+    },
+    {
+      name: "Submarine",
+      length: 3,
+    },
+    {
+      name: "Patrol Boat",
+      length: 2,
+    },
+  ];
+  let i = 0;
+  return function () {
+    if (i === 5) {
+      i = 0;
+      return null;
+    }
+    changeShipText(listOfShips[i].name);
+    return listOfShips[i++];
+  };
 }
 
 function showStartMenu() {
