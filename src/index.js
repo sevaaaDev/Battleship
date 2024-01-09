@@ -44,16 +44,7 @@ function game() {
       }
       let x = e.target.dataset.x;
       let y = e.target.dataset.y;
-      for (let i = 0; i < listOfShips[index].length; i++) {
-        document
-          .querySelector(`dialog div[data-x="${x}"][data-y="${y}"]`)
-          .classList.remove(gameUistyle.hover);
-        if (orient === "x") {
-          x++;
-          continue;
-        }
-        y--;
-      }
+      hoverEffect("remove", nextShip, x, y, orient);
     }
   }
   function hover(e) {
@@ -71,16 +62,7 @@ function game() {
         e.target.setAttribute("aria-disabled", true);
         return;
       }
-      for (let i = 0; i < listOfShips[index].length; i++) {
-        document
-          .querySelector(`dialog div[data-x="${x}"][data-y="${y}"]`)
-          .classList.add(gameUistyle.hover);
-        if (orient === "x") {
-          x++;
-          continue;
-        }
-        y--;
-      }
+      hoverEffect("add", nextShip, x, y, orient);
     }
   }
   function placeShip(e) {
@@ -176,6 +158,18 @@ function changeShipText(name) {
   text.innerText = `Place Your ${name}`;
 }
 
+function hoverEffect(type, ship, x, y, orient) {
+  for (let i = 0; i < ship.length; i++) {
+    document
+      .querySelector(`dialog div[data-x="${x}"][data-y="${y}"]`)
+      .classList[type](gameUistyle.hover);
+    if (orient === "x") {
+      x++;
+      continue;
+    }
+    y--;
+  }
+}
 function showStartMenu() {
   startMenu();
   const button = document.querySelector(`.${startMenuStyle.start}`);
