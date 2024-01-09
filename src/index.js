@@ -98,8 +98,6 @@ function game() {
         createBoard(playerGameboard, computerGameboard);
         return;
       }
-      const text = document.querySelector("dialog h2");
-      text.innerText = `Place Your ${listOfShips[index].name}`;
     }
   }
   function attackEnemy(e) {
@@ -171,6 +169,11 @@ function getNextShipFactory() {
     changeShipText(listOfShips[i].name);
     return listOfShips[i++];
   };
+}
+
+function changeShipText(name) {
+  const text = document.querySelector("dialog h2");
+  text.innerText = `Place Your ${name}`;
 }
 
 function showStartMenu() {
