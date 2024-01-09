@@ -10,7 +10,17 @@ export function placeShipUi(data) {
       board.append(grid);
       for (let ship of data.ships) {
         for (let coord of ship.range) {
-          if (x === coord.x && y === coord.y) {
+          for (let node of data.graph[`${coord.x},${coord.y}`]) {
+            let coord = node.split(",");
+            console.log(coord);
+            if (x == coord[0] && y == coord[1]) {
+              if (grid.style.backgroundColor != "black") {
+                grid.style.backgroundColor = "red";
+                grid.setAttribute("aria-disabled", true);
+              }
+            }
+          }
+          if (x == coord.x && y == coord.y) {
             grid.style.backgroundColor = "black";
           }
         }

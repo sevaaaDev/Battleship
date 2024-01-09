@@ -24,6 +24,12 @@ export default class Gameboard {
     if (orientation === "x") {
       for (let i = 0; i < length; i++) {
         this.board[x][y] = ship;
+        for (let node of this.graph[`${x},${y}`]) {
+          let coord = node.split(",");
+          if (this.board[coord[0]][coord[1]] !== ship) {
+            this.board[coord[0]][coord[1]] = "disabled";
+          }
+        }
         this.ships[this.ships.length - 1].range.push({ x, y });
         x++;
       }
