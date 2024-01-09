@@ -25,10 +25,9 @@ function game() {
   orientBtn.addEventListener("click", () => {
     if (orient === "x") {
       orient = "y";
-      placeShipUi(playerGameboard);
-      return;
+    } else {
+      orient = "x";
     }
-    orient = "x";
     placeShipUi(playerGameboard);
   });
   placeShipUi(playerGameboard);
@@ -67,11 +66,11 @@ function game() {
   }
   function placeShip(e) {
     if (e.target.matches(`dialog .${gameUistyle.board} div`)) {
-      let x = e.target.dataset.x;
-      let y = e.target.dataset.y;
       if (e.target.ariaDisabled) {
         return;
       }
+      let x = e.target.dataset.x;
+      let y = e.target.dataset.y;
       playerGameboard.placeShip(nextShip.length, orient, x, y);
       nextShip = getNextShip();
       placeShipUi(playerGameboard);
