@@ -83,7 +83,6 @@ function game() {
       e.target.matches(`.${gameUistyle.compBoard} .${gameUistyle.board} div`)
     ) {
       playRound(e.target.dataset.x, e.target.dataset.y);
-      e.target.setAttribute("aria-disabled", true);
     }
   }
   function restart(e) {
