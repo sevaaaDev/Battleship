@@ -53,6 +53,7 @@ export default class Gameboard {
       this.attack.push({ x, y });
       return ship;
     }
+    if (this.board[x][y] === "hit") {
       return true;
     }
     this.board[x][y] = "hit";
