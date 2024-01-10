@@ -8,8 +8,8 @@ export function placeShipUi(data) {
       grid.setAttribute("data-x", x);
       grid.setAttribute("data-y", y);
       board.append(grid);
-      for (let ship of data.ships) {
-        for (let coord of ship.range) {
+      for (let ship in data.ships) {
+        for (let coord of data.ships[ship].range) {
           for (let node of data.graph[`${coord.x},${coord.y}`]) {
             let coord = node.split(",");
             console.log(coord);

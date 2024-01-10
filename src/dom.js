@@ -25,6 +25,8 @@ function populateGrid(board, data, player) {
       }
       for (let ship of data.ships) {
         for (let coord of ship.range) {
+      for (let ship in data.ships) {
+        for (let coord of data.ships[ship].range) {
           if (x === coord.x && y === coord.y) {
             grid.style.backgroundColor = "black";
           }

@@ -19,9 +19,9 @@ function game() {
   const changeOrient = orientFactory();
   displayGame();
   const modal = document.querySelector("dialog");
-  modal.showModal();
   let orient = changeOrient();
   let nextShip = getNextShip();
+  modal.showModal();
   const orientBtn = modal.querySelector("button");
   orientBtn.addEventListener("click", () => {
     orient = changeOrient();
@@ -68,7 +68,7 @@ function game() {
       }
       let x = e.target.dataset.x;
       let y = e.target.dataset.y;
-      playerGameboard.placeShip(nextShip.length, orient, x, y);
+      playerGameboard.placeShip(nextShip.length, orient, x, y, nextShip.name);
       nextShip = getNextShip();
       placeShipUi(playerGameboard);
       if (!nextShip) {
@@ -100,7 +100,7 @@ function game() {
   }
   const player = new Player();
   const computer = new Computer();
-  computerGameboard.placeShip(5, "x", 4, 2);
+  computerGameboard.placeShip(5, "x", 4, 2, "Carrier");
   function playRound(x, y) {
     if (player.attack(computerGameboard, x, y)) {
       document.removeEventListener("click", attackEnemy);

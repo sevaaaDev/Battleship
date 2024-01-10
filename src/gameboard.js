@@ -9,7 +9,7 @@ export default class Gameboard {
     this.graph = this.#createGraph();
   }
 
-  placeShip(length, orientation, x, y) {
+  placeShip(length, orientation, x, y, name) {
     x = +x;
     y = +y;
     if (this.checkWater(length, orientation, x, y)) {
@@ -17,10 +17,10 @@ export default class Gameboard {
       return;
     }
     let ship = new Ship(length);
-    this.ships.push({
+    this.ships[name] = {
       ship,
       range: [],
-    });
+    };
     if (orientation === "x") {
       for (let i = 0; i < length; i++) {
         this.board[x][y] = ship;
@@ -30,14 +30,14 @@ export default class Gameboard {
             this.board[coord[0]][coord[1]] = "disabled";
           }
         }
-        this.ships[this.ships.length - 1].range.push({ x, y });
+        this.ships[name].range.push({ x, y });
         x++;
       }
       return true;
     }
     for (let i = 0; i < length; i++) {
       this.board[x][y] = ship;
-      this.ships[this.ships.length - 1].range.push({ x, y });
+      this.ships[name].range.push({ x, y });
       y--;
     }
   }
@@ -65,8 +65,8 @@ export default class Gameboard {
   }
 
   isAllSunk() {
-    for (let ship of this.ships) {
-      if (!ship.ship.isSunk()) {
+    for (let ship in this.ships) {
+      if (!this.ships[ship].ship.isSunk()) {
         return false;
       }
     }
