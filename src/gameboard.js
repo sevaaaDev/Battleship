@@ -16,7 +16,7 @@ export default class Gameboard {
       // throw new Error("another ship already on there");
       return;
     }
-    let ship = new Ship(length);
+    let ship = new Ship(length, name);
     this.ships[name] = {
       ship,
       range: [],
@@ -48,8 +48,11 @@ export default class Gameboard {
       !Array.isArray(this.board[x][y])
     ) {
       this.board[x][y].hit();
+      let ship = this.board[x][y];
       this.board[x][y] = "hit";
       this.attack.push({ x, y });
+      return ship;
+    }
       return true;
     }
     this.board[x][y] = "hit";
