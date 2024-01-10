@@ -49,8 +49,15 @@ export function attackBoard(gameboard, x, y, opt) {
       `.${styles.playerBoard} .${styles.board} div[data-x="${x}"][data-y="${y}"]`,
     );
   }
-  if (gameboard.receiveAttack(x, y)) {
   target.setAttribute("aria-disabled", true);
+  let ship = gameboard.receiveAttack(x, y);
+  if (ship) {
+    if (typeof ship !== "object") {
+      return;
+    }
+    if (ship.isSunk()) {
+      hitSurrounding(gameboard, ship.name, opt);
+    }
     target.style.backgroundColor = "red";
     return;
   }
@@ -60,4 +67,13 @@ export function attackBoard(gameboard, x, y, opt) {
 export function displayWinner(winner) {
   let displayText = document.querySelector(`.${styles.info}`);
   displayText.innerText = `${winner} Won`;
+}
+
+function hitSurrounding(gameboard, name, opt) {
+  for (let coord of gameboard.ships[name].range) {
+    for (let node of gameboard.graph[`${coord.x},${coord.y}`]) {
+      let coordNode = node.split(",");
+      attackBoard(gameboard, +coordNode[0], +coordNode[1], opt);
+    }
+  }
 }
