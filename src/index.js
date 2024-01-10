@@ -16,18 +16,15 @@ function game() {
   const playerGameboard = new Gameboard();
   const computerGameboard = new Gameboard();
   const getNextShip = getNextShipFactory();
+  const changeOrient = orientFactory();
   displayGame();
   const modal = document.querySelector("dialog");
-  let orient = "x";
   modal.showModal();
+  let orient = changeOrient();
   let nextShip = getNextShip();
   const orientBtn = modal.querySelector("button");
   orientBtn.addEventListener("click", () => {
-    if (orient === "x") {
-      orient = "y";
-    } else {
-      orient = "x";
-    }
+    orient = changeOrient();
     placeShipUi(playerGameboard);
   });
   placeShipUi(playerGameboard);
@@ -168,6 +165,17 @@ function hoverEffect(type, ship, x, y, orient) {
     }
     y--;
   }
+}
+
+function orientFactory() {
+  let state = ["x", "y"];
+  let i = 0;
+  return function () {
+    if (i == 2) {
+      i = 0;
+    }
+    return state[i++];
+  };
 }
 function showStartMenu() {
   startMenu();
