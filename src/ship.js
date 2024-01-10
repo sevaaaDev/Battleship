@@ -1,8 +1,9 @@
 export default class Ship {
-  constructor(length) {
+  constructor(length, name) {
     this.length = length;
     this.numOfHit = 0;
     this.sunk = false;
+    this.name = name;
   }
 
   hit() {
