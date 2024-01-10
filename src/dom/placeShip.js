@@ -12,7 +12,6 @@ export function placeShipUi(data) {
         for (let coord of data.ships[ship].range) {
           for (let node of data.graph[`${coord.x},${coord.y}`]) {
             let coord = node.split(",");
-            console.log(coord);
             if (x == coord[0] && y == coord[1]) {
               if (grid.style.backgroundColor != "black") {
                 grid.style.backgroundColor = "red";
