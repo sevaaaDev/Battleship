@@ -50,6 +50,7 @@ export function attackBoard(gameboard, x, y, opt) {
     );
   }
   if (gameboard.receiveAttack(x, y)) {
+  target.setAttribute("aria-disabled", true);
     target.style.backgroundColor = "red";
     return;
   }
