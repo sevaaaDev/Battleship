@@ -30,52 +30,48 @@ function game() {
   placeShipUi(playerGameboard);
   document.addEventListener("click", placeShip);
   document.addEventListener("mouseover", hover);
-  document.addEventListener("mouseout", cleanUp);
   document.addEventListener("click", attackEnemy);
   document.addEventListener("click", restart);
-  function cleanUp(e) {
-    if (e.target.matches(`dialog div.${gameUistyle.hover}`)) {
-      if (e.target.ariaDisabled) {
-        return;
+  globalEventListener("click", placeShip, `dialog .${gameUistyle.board} div`);
+  globalEventListener("mouseout", cleanUp, `dialog div.${gameUistyle.hover}`);
+  function globalEventListener(type, cb, element, disabled) {
+    document.addEventListener(type, (e) => {
+      if (e.target.matches(element)) {
+        if (e.target.ariaDisabled) {
+          return;
+        }
+        cb(e);
       }
-      let x = e.target.dataset.x;
-      let y = e.target.dataset.y;
-      hoverEffect("remove", nextShip, x, y, orient);
-    }
+    });
+  }
+  function cleanUp(e) {
+    let x = e.target.dataset.x;
+    let y = e.target.dataset.y;
+    hoverEffect("remove", nextShip, x, y, orient);
   }
   function hover(e) {
-    if (e.target.matches(`dialog .${gameUistyle.board} div`)) {
-      if (e.target.ariaDisabled) {
-        return;
-      }
-      document.removeEventListener("mouseover", hover);
-      let x = e.target.dataset.x;
-      let y = e.target.dataset.y;
-      setTimeout(() => {
-        document.addEventListener("mouseover", hover);
-      }, 10);
-      if (playerGameboard.checkWater(nextShip.length, orient, x, y)) {
-        e.target.setAttribute("aria-disabled", true);
-        return;
-      }
-      hoverEffect("add", nextShip, x, y, orient);
+    document.removeEventListener("mouseover", hover);
+    let x = e.target.dataset.x;
+    let y = e.target.dataset.y;
+    setTimeout(() => {
+      document.addEventListener("mouseover", hover);
+    }, 10);
+    if (playerGameboard.checkWater(nextShip.length, orient, x, y)) {
+      e.target.setAttribute("aria-disabled", true);
+      return;
     }
+    hoverEffect("add", nextShip, x, y, orient);
   }
   function placeShip(e) {
-    if (e.target.matches(`dialog .${gameUistyle.board} div`)) {
-      if (e.target.ariaDisabled) {
-        return;
-      }
-      let x = e.target.dataset.x;
-      let y = e.target.dataset.y;
-      playerGameboard.placeShip(nextShip.length, orient, x, y, nextShip.name);
-      nextShip = getNextShip();
-      placeShipUi(playerGameboard);
-      if (!nextShip) {
-        modal.close();
-        createBoard(playerGameboard, computerGameboard);
-        return;
-      }
+    let x = e.target.dataset.x;
+    let y = e.target.dataset.y;
+    playerGameboard.placeShip(nextShip.length, orient, x, y, nextShip.name);
+    nextShip = getNextShip();
+    placeShipUi(playerGameboard);
+    if (!nextShip) {
+      modal.close();
+      createBoard(playerGameboard, computerGameboard);
+      return;
     }
   }
   function attackEnemy(e) {
@@ -100,6 +96,7 @@ function game() {
   const player = new Player();
   const computer = new Computer();
   computerGameboard.placeShip(5, "x", 4, 2, "Carrier");
+  computerGameboard.placeShip(5, "x", 4, 5, "Patrol");
   function playRound(x, y) {
     if (player.attack(computerGameboard, x, y)) {
       document.removeEventListener("click", attackEnemy);
