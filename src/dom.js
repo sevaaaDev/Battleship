@@ -20,11 +20,9 @@ function populateGrid(board, data, player) {
       grid.setAttribute("data-x", x);
       grid.setAttribute("data-y", y);
       board.append(grid);
-      if (player === "comp") {
-        continue;
-      }
-      for (let ship of data.ships) {
-        for (let coord of ship.range) {
+      // if (player === "comp") {
+      //   continue;
+      // }
       for (let ship in data.ships) {
         for (let coord of data.ships[ship].range) {
           if (x === coord.x && y === coord.y) {
