@@ -28,7 +28,6 @@ function game() {
     placeShipUi(playerGameboard);
   });
   placeShipUi(playerGameboard);
-  document.addEventListener("click", placeShip);
   document.addEventListener("mouseover", hover);
   document.addEventListener("click", attackEnemy);
   document.addEventListener("click", restart);
@@ -50,21 +49,27 @@ function game() {
     hoverEffect("remove", nextShip, x, y, orient);
   }
   function hover(e) {
-    document.removeEventListener("mouseover", hover);
-    let x = e.target.dataset.x;
-    let y = e.target.dataset.y;
-    setTimeout(() => {
-      document.addEventListener("mouseover", hover);
-    }, 10);
-    if (playerGameboard.checkWater(nextShip.length, orient, x, y)) {
-      e.target.setAttribute("aria-disabled", true);
-      return;
+    if (e.target.matches(`dialog .${gameUistyle.board} div`)) {
+      if (e.target.ariaDisabled) {
+        return;
+      }
+      document.removeEventListener("mouseover", hover);
+      let x = e.target.dataset.x;
+      let y = e.target.dataset.y;
+      setTimeout(() => {
+        document.addEventListener("mouseover", hover);
+      }, 10);
+      if (playerGameboard.checkWater(nextShip.length, orient, x, y)) {
+        e.target.setAttribute("aria-disabled", true);
+        return;
+      }
+      hoverEffect("add", nextShip, x, y, orient);
     }
-    hoverEffect("add", nextShip, x, y, orient);
   }
   function placeShip(e) {
     let x = e.target.dataset.x;
     let y = e.target.dataset.y;
+    console.log(nextShip);
     playerGameboard.placeShip(nextShip.length, orient, x, y, nextShip.name);
     nextShip = getNextShip();
     placeShipUi(playerGameboard);
