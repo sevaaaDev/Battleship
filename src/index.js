@@ -1,4 +1,4 @@
-import Gameboard from "./gameboard";
+import { playerGameboard, computerGameboard } from "./gameboard";
 import { Computer, Player } from "./player";
 import { createBoard, displayWinner } from "./dom";
 import { displayGame } from "./dom/game";
@@ -13,8 +13,6 @@ import { placeShipUi } from "./dom/placeShip";
 // TODO: board is a graph, u need 1 pixel gap for every ship placed
 
 function game() {
-  const playerGameboard = new Gameboard();
-  const computerGameboard = new Gameboard();
   const getNextShip = getNextShipFactory();
   const changeOrient = orientFactory();
   displayGame();
@@ -103,6 +101,7 @@ function game() {
   computerGameboard.placeShip(5, "x", 4, 2, "Carrier");
   computerGameboard.placeShip(5, "x", 4, 5, "Patrol");
   function playRound(x, y) {
+    console.log(computerGameboard.ships);
     if (player.attack(computerGameboard, x, y)) {
       document.removeEventListener("click", attackEnemy);
       displayWinner("You");

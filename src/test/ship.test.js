@@ -1,18 +1,23 @@
-import Ship from "../ship.js";
+// create ship
+// hitting the ship
+// ship sunk
+// cant hit after ship has been sunk
+import Ship from "../game/factories/ship.js";
 
 test("See ship info", () => {
-  const ship = new Ship(4);
+  const ship = new Ship(4, "Destroyer");
   expect(ship).toEqual({
     length: 4,
-    numOfHit: 0,
+    health: 4,
     sunk: false,
+    name: "Destroyer",
   });
 });
 
 test("hitting the ship", () => {
   const ship = new Ship(4);
   ship.hit();
-  expect(ship.numOfHit).toBe(1);
+  expect(ship.health).toBe(3);
 });
 
 test("the ship sunk", () => {
@@ -21,22 +26,16 @@ test("the ship sunk", () => {
   ship.hit();
   ship.hit();
   ship.hit();
-  ship.isSunk();
-  expect(ship.sunk).toBe(true);
   expect(ship.isSunk()).toBe(true);
 });
-
-test("know which ship sunk", () => {
-  const ship1 = new Ship(4);
-  const ship2 = new Ship(5);
-  function hitting(ship) {
-    ship.hit();
-    return ship.isSunk() ? true : false;
-  }
-  hitting(ship1);
-  hitting(ship1);
-  hitting(ship1);
-  expect(hitting(ship1)).toBe(true);
-  expect(ship2.isSunk()).toBe(false);
-  expect(ship1.isSunk()).toBe(true);
+test("cant hit after sunk", () => {
+  const ship = new Ship(4);
+  ship.hit();
+  ship.hit();
+  ship.hit();
+  ship.hit();
+  expect(ship.isSunk()).toBe(true);
+  expect(ship.health).toBe(0);
+  ship.hit();
+  expect(ship.health).toBe(0);
 });

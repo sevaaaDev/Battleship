@@ -1,4 +1,5 @@
 import { attackBoard } from "./dom";
+import { computerGameboard, playerGameboard } from "./gameboard";
 
 function computer(gameboard, x, y) {
   console.log(gameboard.board[x][y]);

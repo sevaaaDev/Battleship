@@ -1,6 +1,6 @@
 import Ship from "./ship";
 
-export default class Gameboard {
+class Gameboard {
   constructor() {
     this.missedAttack = [];
     this.attack = [];
@@ -13,7 +13,6 @@ export default class Gameboard {
     x = +x;
     y = +y;
     if (this.checkWater(length, orientation, x, y)) {
-      // throw new Error("another ship already on there");
       return;
     }
     let ship = new Ship(length, name);
@@ -68,7 +67,7 @@ export default class Gameboard {
     this.missedAttack = [];
   }
 
-  isAllSunk() {
+  areAllSunk() {
     for (let ship in this.ships) {
       if (!this.ships[ship].ship.isSunk()) {
         return false;
@@ -140,3 +139,6 @@ export default class Gameboard {
     return false;
   }
 }
+
+export const playerGameboard = new Gameboard();
+export const computerGameboard = new Gameboard();
