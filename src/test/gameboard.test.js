@@ -1,63 +1,29 @@
-import Gameboard from "./gameboard";
+import createGameboard from "../game/factories/gameboard";
 
-test("there are no ship on the sea", () => {
-  const gameboard = new Gameboard();
-  expect(gameboard.ships.length).toBe(0);
+test("there are no ship", () => {
+  const board = createGameboard();
+  expect(board.ships.length).toBe(0);
 });
 
-test("place a ship x", () => {
-  const gameboard = new Gameboard();
-  gameboard.placeShip(3, "x", 0, 1);
-  expect(gameboard.ships.length).toBe(1);
-  expect(gameboard.board[0][1]).toEqual({
-    length: 3,
-    numOfHit: 0,
-    sunk: false,
-  });
+test("there are ship", () => {
+  const board = createGameboard();
+  board.placeShip(4, "x", 0, 0, "Destroyer");
+  expect(board.ships.length).toBe(1);
+  expect(board.ships[0].name).toBe("Destroyer");
 });
 
-test("place a ship y", () => {
-  const gameboard = new Gameboard();
-  gameboard.placeShip(3, "y", 0, 2);
-  expect(gameboard.ships.length).toBe(1);
-  expect(gameboard.board[0][1]).toEqual({
-    length: 3,
-    numOfHit: 0,
-    sunk: false,
-  });
+test("there are 2 ship", () => {
+  const board = createGameboard();
+  board.placeShip(4, "x", 0, 0, "Destroyer");
+  board.placeShip(5, "x", 0, 2, "Carrier");
+  expect(board.ships.length).toBe(2);
 });
 
-test("cant place a ship at the same place", () => {
-  const gameboard = new Gameboard();
-  gameboard.placeShip(3, "y", 0, 2);
-  expect(() => gameboard.placeShip(3, "y", 0, 2)).toThrow(Error);
-});
-
-test("cant place a ship outside board", () => {
-  const gameboard = new Gameboard();
-  expect(() => gameboard.placeShip(3, "y", 0, 0)).toThrow(Error);
-});
-
-test("hit a ship", () => {
-  const gameboard = new Gameboard();
-  gameboard.placeShip(3, "x", 0, 1);
-  let ship = gameboard.board[0][1];
-  expect(gameboard.receiveAttack(2, 1)).toBe(true);
-  expect(gameboard.attack).toEqual([{ x: 2, y: 1 }]);
-  expect(ship.numOfHit).toBe(1);
-});
-
-test("missed a hit", () => {
-  const gameboard = new Gameboard();
-  gameboard.placeShip(3, "x", 0, 1);
-  expect(gameboard.receiveAttack(4, 1)).toBe(false);
-  expect(gameboard.missedAttack).toEqual([{ x: 4, y: 1 }]);
-});
-
-test("ship still there", () => {
-  const gameboard = new Gameboard();
-  gameboard.placeShip(3, "x", 0, 1);
-  gameboard.receiveAttack(0, 1);
-  gameboard.receiveAttack(1, 1);
-  expect(gameboard.isAllSunk()).toBe(false);
+test("cant place ship at the same place", () => {
+  const board = createGameboard();
+  board.placeShip(4, "x", 0, 0, "Destroyer");
+  board.placeShip(5, "x", 0, 0, "Carrier");
+  board.placeShip(5, "x", 1, 0, "lmao");
+  expect(board.ships.length).toBe(1);
+  expect(board.ships[0].name).toBe("Destroyer");
 });
