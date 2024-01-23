@@ -1,4 +1,46 @@
-import Ship from "./ship";
+import createShip from "./ship";
+
+const proto = {
+  placeShip(length, orientation, x, y, name) {
+    if (this.isThereAShip(x, y)) {
+      return;
+    }
+    const ship = createShip(length, name, [x, y], orientation);
+
+    this.ships.push(ship);
+  },
+  isThereAShip(x, y) {
+    for (let ship of this.ships) {
+      if (x <= ship.tail[0] && x >= ship.head[0]) {
+        if (y >= ship.tail[1] && y <= ship.head[1]) {
+          return true;
+        }
+      }
+      return false;
+    }
+  },
+};
+
+function createBoard() {
+  let arr = [];
+  for (let i = 0; i < 10; i++) {
+    arr.push([]);
+    for (let j = 0; j < 10; j++) {
+      arr[i].push([]);
+    }
+  }
+  return arr;
+}
+
+export default function createGameboard() {
+  const obj = Object.create(proto);
+  obj.missedAttack = [];
+  obj.attack = [];
+  // obj.board = createBoard();
+  obj.ships = [];
+  // obj.graph = this.#createGraph();
+  return obj;
+}
 
 class Gameboard {
   constructor() {
@@ -139,6 +181,3 @@ class Gameboard {
     return false;
   }
 }
-
-export const playerGameboard = new Gameboard();
-export const computerGameboard = new Gameboard();
