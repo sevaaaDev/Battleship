@@ -2,6 +2,9 @@ import createShip from "./ship";
 
 const proto = {
   placeShip(length, orientation, x, y, name) {
+    if (this.isOutside(x, y, length)) {
+      return;
+    }
     if (this.isThereAShip(x, y)) {
       return;
     }
@@ -18,6 +21,15 @@ const proto = {
       }
       return false;
     }
+  },
+  isOutside(x, y, length) {
+    if (x < 0 || x > 9) {
+      return true;
+    }
+    if (x + length > 9) {
+      return true;
+    }
+    return false;
   },
 };
 
