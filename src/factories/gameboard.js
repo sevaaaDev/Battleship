@@ -2,7 +2,7 @@ import createShip from "./ship";
 
 const proto = {
   placeShip(length, orientation, x, y, name) {
-    if (this.isOutside(x, y, length)) {
+    if (this.isOutside(x, y, length, orientation)) {
       return;
     }
     if (this.isThereAShip(x, y)) {
@@ -22,11 +22,16 @@ const proto = {
       return false;
     }
   },
-  isOutside(x, y, length) {
-    if (x < 0 || x > 9) {
+  isOutside(x, y, length, orient) {
+    if (x < 0 || x > 9 || y < 0 || y > 9) {
       return true;
     }
-    if (x + length > 9) {
+    if (orient === "x") {
+      if (x + length > 9) {
+        return true;
+      }
+    }
+    if (y - length < 0) {
       return true;
     }
     return false;
