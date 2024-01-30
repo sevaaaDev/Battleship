@@ -21,9 +21,9 @@ test("there are 2 ship", () => {
 
 test("cant place ship at the same place", () => {
   const board = createGameboard();
-  board.placeShip(4, "x", 0, 0, "Destroyer");
+  // fix this
+  expect(board.placeShip(4, "x", 2, 0, "Destroyer")).toBe(1);
   board.placeShip(5, "x", 0, 0, "Carrier");
-  board.placeShip(5, "y", 1, 6, "lmao");
   expect(board.ships.length).toBe(1);
   expect(board.ships[0].name).toBe("Destroyer");
 });
@@ -31,6 +31,6 @@ test("cant place ship at the same place", () => {
 test("cant place a ship outside of the board", () => {
   const board = createGameboard();
   board.placeShip(4, "x", 9, 0, "Destroyer");
-  board.placeShip(4, "y", 4, 0, "Destroyer");
+  board.placeShip(4, "y", 0, 8, "Destroyer");
   expect(board.ships.length).toBe(0);
 });
