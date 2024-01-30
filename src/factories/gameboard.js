@@ -5,33 +5,48 @@ const proto = {
     if (this.isOutside(x, y, length, orientation)) {
       return;
     }
-    if (this.isThereAShip(x, y)) {
+    if (this.isThereAShip(x, y, length, orientation)) {
       return;
     }
     const ship = createShip(length, name, [x, y], orientation);
 
     this.ships.push(ship);
-  },
-  isThereAShip(x, y) {
-    for (let ship of this.ships) {
-      if (x <= ship.tail[0] && x >= ship.head[0]) {
-        if (y >= ship.tail[1] && y <= ship.head[1]) {
-          return true;
-        }
+    if (orientation === "x") {
+      for (let i = x; i < x + length; i++) {
+        this.board[i][y] = ship;
       }
-      return false;
+      return;
+    }
+    for (let i = y; i < y + length; i++) {
+      this.board[x][i] = ship;
     }
   },
+  isThereAShip(x, y, length, orient) {
+    if (typeof this.board[x][y] === "object") {
+      return true;
+    }
+    if (orient === "x") {
+      if (typeof this.board[x + length][y] === "object") {
+        return true;
+      }
+    }
+    if (typeof this.board[x][y + length] === "object") {
+      return true;
+    }
+    return false;
+  },
   isOutside(x, y, length, orient) {
+    // check if head is outside the board
     if (x < 0 || x > 9 || y < 0 || y > 9) {
       return true;
     }
+    // check if tail is outside the board
     if (orient === "x") {
       if (x + length > 9) {
         return true;
       }
     }
-    if (y - length < 0) {
+    if (y + length > 9) {
       return true;
     }
     return false;
@@ -43,7 +58,7 @@ function createBoard() {
   for (let i = 0; i < 10; i++) {
     arr.push([]);
     for (let j = 0; j < 10; j++) {
-      arr[i].push([]);
+      arr[i].push(undefined);
     }
   }
   return arr;
@@ -53,7 +68,7 @@ export default function createGameboard() {
   const obj = Object.create(proto);
   obj.missedAttack = [];
   obj.attack = [];
-  // obj.board = createBoard();
+  obj.board = createBoard();
   obj.ships = [];
   // obj.graph = this.#createGraph();
   return obj;
