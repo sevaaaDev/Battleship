@@ -22,16 +22,15 @@ const proto = {
     }
   },
   isThereAShip(x, y, length, orient) {
-    if (typeof this.board[x][y] === "object") {
-      return true;
-    }
-    if (orient === "x") {
-      if (typeof this.board[x + length][y] === "object") {
+    for (let i = 0; i < length; i++) {
+      if (typeof this.board[x][y] === "object") {
         return true;
       }
-    }
-    if (typeof this.board[x][y + length] === "object") {
-      return true;
+      if (orient === "x") {
+        x++;
+        continue;
+      }
+      y++;
     }
     return false;
   },
