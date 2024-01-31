@@ -66,6 +66,14 @@ const proto = {
     this.board[x][y] = "hit";
     return info;
   },
+  areAllSunk() {
+    for (let ship of this.ships) {
+      if (!ship.isSunk()) {
+        return false;
+      }
+    }
+    return true;
+  },
 };
 
 function createBoard() {
