@@ -1,29 +1,46 @@
 import createGameboard from "./gameboard";
 
-export default function createPlayer() {
-  return {
+export function createPlayer() {
+  const obj = {
+    board: createGameboard(),
+    attack: attackPlayer,
+    reset() {
+      this.board = createGameboard();
+    },
+  };
+  return obj;
+}
+
+export function createComputer() {
+  const obj = {
     board: createGameboard(),
     moves: getCoord(),
-    attack(board, x, y) {
-      if (x !== undefined && y !== undefined) {
-        return board.receiveAttack(x, y);
-      }
-      // take 1 random coordinate from moves
-      const index = Math.floor(Math.random() * (this.moves.length - 1));
-      const coordinate = this.moves[index];
-      if (!coordinate) return "finish";
-      const result = board.receiveAttack(coordinate[0], coordinate[1]);
-      // delete that coordinate from moves, so it wont be selected again
-      this.moves.splice(index, 1);
-      return [result, coordinate];
-    },
+    attack: attackComputer,
     reset() {
       this.board = createGameboard();
       this.moves = getCoord();
     },
   };
+  return obj;
 }
 
+function attackPlayer(board, x, y) {
+  if (x !== undefined && y !== undefined) {
+    return board.receiveAttack(x, y);
+  }
+  return false;
+}
+
+function attackComputer(board) {
+  // take 1 random coordinate from moves
+  const index = Math.floor(Math.random() * (this.moves.length - 1));
+  const coordinate = this.moves[index];
+  if (!coordinate) return "finish";
+  const result = board.receiveAttack(coordinate[0], coordinate[1]);
+  // delete that coordinate from moves, so it wont be selected again
+  this.moves.splice(index, 1);
+  return [result, coordinate];
+}
 function getCoord() {
   let arr = [];
   for (let x = 0; x < 10; x++) {
