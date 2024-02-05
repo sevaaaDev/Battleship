@@ -12,13 +12,16 @@ export function createPlayer() {
 }
 
 export function createComputer() {
+  let moves = getCoord();
   const obj = {
     board: createGameboard(),
-    moves: getCoord(),
     attack: attackComputer,
+    get moves() {
+      return moves;
+    },
     reset() {
       this.board = createGameboard();
-      this.moves = getCoord();
+      moves = getCoord();
     },
   };
   return obj;
