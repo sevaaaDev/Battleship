@@ -10,15 +10,28 @@ test("attack", () => {
 test("computer", () => {
   const player = createPlayer();
   const opponent = createComputer();
+  function random(moves) {
+    return 6 < moves.length - 1 ? 6 : 0;
+  }
   player.board.placeShip(4, "x", 0, 0, "destroy");
-  let res = opponent.attack(player.board);
-  expect(player.board.board[res[1][0]][res[1][1]]).toBe("hit");
+  let res = opponent.attack(player.board, random);
+  expect(res[0]).toBeTruthy();
 });
 
-test("reset", () => {
+test("player reset", () => {
   const player = createPlayer();
-  const opponent = createComputer();
-  player.board.placeShip(4, "x", 0, 0, "destroy");
+  player.board.placeShip(4, "x", 0, 0, "destroyer");
   player.reset();
   expect(player.board.ships.length).toBe(0);
+});
+
+test("computer reset", () => {
+  let comp = createComputer();
+  let player = createPlayer();
+  comp.attack(player.board, () => {
+    return 0;
+  });
+  expect(comp.moves.length).toBe(99);
+  comp.reset();
+  expect(comp.moves.length).toBe(100);
 });
