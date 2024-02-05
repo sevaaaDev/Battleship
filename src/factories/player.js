@@ -27,16 +27,9 @@ export function createComputer() {
   return obj;
 }
 
-function attackPlayer(board, x, y) {
-  if (x !== undefined && y !== undefined) {
-    return board.receiveAttack(x, y);
-  }
-  return false;
-}
-
-function attackComputer(board) {
+function attackComputer(board, cb) {
   // take 1 random coordinate from moves
-  const index = Math.floor(Math.random() * (this.moves.length - 1));
+  const index = cb(this.moves);
   const coordinate = this.moves[index];
   if (!coordinate) return "finish";
   const result = board.receiveAttack(coordinate[0], coordinate[1]);
@@ -44,6 +37,14 @@ function attackComputer(board) {
   this.moves.splice(index, 1);
   return [result, coordinate];
 }
+
+function attackPlayer(board, x, y) {
+  if (x !== undefined && y !== undefined) {
+    return board.receiveAttack(x, y);
+  }
+  return false;
+}
+
 function getCoord() {
   let arr = [];
   for (let x = 0; x < 10; x++) {
