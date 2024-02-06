@@ -50,7 +50,7 @@ const proto = {
     }
     return false;
   },
-  receiveAttack(x, y) {
+  receiveAttack([x, y]) {
     let info;
     if (this.isOutside(x, y)) return false;
     if (this.board[x][y] === "hit") return false;
