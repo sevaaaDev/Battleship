@@ -15,11 +15,12 @@ const proto = {
       for (let i = x; i < x + length; i++) {
         this.board[i][y] = ship;
       }
-      return;
+      return true;
     }
     for (let i = y; i < y + length; i++) {
       this.board[x][i] = ship;
     }
+    return true;
   },
   isThereAShip(x, y, length, orient) {
     for (let i = 0; i < length; i++) {
