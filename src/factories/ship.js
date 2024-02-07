@@ -20,9 +20,9 @@ export default function createShip(length, name, pos, orient) {
   obj.sunk = false;
   obj.head = pos;
   obj.orientation = orient;
-  obj.tail = [pos[0], pos[1] + length];
+  obj.tail = [pos[0], pos[1] + length - 1];
   if (orient === "x") {
-    obj.tail = [pos[0] + length, pos[1]];
+    obj.tail = [pos[0] + length - 1, pos[1]];
   }
   return obj;
 }
