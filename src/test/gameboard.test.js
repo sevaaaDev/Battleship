@@ -1,4 +1,5 @@
 import createGameboard from "../factories/gameboard";
+import { initPlaceShip } from "../factories/ship";
 
 test("there are no ship", () => {
   const board = createGameboard();
@@ -69,4 +70,10 @@ test("are all sunk?", () => {
   expect(board.areAllSunk()).toBe(false);
   board.receiveAttack(3, 0);
   expect(board.areAllSunk()).toBe(true);
+});
+
+test("init", () => {
+  const playerBoard = createGameboard();
+  let moves = initPlaceShip(playerBoard);
+  expect(playerBoard.ships.length).toBe(4);
 });
