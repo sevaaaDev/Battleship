@@ -1,5 +1,15 @@
 import createShip from "./ship";
 
+export function getCoord() {
+  let arr = [];
+  for (let x = 0; x < 10; x++) {
+    for (let y = 0; y < 10; y++) {
+      arr.push([x, y]);
+    }
+  }
+  return arr;
+}
+
 const proto = {
   placeShip(length, orientation, x, y, name) {
     if (this.isOutside(x, y, length, orientation)) {
