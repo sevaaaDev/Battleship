@@ -36,38 +36,58 @@ function getShipClosure() {
       { name: "Attacker", length: 4 },
       { name: "Patrol", length: 2 },
     ];
-    if (index > 4) {
+    if (index > 3) {
       index = 0;
     }
     return ships[index++];
   };
 }
 
-const getShip = getShipClosure();
-
 export function initPlaceShip(board) {
+  const getShip = getShipClosure();
   let moves = getCoord();
   for (let i = 0; i < 4; i++) {
     const ship = getShip();
-    function placeShipRecur() {
-      const index = Math.floor(Math.random() * moves.length - 1);
-      const coordinate = moves[index];
-      let result = board.placeShip(
-        ship.length,
-        "x",
-        coordinate[0],
-        coordinate[1],
-        ship.name,
-      );
-      if (!result) {
-        placeShipRecur();
-      }
-      return coordinate;
-    }
-    const coordinate = placeShipRecur();
-    for (let i = 0; i < ship.length; i++) {
-      moves.splice(moves.indexOf([coordinate[0]++, coordinate[1]]), 1);
+    let { coordinate, orient } = tryPlaceShip(board, ship, moves, "x");
+    removeCoord(moves, ship.length, coordinate, orient);
+  }
+}
+
+function tryPlaceShip(board, ship, moves, orient) {
+  let coordinate = pickCoord(moves, ship.length);
+  let result = board.placeShip(
+    ship.length,
+    orient,
+    coordinate[0],
+    coordinate[1],
+    ship.name,
+  );
+  // randomise the orientation
+  if (orient === "x") {
+    orient = "y";
+  } else {
+    orient = "x";
+  }
+  // try again if fail
+  if (!result) {
+    return tryPlaceShip(board, ship, moves, orient);
+  }
+  return { coordinate, orient };
+}
+
+function pickCoord(moves) {
+  let index = Math.floor(Math.random() * (moves.length - 1));
+  let coord = moves[index];
+  return coord;
+}
+
+function removeCoord(moves, length, coord, orient) {
+  let copyCoord = coord.slice();
+  for (let i = 0; i < length; i++) {
+    if (orient === "x") {
+      moves.splice(moves.indexOf([copyCoord[0]++, copyCoord[1]]), 1);
+    } else {
+      moves.splice(moves.indexOf([copyCoord[0], copyCoord[1]++]), 1);
     }
   }
-  return moves;
 }
