@@ -1,0 +1,23 @@
+.board {
+  width: 300px;
+  aspect-ratio: 1/1;
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.board div {
+  border: 1px solid black;
+}
+
+.ship {
+  background: black;
+}
+
+.hit {
+  background-color: red;
+}
+
+.miss {
+  background-color: blue;
+}
