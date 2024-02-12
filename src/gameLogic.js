@@ -10,7 +10,7 @@ export default function game() {
   initPlaceShip(playerBoard);
   initPlaceShip(computerBoard);
   render();
-  renderBoard();
+  renderBoard(computerBoard);
   document.addEventListener("click", (e) => {
     if (e.target.matches("button")) {
       playRound(...computer.chooseCoord());
