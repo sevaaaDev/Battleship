@@ -18,18 +18,26 @@ const proto = {
     if (this.isThereAShip(x, y, length, orientation)) {
       return;
     }
-    const ship = createShip(length, name, [x, y], orientation);
+    // create arr to hold ship coordinates
+    let lsCoord = [];
+    // create ship obj
+    const ship = createShip(length, name, [x, y], orientation, lsCoord);
 
-    this.ships.push(ship);
     if (orientation === "x") {
       for (let i = x; i < x + length; i++) {
         this.board[i][y] = ship;
+        // push ship coordinate to arr
+        lsCoord.push({ x: i, y });
       }
+      this.ships.push(ship);
       return true;
     }
     for (let i = y; i < y + length; i++) {
       this.board[x][i] = ship;
+      // push ship coordinate to arr
+      lsCoord.push({ x, y: i });
     }
+    this.ships.push(ship);
     return true;
   },
   isThereAShip(x, y, length, orient) {

@@ -12,7 +12,7 @@ const proto = {
     if (this.health) this.health--;
   },
 };
-export default function createShip(length, name, pos, orient) {
+export default function createShip(length, name, pos, orient, coord) {
   const obj = Object.create(proto);
   obj.length = length;
   obj.name = name;
@@ -24,6 +24,7 @@ export default function createShip(length, name, pos, orient) {
   if (orient === "x") {
     obj.tail = [pos[0] + length - 1, pos[1]];
   }
+  obj.lsCoord = coord;
   return obj;
 }
 
