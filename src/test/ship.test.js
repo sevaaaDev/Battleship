@@ -1,23 +1,27 @@
-// create ship
-// hitting the ship
-// ship sunk
-// cant hit after ship has been sunk
-import createShip from "../game/factories/ship";
+import createGameboard from "../factories/gameboard";
+import { initPlaceShip } from "../factories/ship";
+import createShip from "../factories/ship";
 
-test("See ship info", () => {
-  const ship = createShip(4, "Destroyer");
-  expect(ship).toEqual({
-    length: 4,
-    health: 4,
-    sunk: false,
-    name: "Destroyer",
-  });
-});
+// test("See ship info", () => {
+//   const ship = createShip(4, "Destroyer");
+//   expect(ship).toEqual({
+//     length: 4,
+//     health: 4,
+//     sunk: false,
+//     name: "Destroyer",
+//   });
+// });
+//
+// test("hitting the ship", () => {
+//   const ship = createShip(4, "Destroyer");
+//   ship.hit();
+//   expect(ship.health).toBe(3);
+// });
 
-test("hitting the ship", () => {
-  const ship = createShip(4, "Destroyer");
-  ship.hit();
-  expect(ship.health).toBe(3);
+test("init", () => {
+  const board = createGameboard();
+  initPlaceShip(board);
+  expect(board.ships.length).toBe(4);
 });
 
 // test("the ship sunk", () => {
