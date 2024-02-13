@@ -27,6 +27,12 @@ const proto = {
       for (let i = x; i < x + length; i++) {
         this.board[i][y] = ship;
         // push ship coordinate to arr
+        for (let node of this.graph[`${i},${y}`]) {
+          let [x, y] = node.split(",");
+          if (this.board[x][y] !== ship) {
+            this.board[x][y] = "disabled";
+          }
+        }
         lsCoord.push({ x: i, y });
       }
       this.ships.push(ship);
@@ -36,15 +42,20 @@ const proto = {
       this.board[x][i] = ship;
       // push ship coordinate to arr
       lsCoord.push({ x, y: i });
+      for (let node of this.graph[`${x},${i}`]) {
+        let [x, y] = node.split(",");
+        if (this.board[x][y] !== ship) {
+          this.board[x][y] = "disabled";
+        }
+      }
     }
     this.ships.push(ship);
     return true;
   },
   isThereAShip(x, y, length, orient) {
     for (let i = 0; i < length; i++) {
-      if (typeof this.board[x][y] === "object") {
-        return true;
-      }
+      if (typeof this.board[x][y] === "object") return true;
+      if (this.board[x][y] === "disabled") return true;
       if (orient === "x") {
         x++;
         continue;
@@ -73,6 +84,7 @@ const proto = {
     let info;
     if (this.isOutside(x, y)) return false;
     if (this.board[x][y] === "hit") return false;
+    if (this.board[x][y] === "disabled") return false;
     if (typeof this.board[x][y] === "object") {
       this.board[x][y].hit();
       info = "hit";
@@ -95,6 +107,37 @@ const proto = {
   },
 };
 
+function createGraph() {
+  let graph = {};
+  for (let x = 0; x < 10; x++) {
+    for (let y = 0; y < 10; y++) {
+      let vertex = returnPossibleMoves(x, y);
+      graph[`${x},${y}`] = vertex;
+    }
+  }
+  return graph;
+}
+
+function returnPossibleMoves(x, y) {
+  let arr = [];
+  arr.push(`${x + 1},${y}`);
+  arr.push(`${x - 1},${y}`);
+  arr.push(`${x},${y + 1}`);
+  arr.push(`${x},${y - 1}`);
+  arr.push(`${x + 1},${y + 1}`);
+  arr.push(`${x + 1},${y - 1}`);
+  arr.push(`${x - 1},${y + 1}`);
+  arr.push(`${x - 1},${y - 1}`);
+
+  return arr.filter((n) => {
+    let coor = n.split(",");
+    if (coor[0] < 10 && coor[0] > -1) {
+      if (coor[1] < 10 && coor[1] > -1) {
+        return true;
+      }
+    }
+  });
+}
 function createBoard() {
   let arr = [];
   for (let i = 0; i < 10; i++) {
@@ -112,6 +155,6 @@ export default function createGameboard() {
   obj.attack = [];
   obj.board = createBoard();
   obj.ships = [];
-  // obj.graph = this.#createGraph();
+  obj.graph = createGraph();
   return obj;
 }
