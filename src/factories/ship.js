@@ -55,14 +55,8 @@ export function initPlaceShip(board) {
 }
 
 function tryPlaceShip(board, ship, moves, orient) {
-  let coordinate = pickCoord(moves, ship.length);
-  let result = board.placeShip(
-    ship.length,
-    orient,
-    coordinate[0],
-    coordinate[1],
-    ship.name,
-  );
+  let [x, y] = pickCoord(moves, ship.length);
+  let result = board.placeShip(ship.length, orient, [x, y], ship.name);
   // randomise the orientation
   if (orient === "x") {
     orient = "y";
@@ -73,7 +67,7 @@ function tryPlaceShip(board, ship, moves, orient) {
   if (!result) {
     return tryPlaceShip(board, ship, moves, orient);
   }
-  return { coordinate, orient };
+  return { coordinate: [x, y], orient };
 }
 
 function pickCoord(moves) {
