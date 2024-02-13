@@ -16,9 +16,12 @@ function renderBoard(board) {
       for (let ship of board.ships) {
         for (let coord of ship.lsCoord) {
           if (x === coord.x && y === coord.y) {
-            tile.classList.add(`${css.ship}`)
+            tile.classList.add(`${css.ship}`);
           }
         }
+      }
+      if (board.board[x][y] === "disabled") {
+        tile.classList.add(`${css.disabled}`);
       }
       document.querySelector(`.${css.board}`).append(tile);
     }
