@@ -21,3 +21,7 @@
 .miss {
   background-color: blue;
 }
+
+.disabled {
+  background-color: pink;
+}
