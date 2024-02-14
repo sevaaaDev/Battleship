@@ -1,8 +1,9 @@
-import { render, renderBoard } from "./DOM/dom";
+import { domHit, domMiss, render, renderBoard, showWinner } from "./DOM/dom";
 import createGameboard from "./factories/gameboard";
 import { createComputer } from "./factories/player";
 import { initPlaceShip } from "./factories/ship";
-
+// TODO add interactivity
+// stop game after game over
 export default function game() {
   const playerBoard = createGameboard();
   const computerBoard = createGameboard();
@@ -10,7 +11,7 @@ export default function game() {
   initPlaceShip(playerBoard);
   initPlaceShip(computerBoard);
   render();
-  renderBoard(computerBoard);
+  renderBoard(computerBoard.board);
   document.addEventListener("click", (e) => {
     if (e.target.matches("button")) {
       playRound(...computer.chooseCoord());
@@ -21,12 +22,27 @@ export default function game() {
     if (!result) {
       return;
     }
+    paintTile(result, x, y);
+    if (computerBoard.areAllSunk()) {
+      // dom stuff
+      showWinner("PLAYER");
+      return;
+    }
     logger(result);
     logger(computerBoard.board);
     logger(computerBoard.ships[0]);
     // const compResult = playerBoard.receiveAttack(computer.chooseCoord());
     // logger(compResult);
     // logger(playerBoard.board);
+  }
+}
+
+function paintTile(result, x, y) {
+  if (result === "missed") {
+    domMiss(x, y);
+  }
+  if (result === "hit") {
+    domHit(x, y);
   }
 }
 
