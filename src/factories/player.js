@@ -15,7 +15,7 @@ export function createComputer() {
 }
 
 function chooseCoord() {
-  const index = Math.floor(Math.random() * this.moves.length - 1);
+  const index = Math.floor(Math.random() * (this.moves.length - 1));
   const coordinate = this.moves[index];
   if (!coordinate) return "finish";
   this.moves.splice(index, 1);
