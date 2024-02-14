@@ -1,4 +1,4 @@
-import { getCoord } from "./gameboard";
+import { getAllCoord } from "./gameboard";
 
 const proto = {
   isSunk: function () {
@@ -46,8 +46,8 @@ function getShipClosure() {
 
 export function initPlaceShip(board) {
   const getShip = getShipClosure();
-  let moves = getCoord();
   for (let i = 0; i < 4; i++) {
+  let moves = getAllCoord();
     const ship = getShip();
     let { coordinate, orient } = tryPlaceShip(board, ship, moves, "x");
     removeCoord(moves, ship.length, coordinate, orient);

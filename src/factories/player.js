@@ -1,14 +1,14 @@
-import { getCoord } from "./gameboard";
+import { getAllCoord } from "./gameboard";
 
 export function createComputer() {
-  let moves = getCoord();
+  let moves = getAllCoord();
   const obj = {
     chooseCoord: chooseCoord,
     get moves() {
       return moves;
     },
     reset() {
-      moves = getCoord();
+      moves = getAllCoord();
     },
   };
   return obj;
