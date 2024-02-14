@@ -77,13 +77,12 @@ const proto = {
     let info;
     if (this.isOutside(x, y)) return false;
     if (this.board[x][y] === "hit") return false;
-    if (this.board[x][y] === "disabled") return false;
     if (typeof this.board[x][y] === "object") {
       this.board[x][y].hit();
       info = "hit";
       this.attack.push({ x, y });
     }
-    if (this.board[x][y] === undefined) {
+    if (this.board[x][y] === undefined || this.board[x][y] === "disabled") {
       info = "missed";
       this.missedAttack.push({ x, y });
     }
