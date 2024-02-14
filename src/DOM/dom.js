@@ -13,14 +13,10 @@ function renderBoard(board) {
       let tile = document.createElement("div");
       tile.setAttribute("data-x", x);
       tile.setAttribute("data-y", y);
-      for (let ship of board.ships) {
-        for (let coord of ship.lsCoord) {
-          if (x === coord.x && y === coord.y) {
-            tile.classList.add(`${css.ship}`);
-          }
-        }
+      if (typeof board[x][y] === "object") {
+        tile.classList.add(`${css.ship}`);
       }
-      if (board.board[x][y] === "disabled") {
+      if (board[x][y] === "disabled") {
         tile.classList.add(`${css.disabled}`);
       }
       document.querySelector(`.${css.board}`).append(tile);
