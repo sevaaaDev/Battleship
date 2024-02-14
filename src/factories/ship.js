@@ -33,11 +33,12 @@ function getShipClosure() {
   return function () {
     let ships = [
       { name: "Carrier", length: 5 },
-      { name: "Destroyer", length: 4 },
-      { name: "Attacker", length: 4 },
+      { name: "Battleship", length: 4 },
+      { name: "Destroyer", length: 3 },
+      { name: "Submarine", length: 3 },
       { name: "Patrol", length: 2 },
     ];
-    if (index > 3) {
+    if (index > ships.length - 1) {
       index = 0;
     }
     return ships[index++];
@@ -46,8 +47,8 @@ function getShipClosure() {
 
 export function initPlaceShip(board) {
   const getShip = getShipClosure();
-  for (let i = 0; i < 4; i++) {
   let moves = getAllCoord();
+  for (let i = 0; i < 5; i++) {
     const ship = getShip();
     let { coordinate, orient } = tryPlaceShip(board, ship, moves, "x");
     removeCoord(moves, ship.length, coordinate, orient);
