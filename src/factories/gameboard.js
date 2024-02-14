@@ -23,34 +23,27 @@ const proto = {
     // create ship obj
     const ship = createShip(length, name, [x, y], orientation, lsCoord);
 
-    if (orientation === "x") {
-      for (let i = x; i < x + length; i++) {
-        this.board[i][y] = ship;
-        // push ship coordinate to arr
-        for (let node of this.graph[`${i},${y}`]) {
-          let [x, y] = node.split(",");
-          if (this.board[x][y] !== ship) {
-            this.board[x][y] = "disabled";
-          }
-        }
-        lsCoord.push({ x: i, y });
-      }
-      this.ships.push(ship);
-      return true;
-    }
-    for (let i = y; i < y + length; i++) {
-      this.board[x][i] = ship;
+    for (let i = 0; i < length; i++) {
+      this.board[x][y] = ship;
       // push ship coordinate to arr
-      lsCoord.push({ x, y: i });
-      for (let node of this.graph[`${x},${i}`]) {
-        let [x, y] = node.split(",");
-        if (this.board[x][y] !== ship) {
-          this.board[x][y] = "disabled";
-        }
+      lsCoord.push({ x, y });
+      this.disableTile([x, y]);
+      if (orientation === "x") {
+        x++;
+        continue;
       }
+      y++;
     }
     this.ships.push(ship);
     return true;
+  },
+  disableTile([x, y]) {
+    for (let node of this.graph[`${x},${y}`]) {
+      let [x, y] = node.split(",");
+      if (typeof this.board[x][y] !== "object") {
+        this.board[x][y] = "disabled";
+      }
+    }
   },
   isThereAShip(x, y, length, orient) {
     for (let i = 0; i < length; i++) {
