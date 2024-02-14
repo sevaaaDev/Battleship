@@ -1,6 +1,6 @@
 import createShip from "./ship";
 
-export function getCoord() {
+export function getAllCoord() {
   let arr = [];
   for (let x = 0; x < 10; x++) {
     for (let y = 0; y < 10; y++) {
