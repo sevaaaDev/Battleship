@@ -3,6 +3,7 @@ function render() {
   const body = document.querySelector("body");
   body.innerHTML = `
 <button>Attack</button type='button'>
+<p class='sign'></p>
 <div class='${css.board}'></div>
 `;
 }
@@ -36,4 +37,9 @@ function domMiss(x, y) {
   tile.classList.add(`${css.miss}`);
 }
 
-export { render, renderBoard, domHit, domMiss };
+function showWinner(winner) {
+  let sign = document.querySelector(`p.sign`);
+  sign.innerText = `${winner} WON`;
+}
+
+export { render, renderBoard, domHit, domMiss, showWinner };
