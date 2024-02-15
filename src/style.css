@@ -25,3 +25,21 @@
 .disabled {
   background-color: pink;
 }
+
+.bigTitle {
+  text-align: center;
+}
+.boardWrapper {
+  display: flex;
+  gap: 1rem;
+}
+.boardsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+}
