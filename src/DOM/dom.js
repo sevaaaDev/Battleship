@@ -50,14 +50,18 @@ function renderBoard(board, user) {
   }
 }
 
-function domHit(x, y) {
-  let tile = document.querySelector(`div[data-x='${x}'][data-y='${y}']`);
+function hit(user, x, y) {
+  let tile = document.querySelector(
+    `div[data-board='${user}'] div[data-x='${x}'][data-y='${y}']`,
+  );
   tile.classList.remove(`${css.ship}`);
   tile.classList.add(`${css.hit}`);
 }
 
-function domMiss(x, y) {
-  let tile = document.querySelector(`div[data-x='${x}'][data-y='${y}']`);
+function miss(user, x, y) {
+  let tile = document.querySelector(
+    `div[data-board='${user}'] div[data-x='${x}'][data-y='${y}']`,
+  );
   tile.classList.remove(`${css.disabled}`);
   tile.classList.add(`${css.miss}`);
 }
