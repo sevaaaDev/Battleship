@@ -1,7 +1,8 @@
-import { domHit, domMiss, render, renderBoard, showWinner } from "./DOM/dom";
+import domStuff from "./DOM/dom";
 import createGameboard from "./factories/gameboard";
 import { createComputer } from "./factories/player";
 import { initPlaceShip } from "./factories/ship";
+import select from "./DOM/selector";
 // TODO add interactivity
 // stop game after game over
 export default function game() {
@@ -10,39 +11,47 @@ export default function game() {
   const computer = createComputer();
   initPlaceShip(playerBoard);
   initPlaceShip(computerBoard);
-  render();
-  renderBoard(computerBoard.board);
-  document.addEventListener("click", (e) => {
-    if (e.target.matches("button")) {
-      playRound(...computer.chooseCoord());
+  domStuff.render();
+  domStuff.renderBoard(playerBoard.board, "player");
+  domStuff.renderBoard(computerBoard.board, "computer");
+  document.addEventListener("click", playRoundHandler);
+  function playRoundHandler(e) {
+    if (e.target.matches("div[data-board='computer'] div")) {
+      let x = e.target.dataset.x;
+      let y = e.target.dataset.y;
+      playRound(x, y);
     }
-  });
+  }
   function playRound(x, y) {
     const result = computerBoard.receiveAttack([x, y]);
     if (!result) {
       return;
     }
-    paintTile(result, x, y);
+    paintTile(result, "computer", x, y);
     if (computerBoard.areAllSunk()) {
-      // dom stuff
-      showWinner("PLAYER");
+      stopGame("Player");
       return;
     }
-    logger(result);
-    logger(computerBoard.board);
-    logger(computerBoard.ships[0]);
-    // const compResult = playerBoard.receiveAttack(computer.chooseCoord());
-    // logger(compResult);
-    // logger(playerBoard.board);
+    const coord = computer.chooseCoord();
+    const compResult = playerBoard.receiveAttack(coord);
+    paintTile(compResult, "player", ...coord);
+    if (playerBoard.areAllSunk()) {
+      stopGame("Computer");
+      return;
+    }
+  }
+  function stopGame(user) {
+    document.removeEventListener("click", playRoundHandler);
+    domStuff.showWinner(user);
   }
 }
 
-function paintTile(result, x, y) {
+function paintTile(result, user, x, y) {
   if (result === "missed") {
-    domMiss(x, y);
+    domStuff.miss(user, x, y);
   }
   if (result === "hit") {
-    domHit(x, y);
+    domStuff.hit(user, x, y);
   }
 }
 
