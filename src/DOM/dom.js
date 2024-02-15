@@ -2,9 +2,34 @@ import css from "../style.css";
 function render() {
   const body = document.querySelector("body");
   body.innerHTML = `
-<button>Attack</button type='button'>
-<p class='sign'></p>
-<div class='${css.board}'></div>
+<main class='${css.container}'>
+  <button type='button'>Attack</button>
+  <h1 class='${css.bigTitle}'>Battleship</h1>
+  <p class='sign'></p>
+  <section class='${css.boardsContainer}'>
+    <section class='${css.boardWrapper}'>
+      <div class='${css.listOfShips}'>
+        <ul>
+          <li>Carrier</li>
+        </ul>
+      </div>
+      <div class='${css.board}' data-board='player'></div>
+    </section>
+    <section class='${css.buttonContainer}'>
+      <button type='button'>Restart</button>
+      <button type='button'>Start</button>
+    </section>
+    <section class='${css.boardWrapper}'>
+      <div class='${css.board}' data-board='computer'></div>
+      <div class='${css.listOfShips}'>
+        <ul>
+          <li>Carrier</li>
+        </ul>
+      </div>
+    </section>
+  </section>
+
+</main>
 `;
 }
 
