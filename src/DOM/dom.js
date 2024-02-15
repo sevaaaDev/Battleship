@@ -1,4 +1,5 @@
 import css from "../style.css";
+
 function render() {
   const body = document.querySelector("body");
   body.innerHTML = `
@@ -71,4 +72,5 @@ function showWinner(winner) {
   sign.innerText = `${winner} WON`;
 }
 
-export { render, renderBoard, domHit, domMiss, showWinner };
+let domStuff = { render, renderBoard, hit, miss, showWinner };
+export default domStuff;
