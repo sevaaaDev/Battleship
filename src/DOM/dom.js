@@ -33,7 +33,7 @@ function render() {
 `;
 }
 
-function renderBoard(board) {
+function renderBoard(board, user) {
   for (let x = 0; x < 10; x++) {
     for (let y = 9; y >= 0; y--) {
       let tile = document.createElement("div");
@@ -45,7 +45,7 @@ function renderBoard(board) {
       if (board[x][y] === "disabled") {
         tile.classList.add(`${css.disabled}`);
       }
-      document.querySelector(`.${css.board}`).append(tile);
+      document.querySelector(`div[data-board="${user}"]`).append(tile);
     }
   }
 }
