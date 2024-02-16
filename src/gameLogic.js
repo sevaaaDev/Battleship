@@ -50,7 +50,7 @@ function paintTile(result, user, x, y) {
   if (result === "missed") {
     domStuff.miss(user, x, y);
   }
-  if (result === "hit") {
+  else if (result === "hit") {
     domStuff.hit(user, x, y);
   }
 }
