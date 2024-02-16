@@ -49,7 +49,9 @@ function renderBoard(board, user) {
         tile.classList.add(`${css.disabled}`);
       }
       //}
-      document.querySelector(`div[data-board="${user}"]`).append(tile);
+      document
+        .querySelector(`div[data-board="${user}"].${css.board}`)
+        .append(tile);
     }
   }
 }
