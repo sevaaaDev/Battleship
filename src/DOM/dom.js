@@ -3,8 +3,10 @@ import css from "../style.css";
 function render() {
   const body = document.querySelector("body");
   body.innerHTML = `
-<main class='${css.container}'>
+<header>
   <h1 class='${css.bigTitle}'>Battleship</h1>
+</header>
+<main class='${css.container}'>
   <p class='sign'></p>
   <section class='${css.boardsContainer}'>
     <section class='${css.boardWrapper}'>
@@ -39,12 +41,14 @@ function renderBoard(board, user) {
       let tile = document.createElement("div");
       tile.setAttribute("data-x", x);
       tile.setAttribute("data-y", y);
+      //if (user === "player") {
       if (typeof board[x][y] === "object") {
         tile.classList.add(`${css.ship}`);
       }
       if (board[x][y] === "disabled") {
         tile.classList.add(`${css.disabled}`);
       }
+      //}
       document.querySelector(`div[data-board="${user}"]`).append(tile);
     }
   }
