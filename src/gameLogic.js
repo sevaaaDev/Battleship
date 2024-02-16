@@ -14,6 +14,8 @@ export default function game() {
   domStuff.render();
   domStuff.renderBoard(playerBoard.board, "player");
   domStuff.renderBoard(computerBoard.board, "computer");
+  domStuff.renderListShip(playerBoard.ships, "player");
+  domStuff.renderListShip(computerBoard.ships, "computer");
   document.addEventListener("click", playRoundHandler);
   function playRoundHandler(e) {
     if (e.target.matches("div[data-board='computer'] div")) {
@@ -28,6 +30,7 @@ export default function game() {
       return;
     }
     paintTile(result, "computer", x, y);
+    domStuff.updateListShip(computerBoard.ships, "computer");
     if (computerBoard.areAllSunk()) {
       stopGame("Player");
       return;
@@ -35,6 +38,7 @@ export default function game() {
     const coord = computer.chooseCoord();
     const compResult = playerBoard.receiveAttack(coord);
     paintTile(compResult, "player", ...coord);
+    domStuff.updateListShip(playerBoard.ships, "player");
     if (playerBoard.areAllSunk()) {
       stopGame("Computer");
       return;
