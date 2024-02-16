@@ -43,3 +43,24 @@
   display: flex;
   flex-direction: column;
 }
+
+.listOfShips {
+  width: 62px;
+}
+
+.listOfShips div {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 3px;
+  height: 10px;
+  margin-bottom: 3px;
+}
+
+.shipSunk .smallTile {
+  background-color: red;
+}
+
+.smallTile {
+  background-color: black;
+  width: 10px;
+}
