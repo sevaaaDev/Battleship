@@ -15,15 +15,12 @@ function render() {
       <div class='${css.board}' data-board='player'></div>
     </section>
     <section class='${css.buttonContainer}'>
-      <button type='button'>Restart</button>
-      <button type='button'>Start</button>
+      <button type='button' data-type='restart'>Restart</button>
+      <button type='button'data-type='start'>Start</button>
     </section>
     <section class='${css.boardWrapper}'>
       <div class='${css.board}' data-board='computer'></div>
       <div class='${css.listOfShips}' data-board='computer'>
-        <ul>
-          <li>Carrier</li>
-        </ul>
       </div>
     </section>
   </section>
