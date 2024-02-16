@@ -26,9 +26,7 @@ export default function game() {
   }
   function playRound(x, y) {
     const result = computerBoard.receiveAttack([x, y]);
-    if (!result) {
-      return;
-    }
+    if (!result) return;
     paintTile(result, "computer", x, y);
     domStuff.updateListShip(computerBoard.ships, "computer");
     if (computerBoard.areAllSunk()) {
@@ -53,8 +51,7 @@ export default function game() {
 function paintTile(result, user, x, y) {
   if (result === "missed") {
     domStuff.miss(user, x, y);
-  }
-  else if (result === "hit") {
+  } else if (result === "hit") {
     domStuff.hit(user, x, y);
   }
 }
