@@ -78,4 +78,31 @@ function showWinner(winner) {
 }
 
 let domStuff = { render, renderBoard, hit, miss, showWinner };
+function renderListShip(ships, user) {
+  const list = document.querySelector(
+    `div[data-board='${user}'].${css.listOfShips}`,
+  );
+  list.innerText = "";
+  for (let ship of ships) {
+    const divShip = document.createElement("div");
+    divShip.setAttribute("data-ship", ship.name);
+    for (let i = 0; i < ship.length; i++) {
+      const smallTile = document.createElement("div");
+      smallTile.classList.add(`${css.smallTile}`);
+      divShip.append(smallTile);
+    }
+    list.append(divShip);
+  }
+}
+
+function updateListShip(ships, user) {
+  for (let ship of ships) {
+    const divShip = document.querySelector(
+      `div[data-board='${user}'] div[data-ship='${ship.name}']`,
+    );
+    if (ship.isSunk()) {
+      divShip.classList.add(`${css.shipSunk}`);
+    }
+  }
+}
 export default domStuff;
