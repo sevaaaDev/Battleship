@@ -17,6 +17,7 @@ export default function game() {
   domStuff.renderListShip(playerBoard.ships, "player");
   domStuff.renderListShip(computerBoard.ships, "computer");
   document.addEventListener("click", playRoundHandler);
+  document.addEventListener("click", restart);
   function playRoundHandler(e) {
     if (e.target.matches("div[data-board='computer'] div")) {
       let x = e.target.dataset.x;
@@ -45,6 +46,21 @@ export default function game() {
   function stopGame(user) {
     document.removeEventListener("click", playRoundHandler);
     domStuff.showWinner(user);
+  }
+
+  function restart(e) {
+    if (e.target.matches("button[data-type='restart']")) {
+      playerBoard.reset();
+      computerBoard.reset();
+      computer.reset();
+      initPlaceShip(playerBoard);
+      initPlaceShip(computerBoard);
+      domStuff.render();
+      domStuff.renderBoard(playerBoard.board, "player");
+      domStuff.renderBoard(computerBoard.board, "computer");
+      domStuff.renderListShip(playerBoard.ships, "player");
+      domStuff.renderListShip(computerBoard.ships, "computer");
+    }
   }
 }
 
