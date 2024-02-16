@@ -10,10 +10,7 @@ function render() {
   <p class='sign'></p>
   <section class='${css.boardsContainer}'>
     <section class='${css.boardWrapper}'>
-      <div class='${css.listOfShips}'>
-        <ul>
-          <li>Carrier</li>
-        </ul>
+      <div class='${css.listOfShips}' data-board='player'>
       </div>
       <div class='${css.board}' data-board='player'></div>
     </section>
@@ -23,7 +20,7 @@ function render() {
     </section>
     <section class='${css.boardWrapper}'>
       <div class='${css.board}' data-board='computer'></div>
-      <div class='${css.listOfShips}'>
+      <div class='${css.listOfShips}' data-board='computer'>
         <ul>
           <li>Carrier</li>
         </ul>
