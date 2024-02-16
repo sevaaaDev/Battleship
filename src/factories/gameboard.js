@@ -97,6 +97,13 @@ const proto = {
     }
     return true;
   },
+  reset() {
+    this.missedAttack = [];
+    this.attack = [];
+    this.board = createBoard();
+    this.ships = [];
+    this.graph = createGraph();
+  },
 };
 
 function createGraph() {
