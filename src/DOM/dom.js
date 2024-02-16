@@ -4,7 +4,6 @@ function render() {
   const body = document.querySelector("body");
   body.innerHTML = `
 <main class='${css.container}'>
-  <button type='button'>Attack</button>
   <h1 class='${css.bigTitle}'>Battleship</h1>
   <p class='sign'></p>
   <section class='${css.boardsContainer}'>
