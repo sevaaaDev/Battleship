@@ -77,7 +77,6 @@ function showWinner(winner) {
   sign.innerText = `${winner} WON`;
 }
 
-let domStuff = { render, renderBoard, hit, miss, showWinner };
 function renderListShip(ships, user) {
   const list = document.querySelector(
     `div[data-board='${user}'].${css.listOfShips}`,
@@ -105,4 +104,13 @@ function updateListShip(ships, user) {
     }
   }
 }
+let domStuff = {
+  render,
+  renderBoard,
+  hit,
+  miss,
+  showWinner,
+  renderListShip,
+  updateListShip,
+};
 export default domStuff;
