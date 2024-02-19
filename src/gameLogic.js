@@ -6,18 +6,15 @@ import select from "./DOM/selector";
 // TODO add interactivity
 // stop game after game over
 export default function game() {
-  const playerBoard = createGameboard();
-  const computerBoard = createGameboard();
-  const computer = createComputer();
+  let playerBoard = createGameboard();
+  let computerBoard = createGameboard();
+  let computer = createComputer();
   initPlaceShip(playerBoard);
   initPlaceShip(computerBoard);
-  domStuff.render();
-  domStuff.renderBoard(playerBoard.board, "player");
-  domStuff.renderBoard(computerBoard.board, "computer");
-  domStuff.renderListShip(playerBoard.ships, "player");
-  domStuff.renderListShip(computerBoard.ships, "computer");
+  renderDom(playerBoard, computerBoard);
   document.addEventListener("click", playRoundHandler);
-  document.addEventListener("click", restart);
+  document.addEventListener("click", resetGame);
+
   function playRoundHandler(e) {
     if (e.target.matches("div[data-board='computer'] div")) {
       let x = e.target.dataset.x;
@@ -25,7 +22,9 @@ export default function game() {
       playRound(x, y);
     }
   }
+
   function playRound(x, y) {
+    // player turn
     const result = computerBoard.receiveAttack([x, y]);
     if (!result) return;
     paintTile(result, "computer", x, y);
@@ -34,6 +33,7 @@ export default function game() {
       stopGame("Player");
       return;
     }
+    // computer turn
     const coord = computer.chooseCoord();
     const compResult = playerBoard.receiveAttack(coord);
     paintTile(compResult, "player", ...coord);
@@ -43,25 +43,31 @@ export default function game() {
       return;
     }
   }
+
   function stopGame(user) {
     document.removeEventListener("click", playRoundHandler);
     domStuff.showWinner(user);
   }
 
-  function restart(e) {
+  function resetGame(e) {
     if (e.target.matches("button[data-type='restart']")) {
-      playerBoard.reset();
-      computerBoard.reset();
-      computer.reset();
+      playerBoard = createGameboard();
+      computerBoard = createGameboard();
+      computer = createComputer();
       initPlaceShip(playerBoard);
       initPlaceShip(computerBoard);
-      domStuff.render();
-      domStuff.renderBoard(playerBoard.board, "player");
-      domStuff.renderBoard(computerBoard.board, "computer");
-      domStuff.renderListShip(playerBoard.ships, "player");
-      domStuff.renderListShip(computerBoard.ships, "computer");
+      renderDom(playerBoard, computerBoard);
+      document.addEventListener("click", playRoundHandler);
     }
   }
+}
+
+function renderDom(playerBoard, computerBoard) {
+  domStuff.render();
+  domStuff.renderBoard(playerBoard.board, "player");
+  domStuff.renderBoard(computerBoard.board, "computer");
+  domStuff.renderListShip(playerBoard.ships, "player");
+  domStuff.renderListShip(computerBoard.ships, "computer");
 }
 
 function paintTile(result, user, x, y) {
