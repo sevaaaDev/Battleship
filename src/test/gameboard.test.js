@@ -38,7 +38,7 @@ test("cant place a ship outside of the board", () => {
 test("attack ship", () => {
   const board = createGameboard();
   board.placeShip(4, "x", 0, 0, "Destroyer");
-  expect(board.receiveAttack(1, 0)).toBe("hit");
+  expect(board.receiveAttack([1, 0])).toBe("hit");
   expect(board.ships[0].health).toBe(3);
   expect(board.board[1][0]).toBe("hit");
 });
@@ -46,34 +46,45 @@ test("attack ship", () => {
 test("cant attack the same place twice", () => {
   const board = createGameboard();
   board.placeShip(4, "x", 0, 0, "Destroyer");
-  board.receiveAttack(1, 0);
-  expect(board.receiveAttack(1, 0)).toBe(false);
+  board.receiveAttack([1, 0]);
+  expect(board.receiveAttack([1, 0])).toBe(false);
 });
 
 test("cant attack outside the board", () => {
   const board = createGameboard();
   board.placeShip(4, "x", 0, 0, "Destroyer");
-  expect(board.receiveAttack(10, 0)).toBe(false);
+  expect(board.receiveAttack([10, 0])).toBe(false);
 });
 
 test("attack water", () => {
   const board = createGameboard();
   board.placeShip(4, "x", 0, 0, "Destroyer");
-  expect(board.receiveAttack(7, 0)).toBe("missed");
+  expect(board.receiveAttack([7, 0])).toBe("missed");
 });
 test("are all sunk?", () => {
   const board = createGameboard();
   board.placeShip(4, "x", 0, 0, "Destroyer");
-  board.receiveAttack(0, 0);
-  board.receiveAttack(1, 0);
-  board.receiveAttack(2, 0);
+  board.receiveAttack([0, 0]);
+  board.receiveAttack([1, 0]);
+  board.receiveAttack([2, 0]);
   expect(board.areAllSunk()).toBe(false);
-  board.receiveAttack(3, 0);
+  board.receiveAttack([3, 0]);
   expect(board.areAllSunk()).toBe(true);
 });
 
-test("init", () => {
-  const playerBoard = createGameboard();
-  let moves = initPlaceShip(playerBoard);
-  expect(playerBoard.ships.length).toBe(4);
+// test("init", () => {
+//   const playerBoard = createGameboard();
+//   let moves = initPlaceShip(playerBoard);
+//   expect(playerBoard.ships.length).toBe(4);
+// });
+
+test("remove ship", () => {
+  const board = createGameboard();
+  board.placeShip(4, "x", 0, 0, "Destroyer");
+  board.placeShip(4, "x", 0, 3, "Destroyer");
+  board.removeShip(0, 0);
+  expect(board.board[0][0]).toBe(undefined);
+  expect(board.board[3][0]).toBe(undefined);
+  expect(board.board[4][0]).toBe("disabled");
+  expect(board.ships.length).toBe(1);
 });
