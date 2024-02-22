@@ -61,6 +61,14 @@ const proto = {
     }
     return false;
   },
+  removeShip(x, y) {
+    let ship = this.board[x][y];
+    for (let coord of ship.lsCoord) {
+      this.board[coord.x][coord.y] = undefined;
+    }
+    let index = this.ships.indexOf(ship);
+    this.ships.splice(index, 1);
+  },
   isOutside(x, y, length, orient) {
     // check if head is outside the board
     if (x < 0 || x > 9 || y < 0 || y > 9) {
