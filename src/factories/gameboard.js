@@ -15,7 +15,7 @@ const proto = {
     if (this.isOutside(x, y, length, orientation)) {
       return;
     }
-    if (this.isThereAShip(x, y, length, orientation)) {
+    if (this.isThereAShip(x, y, length, orientation, name)) {
       return;
     }
     // create arr to hold ship coordinates
@@ -45,10 +45,13 @@ const proto = {
       }
     }
   },
-  isThereAShip(x, y, length, orient) {
+  isThereAShip(x, y, length, orient, shipName) {
     for (let i = 0; i < length; i++) {
-      if (typeof this.board[x][y] === "object") return true;
-      if (this.board[x][y] === "disabled") return true;
+      if (typeof this.board[x][y] === "object") {
+        if (this.board[x][y].name !== shipName) {
+          return true;
+        }
+      }
       if (orient === "x") {
         x++;
         continue;
