@@ -52,6 +52,7 @@ const proto = {
           return true;
         }
       }
+      // if (this.board[x][y] === "disabled") return true;
       if (orient === "x") {
         x++;
         continue;
