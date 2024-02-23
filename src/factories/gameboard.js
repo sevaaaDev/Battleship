@@ -78,11 +78,12 @@ const proto = {
     }
     // check if tail is outside the board
     if (orient === "x") {
-      if (x + length > 9) {
+      if (x + length - 1 > 9) {
         return true;
       }
+      return false;
     }
-    if (y + length > 9) {
+    if (y + length - 1 > 9) {
       return true;
     }
     return false;
