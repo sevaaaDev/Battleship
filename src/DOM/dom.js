@@ -40,6 +40,9 @@ function renderBoard(board, user) {
       let tile = document.createElement("div");
       tile.setAttribute("data-x", x);
       tile.setAttribute("data-y", y);
+      if (user === "player") {
+        tile.setAttribute("data-drop", true);
+      }
       //if (user === "player") {
       if (typeof board[x][y] === "object") {
         tile.classList.add(`${css.ship}`);
