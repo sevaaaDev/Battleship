@@ -11,7 +11,7 @@ export function getAllCoord() {
 }
 
 const proto = {
-  placeShip(length, orientation, x, y, name) {
+  placeShip(length, orientation, x, y, name, ship) {
     if (this.isOutside(x, y, length, orientation)) {
       return;
     }
@@ -21,7 +21,9 @@ const proto = {
     // create arr to hold ship coordinates
     let lsCoord = [];
     // create ship obj
-    const ship = createShip(length, name, [x, y], orientation, lsCoord);
+    if (!ship) {
+      ship = createShip(length, name, [x, y], orientation, lsCoord);
+    }
 
     for (let i = 0; i < length; i++) {
       this.board[x][y] = ship;
