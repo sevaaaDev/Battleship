@@ -31,12 +31,12 @@ function render() {
 }
 
 function renderBoard(board, user) {
-  for (let x = 0; x < 10; x++) {
-    for (let y = 9; y >= 0; y--) {
   let domboard = document.querySelector(
     `div[data-board="${user}"].${css.board}`,
   );
   domboard.innerHTML = "";
+  for (let y = 9; y >= 0; y--) {
+    for (let x = 0; x < 10; x++) {
       let tile = document.createElement("div");
       tile.setAttribute("data-x", x);
       tile.setAttribute("data-y", y);
