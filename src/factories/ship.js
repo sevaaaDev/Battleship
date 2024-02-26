@@ -23,21 +23,13 @@ export default function createShip({ length, name, orient, shipPosition }) {
   return obj;
 }
 
-function holdShipPosition(x, y, orientation, length) {
+export function holdShipPosition(x, y, orientation, length) {
   const position = {};
   position.listCoordinate = [];
   position.head = [x, y];
   position.tail = [x + length - 1, y];
   if (orientation === "y") {
     position.tail = [x, y + length - 1];
-  }
-  for (let i = 0; i < length; i++) {
-    position.listCoordinate.push({ x, y });
-    if (orientation === "x") {
-      x++;
-      continue;
-    }
-    y++;
   }
   return position;
 }
