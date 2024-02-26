@@ -12,20 +12,34 @@ const proto = {
     if (this.health) this.health--;
   },
 };
-export default function createShip(length, name, pos, orient, coord) {
+export default function createShip({ length, name, orient, shipPosition }) {
   const obj = Object.create(proto);
   obj.length = length;
   obj.name = name;
   obj.health = length;
   obj.sunk = false;
-  obj.head = pos;
   obj.orientation = orient;
-  obj.tail = [pos[0], pos[1] + length - 1];
-  if (orient === "x") {
-    obj.tail = [pos[0] + length - 1, pos[1]];
-  }
-  obj.lsCoord = coord;
+  obj.position = shipPosition;
   return obj;
+}
+
+function holdShipPosition(x, y, orientation, length) {
+  const position = {};
+  position.listCoordinate = [];
+  position.head = [x, y];
+  position.tail = [x + length - 1, y];
+  if (orientation === "y") {
+    position.tail = [x, y + length - 1];
+  }
+  for (let i = 0; i < length; i++) {
+    position.listCoordinate.push({ x, y });
+    if (orientation === "x") {
+      x++;
+      continue;
+    }
+    y++;
+  }
+  return position;
 }
 
 function getShipClosure() {
@@ -51,13 +65,14 @@ export function initPlaceShip(board) {
   for (let i = 0; i < 5; i++) {
     const ship = getShip();
     let { coordinate, orient } = tryPlaceShip(board, ship, moves, "x");
-    removeCoord(moves, ship.length, coordinate, orient);
+    removeCoordinate(moves, ship.length, coordinate, orient);
   }
 }
 
 function tryPlaceShip(board, ship, moves, orient) {
-  let [x, y] = pickCoord(moves, ship.length);
-  let result = board.placeShip(ship.length, orient, x, y, ship.name);
+  let [x, y] = pickCoordinate(moves, ship.length);
+  let shipPosition = holdShipPosition(x, y, orient, ship.length);
+  let result = board.placeShip(createShip({ ...ship, shipPosition, orient }));
   // randomise the orientation
   if (orient === "x") {
     orient = "y";
@@ -71,19 +86,25 @@ function tryPlaceShip(board, ship, moves, orient) {
   return { coordinate: [x, y], orient };
 }
 
-function pickCoord(moves) {
+function pickCoordinate(moves) {
   let index = Math.floor(Math.random() * (moves.length - 1));
   let coord = moves[index];
   return coord;
 }
 
-function removeCoord(moves, length, coord, orient) {
-  let copyCoord = coord.slice();
+function removeCoordinate(moves, length, coord, orient) {
+  let copiedCoordinate = coord.slice();
   for (let i = 0; i < length; i++) {
     if (orient === "x") {
-      moves.splice(moves.indexOf([copyCoord[0]++, copyCoord[1]]), 1);
+      moves.splice(
+        moves.indexOf([copiedCoordinate[0]++, copiedCoordinate[1]]),
+        1,
+      );
     } else {
-      moves.splice(moves.indexOf([copyCoord[0], copyCoord[1]++]), 1);
+      moves.splice(
+        moves.indexOf([copiedCoordinate[0], copiedCoordinate[1]++]),
+        1,
+      );
     }
   }
 }
