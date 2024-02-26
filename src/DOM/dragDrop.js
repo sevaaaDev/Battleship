@@ -14,6 +14,8 @@ export function startDrag(e, gameboard, renderBoard) {
     document.removeEventListener("mouseup", endDrag);
   }
   document.addEventListener("mouseup", endDrag);
+  // TODO: support mobile
+  // document.addEventListener('touchend', endDrag)
 }
 
 function drop(currentElement, dropPoint, gameboard) {
@@ -22,17 +24,16 @@ function drop(currentElement, dropPoint, gameboard) {
   let { x, y } = currentElement.dataset;
   let [a, b] = [+dropPoint.dataset.x, +dropPoint.dataset.y];
   let ship = gameboard.board[x][y];
-  let length = ship.length;
+  let length = parseInt(ship.length);
   let orient = ship.orientation;
   let name = ship.name;
   console.log(orient);
-  // check the coordinate
-  if (gameboard.isOutside(+a, +b, +length, orient)) return;
-  console.log("outside");
-  if (gameboard.isThereAShip(+a, +b, +length, orient, name)) return;
-  // remove and place (replace)
-  gameboard.removeShip(+x, +y);
-  // ERROR : ship.lsCoord doesnt get updated, so the ship cant be remove
-  gameboard.placeShip(+length, orient, +a, +b, name, ship);
+  // check the dropPoint coordinate
+  if (gameboard.isOutside(a, b, length, orient)) return;
+  console.log("not outside");
+  if (gameboard.isThereAShip(a, b, length, orient, name)) return;
+  let from = [x, y];
+  let to = [a, b];
+  gameboard.moveShip(from, to, ship);
   console.log(gameboard.ships);
 }
