@@ -1,5 +1,3 @@
-import createShip from "./ship";
-
 export function getAllCoord() {
   let arr = [];
   for (let x = 0; x < 10; x++) {
@@ -11,25 +9,22 @@ export function getAllCoord() {
 }
 
 const proto = {
-  placeShip(length, orientation, x, y, name, ship) {
+  placeShip(ship) {
+    let length = ship.length;
+    let orientation = ship.orientation;
+    let name = ship.name;
+    let [x, y] = ship.position.head;
     if (this.isOutside(x, y, length, orientation)) {
       return;
     }
     if (this.isThereAShip(x, y, length, orientation, name)) {
       return;
     }
-    // create arr to hold ship coordinates
-    let lsCoord = [];
-    // create ship obj
-    if (!ship) {
-      ship = createShip(length, name, [x, y], orientation, lsCoord);
-    }
 
     for (let i = 0; i < length; i++) {
       this.board[x][y] = ship;
       // push ship coordinate to arr
-      lsCoord.push({ x, y });
-      this.disableTile([x, y]);
+      this.disableTile(x, y);
       if (orientation === "x") {
         x++;
         continue;
@@ -39,7 +34,7 @@ const proto = {
     this.ships.push(ship);
     return true;
   },
-  disableTile([x, y]) {
+  disableTile(x, y) {
     for (let node of this.graph[`${x},${y}`]) {
       let [x, y] = node.split(",");
       if (typeof this.board[x][y] !== "object") {
@@ -54,7 +49,7 @@ const proto = {
           return true;
         }
       }
-      // if (this.board[x][y] === "disabled") return true;
+      if (this.board[x][y] === "disabled") return true;
       if (orient === "x") {
         x++;
         continue;
