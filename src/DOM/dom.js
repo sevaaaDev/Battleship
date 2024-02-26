@@ -30,7 +30,7 @@ function render() {
 `;
 }
 
-function renderBoard(board, user) {
+function renderBoard(gameboard, user) {
   let domboard = document.querySelector(
     `div[data-board="${user}"].${css.board}`,
   );
@@ -44,15 +44,15 @@ function renderBoard(board, user) {
         tile.setAttribute("data-drop", true);
       }
       //if (user === "player") {
-      if (typeof board[x][y] === "object") {
+      if (typeof gameboard.board[x][y] === "object") {
         tile.classList.add(`${css.ship}`);
         tile.addEventListener("mousedown", (e) => {
           startDrag(e, gameboard, renderBoard);
         });
       }
-      if (board[x][y] === "disabled") {
-        tile.classList.add(`${css.disabled}`);
-      }
+      // if (board[x][y] === "disabled") {
+      //   tile.classList.add(`${css.disabled}`);
+      // }
       //}
       domboard.append(tile);
     }
