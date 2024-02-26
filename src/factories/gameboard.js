@@ -1,3 +1,4 @@
+import { holdShipPosition } from "./ship";
 export function getAllCoord() {
   let arr = [];
   for (let x = 0; x < 10; x++) {
@@ -14,6 +15,7 @@ const proto = {
     let orientation = ship.orientation;
     let name = ship.name;
     let [x, y] = ship.position.head;
+    let lsCoord = ship.position.listCoordinate;
     if (this.isOutside(x, y, length, orientation)) {
       return;
     }
@@ -24,7 +26,8 @@ const proto = {
     for (let i = 0; i < length; i++) {
       this.board[x][y] = ship;
       // push ship coordinate to arr
-      this.disableTile(x, y);
+      lsCoord.push({ x, y });
+      // this.disableTile(x, y);
       if (orientation === "x") {
         x++;
         continue;
@@ -33,6 +36,16 @@ const proto = {
     }
     this.ships.push(ship);
     return true;
+  },
+  moveShip(from, to, shipObject) {
+    this.removeShip(...from);
+    let newPosition = holdShipPosition(
+      ...to,
+      shipObject.orientation,
+      shipObject.length,
+    );
+    shipObject.position = newPosition;
+    this.placeShip(shipObject);
   },
   disableTile(x, y) {
     for (let node of this.graph[`${x},${y}`]) {
@@ -49,7 +62,7 @@ const proto = {
           return true;
         }
       }
-      if (this.board[x][y] === "disabled") return true;
+      // if (this.board[x][y] === "disabled") return true;
       if (orient === "x") {
         x++;
         continue;
@@ -60,7 +73,7 @@ const proto = {
   },
   removeShip(x, y) {
     let ship = this.board[x][y];
-    for (let coord of ship.lsCoord) {
+    for (let coord of ship.position.listCoordinate) {
       this.board[coord.x][coord.y] = undefined;
     }
     let index = this.ships.indexOf(ship);
