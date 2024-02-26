@@ -3,15 +3,15 @@ import createGameboard from "./factories/gameboard";
 import { createComputer } from "./factories/player";
 import { initPlaceShip } from "./factories/ship";
 import select from "./DOM/selector";
-// TODO add interactivity
-// stop game after game over
 export default function game() {
   let playerBoard = createGameboard();
   let computerBoard = createGameboard();
   let computer = createComputer();
+
   initPlaceShip(playerBoard);
   initPlaceShip(computerBoard);
   renderDom(playerBoard, computerBoard);
+
   document.addEventListener("click", playRoundHandler);
   document.addEventListener("click", resetGame);
 
@@ -64,8 +64,8 @@ export default function game() {
 
 function renderDom(playerBoard, computerBoard) {
   domStuff.render();
-  domStuff.renderBoard(playerBoard.board, "player");
-  domStuff.renderBoard(computerBoard.board, "computer");
+  domStuff.renderBoard(playerBoard, "player");
+  domStuff.renderBoard(computerBoard, "computer");
   domStuff.renderListShip(playerBoard.ships, "player");
   domStuff.renderListShip(computerBoard.ships, "computer");
 }
@@ -76,8 +76,4 @@ function paintTile(result, user, x, y) {
   } else if (result === "hit") {
     domStuff.hit(user, x, y);
   }
-}
-
-export function logger(result) {
-  console.log(result);
 }
