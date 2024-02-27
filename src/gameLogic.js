@@ -4,6 +4,9 @@ import { createComputer } from "./factories/player";
 import { initPlaceShip } from "./factories/ship";
 import select from "./DOM/selector";
 import { startDrag } from "./DOM/dragDrop";
+// TODO: send message to dom (attack, gameover, etc)
+// TODO: hide start button after clicked
+// TODO: make computer smart
 export default function game() {
   let playerBoard = createGameboard();
   let computerBoard = createGameboard();
