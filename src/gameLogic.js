@@ -3,6 +3,7 @@ import createGameboard from "./factories/gameboard";
 import { createComputer } from "./factories/player";
 import { initPlaceShip } from "./factories/ship";
 import select from "./DOM/selector";
+import { startDrag } from "./DOM/dragDrop";
 export default function game() {
   let playerBoard = createGameboard();
   let computerBoard = createGameboard();
@@ -10,10 +11,25 @@ export default function game() {
 
   initPlaceShip(playerBoard);
   initPlaceShip(computerBoard);
+
   renderDom(playerBoard, computerBoard);
 
-  document.addEventListener("click", playRoundHandler);
   document.addEventListener("click", resetGame);
+  document.addEventListener("click", startGame);
+  document.addEventListener("mousedown", dragHandler);
+
+  function dragHandler(e) {
+    if (e.target.matches('[data-ship="true"]')) {
+      startDrag(e, playerBoard, domStuff.renderBoard);
+    }
+  }
+
+  function startGame(e) {
+    if (e.target.matches('button[data-type="start"]')) {
+      document.removeEventListener("mousedown", dragHandler);
+      document.addEventListener("click", playRoundHandler);
+    }
+  }
 
   function playRoundHandler(e) {
     if (e.target.matches("div[data-board='computer'] div")) {
@@ -57,7 +73,8 @@ export default function game() {
       initPlaceShip(playerBoard);
       initPlaceShip(computerBoard);
       renderDom(playerBoard, computerBoard);
-      document.addEventListener("click", playRoundHandler);
+      document.removeEventListener("click", playRoundHandler);
+      document.addEventListener("mousedown", dragHandler);
     }
   }
 }
