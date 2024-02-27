@@ -1,9 +1,15 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 .board {
   width: 300px;
   aspect-ratio: 1/1;
   border: 1px solid black;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
+  box-shadow: 0.3rem 0.3rem 0 black;
 }
 
 .board div {
@@ -28,11 +34,19 @@
 
 .bigTitle {
   text-align: center;
+  margin: 1rem;
 }
-.boardWrapper {
+
+.mainBoardWrapper {
   display: flex;
   gap: 1rem;
 }
+
+.boardName {
+  text-align: center;
+  margin-top: 1rem;
+}
+
 .boardsContainer {
   display: flex;
   align-items: center;
@@ -42,12 +56,30 @@
 .buttonContainer {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  box-shadow: 0.3rem 0.3rem black;
+}
+
+button:active {
+  translate: 0.3rem 0.3rem;
+  box-shadow: 0 0;
 }
 
 .listOfShips {
   width: 62px;
 }
+.listOfShipsLeft,
+.listOfShipsRight {
+  composes: listOfShips;
+}
 
+.listOfShipsRight div {
+  justify-content: left;
+}
 .listOfShips div {
   display: flex;
   flex-direction: row-reverse;
@@ -63,4 +95,11 @@
 .smallTile {
   background-color: black;
   width: 10px;
+}
+
+.messageInfo {
+  border: 2px solid black;
+  text-align: center;
+  padding: 1rem;
+  margin: 1rem 5rem 3rem;
 }

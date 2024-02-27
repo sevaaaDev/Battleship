@@ -8,23 +8,27 @@ function render() {
 </header>
 <main class='${css.container}'>
   <p class='sign'></p>
+  <section class='${css.messageInfo}'>Hell</section>
   <section class='${css.boardsContainer}'>
-    <section class='${css.boardWrapper}'>
-      <div class='${css.listOfShips}' data-board='player'>
-      </div>
-      <div class='${css.board}' data-board='player'></div>
+    <section class='${css.mainBoardWrapper}'>
+        <div class='${css.listOfShipsLeft}' data-board='player'></div>
+      <section class='${css.boardWrapper}'>
+        <div class='${css.board}' data-board='player'></div>
+        <h3 class='${css.boardName}'>PLAYER</h3>
+      </section>
     </section>
     <section class='${css.buttonContainer}'>
       <button type='button' data-type='restart'>Restart</button>
       <button type='button'data-type='start'>Start</button>
     </section>
-    <section class='${css.boardWrapper}'>
-      <div class='${css.board}' data-board='computer'></div>
-      <div class='${css.listOfShips}' data-board='computer'>
-      </div>
+    <section class='${css.mainBoardWrapper}'>
+      <section class='${css.boardWrapper}'>
+        <div class='${css.board}' data-board='computer'></div>
+        <h3 class='${css.boardName}'>COMPUTER</h3>
+      </section>
+        <div class='${css.listOfShipsRight}' data-board='computer'></div>
     </section>
   </section>
-
 </main>
 `;
 }
