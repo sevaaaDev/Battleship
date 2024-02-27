@@ -1,5 +1,4 @@
 import css from "../style.css";
-import { startDrag } from "./dragDrop";
 
 function render() {
   const body = document.querySelector("body");
@@ -46,9 +45,9 @@ function renderBoard(gameboard, user) {
       //if (user === "player") {
       if (typeof gameboard.board[x][y] === "object") {
         tile.classList.add(`${css.ship}`);
-        tile.addEventListener("mousedown", (e) => {
-          startDrag(e, gameboard, renderBoard);
-        });
+        if (user === "player") {
+          tile.setAttribute("data-ship", true);
+        }
       }
       // if (board[x][y] === "disabled") {
       //   tile.classList.add(`${css.disabled}`);
