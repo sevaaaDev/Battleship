@@ -72,6 +72,7 @@ const proto = {
     return false;
   },
   removeShip(x, y) {
+    // TODO: add compatibility with disabled tile
     let ship = this.board[x][y];
     for (let coord of ship.position.listCoordinate) {
       this.board[coord.x][coord.y] = undefined;
