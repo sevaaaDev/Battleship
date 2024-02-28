@@ -16,13 +16,14 @@ const proto = {
     let name = ship.name;
     let [x, y] = ship.position.head;
     let lsCoord = ship.position.listCoordinate;
+    // if u move this to init place ship, it broke [
     if (this.isOutside(x, y, length, orientation)) {
       return;
     }
     if (this.isThereAShip(x, y, length, orientation, name)) {
       return;
     }
-
+    // ]
     for (let i = 0; i < length; i++) {
       this.board[x][y] = ship;
       // push ship coordinate to arr
@@ -39,6 +40,7 @@ const proto = {
   },
   moveShip(from, to, shipObject) {
     this.removeShip(...from);
+    // TODO: change holdshipposition function
     let newPosition = holdShipPosition(
       ...to,
       shipObject.orientation,
@@ -81,6 +83,7 @@ const proto = {
     this.ships.splice(index, 1);
   },
   isOutside(x, y, length, orient) {
+    console.log(x, y);
     // check if head is outside the board
     if (x < 0 || x > 9 || y < 0 || y > 9) {
       return true;
