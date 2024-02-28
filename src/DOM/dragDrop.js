@@ -1,5 +1,5 @@
 export function startDrag(e, gameboard, renderBoard) {
-  e.preventDefault();
+  // e.preventDefault();
   console.log("down");
   let currentElement = e.target;
   // TODO: add animation when dragging
@@ -21,21 +21,16 @@ export function startDrag(e, gameboard, renderBoard) {
 }
 
 function drop(currentElement, dropPoint, gameboard) {
-  console.log(currentElement);
-  console.log(dropPoint);
   let { x, y } = currentElement.dataset;
   let [a, b] = [+dropPoint.dataset.x, +dropPoint.dataset.y];
   let ship = gameboard.board[x][y];
   let length = parseInt(ship.length);
   let orient = ship.orientation;
   let name = ship.name;
-  console.log(orient);
+  let from = [parseInt(x), parseInt(y)];
+  let to = [a, b];
   // check the dropPoint coordinate
   if (gameboard.isOutside(a, b, length, orient)) return;
-  console.log("not outside");
   if (gameboard.isThereAShip(a, b, length, orient, name)) return;
-  let from = [x, y];
-  let to = [a, b];
   gameboard.moveShip(from, to, ship);
-  console.log(gameboard.ships);
 }
