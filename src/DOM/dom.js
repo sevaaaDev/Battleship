@@ -8,7 +8,7 @@ function render() {
 </header>
 <main class='${css.container}'>
   <p class='sign'></p>
-  <section class='${css.messageInfo}'>Hell</section>
+  <section class='${css.messageInfo}'><p></p></section>
   <section class='${css.boardsContainer}'>
     <section class='${css.mainBoardWrapper}'>
         <div class='${css.listOfShipsLeft}' data-board='player'></div>
@@ -87,7 +87,7 @@ function miss(user, x, y) {
 }
 
 function showWinner(winner) {
-  let sign = document.querySelector(`p.sign`);
+  let sign = document.querySelector(`section.${css.messageInfo} p`);
   sign.innerText = `${winner} WON`;
 }
 
