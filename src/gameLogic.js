@@ -4,8 +4,7 @@ import { createComputer } from "./factories/player";
 import { initPlaceShip } from "./factories/ship";
 import select from "./DOM/selector";
 import { startDrag } from "./DOM/dragDrop";
-// TODO: send message to dom (attack, gameover, etc)
-// TODO: hide start button after clicked
+import { rotateShip } from "./DOM/rotateShip";
 // TODO: make computer smart
 export default function game() {
   let playerBoard = createGameboard();
@@ -20,7 +19,18 @@ export default function game() {
   document.addEventListener("click", resetGame);
   document.addEventListener("click", startGame);
   document.addEventListener("mousedown", dragHandler);
+  // TODO: buggy mouseup event
+  document.addEventListener("mouseup", rotateShipHandler);
 
+  function rotateShipHandler(e) {
+    if (e.target.matches('[data-ship="true"]')) {
+      let x = +e.target.dataset.x;
+      let y = +e.target.dataset.y;
+      if (rotateShip(x, y, playerBoard)) {
+        domStuff.renderBoard(playerBoard, "player");
+      }
+    }
+  }
   function dragHandler(e) {
     if (e.target.matches('[data-ship="true"]')) {
       startDrag(e, playerBoard, domStuff.renderBoard);
@@ -30,7 +40,10 @@ export default function game() {
   function startGame(e) {
     if (e.target.matches('button[data-type="start"]')) {
       document.removeEventListener("mousedown", dragHandler);
+      document.removeEventListener("mouseup", rotateShipHandler);
       document.addEventListener("click", playRoundHandler);
+      e.target.remove();
+      domStuff.renderButton("restart");
     }
   }
 
@@ -78,6 +91,7 @@ export default function game() {
       renderDom(playerBoard, computerBoard);
       document.removeEventListener("click", playRoundHandler);
       document.addEventListener("mousedown", dragHandler);
+      document.addEventListener("mouseup", rotateShipHandler);
     }
   }
 }
