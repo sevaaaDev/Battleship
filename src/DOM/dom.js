@@ -18,7 +18,6 @@ function render() {
       </section>
     </section>
     <section class='${css.buttonContainer}'>
-      <button type='button' data-type='restart'>Restart</button>
       <button type='button'data-type='start'>Start</button>
     </section>
     <section class='${css.mainBoardWrapper}'>
@@ -31,6 +30,15 @@ function render() {
   </section>
 </main>
 `;
+}
+
+function renderButton(type) {
+  const container = document.querySelector(`.${css.buttonContainer}`);
+  const btn = document.createElement("button");
+  btn.setAttribute("type", "button");
+  btn.setAttribute("data-type", type);
+  btn.innerText = type[0].toUpperCase().concat(type.slice(1));
+  container.append(btn);
 }
 
 function renderBoard(gameboard, user) {
@@ -118,5 +126,6 @@ let domStuff = {
   showWinner,
   renderListShip,
   updateListShip,
+  renderButton,
 };
 export default domStuff;
