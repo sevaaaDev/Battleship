@@ -1,8 +1,8 @@
-import render from "./View/dom";
+import render from "../View/dom";
 import updateDom from "../View/updateDom";
-import createGameboard from "./factories/gameboard";
-import { createComputer } from "./factories/player";
-import { initPlaceShip } from "./factories/ship";
+import createGameboard from "../Model/gameboard";
+import { createComputer } from "../Model/player";
+import { initPlaceShip } from "../Model/ship";
 import { startDrag } from "./dragDrop";
 import { rotateShip } from "./rotateShip";
 // import select from "./DOM/selector";
