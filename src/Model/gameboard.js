@@ -16,19 +16,20 @@ const proto = {
     let name = ship.name;
     let [x, y] = ship.position.head;
     let lsCoord = ship.position.listCoordinate;
-    // if u move this to init place ship, it broke [
+    // FIX: if u move this to init place ship, it broke [
     if (this.isOutside(x, y, length, orientation)) {
       return;
     }
     if (this.isThereAShip(x, y, length, orientation, name)) {
       return;
     }
-    // ]
+    if (this.isTooCloseToOtherShip(x, y, length, orientation, name)) {
+      return;
+    }
     for (let i = 0; i < length; i++) {
       this.board[x][y] = ship;
       // push ship coordinate to arr
       lsCoord.push({ x, y });
-      // this.disableTile(x, y);
       if (orientation === "x") {
         x++;
         continue;
@@ -49,22 +50,34 @@ const proto = {
     shipObject.position = newPosition;
     this.placeShip(shipObject);
   },
-  disableTile(x, y) {
-    for (let node of this.graph[`${x},${y}`]) {
-      let [x, y] = node.split(",");
-      if (typeof this.board[x][y] !== "object") {
-        this.board[x][y] = "disabled";
-      }
-    }
-  },
-  isThereAShip(x, y, length, orient, shipName) {
+  isTooCloseToOtherShip(x, y, length, orientation, name) {
+    // TODO: refactor this
     for (let i = 0; i < length; i++) {
-      if (typeof this.board[x][y] === "object") {
-        if (this.board[x][y].name !== shipName) {
+      for (let node of this.graph[`${x},${y}`]) {
+        let [a, b] = node.split(",");
+        if (
+          typeof this.board[a][b] === "object" &&
+          this.board[a][b].name !== name
+        ) {
           return true;
         }
       }
-      // if (this.board[x][y] === "disabled") return true;
+      if (orientation === "x") {
+        x++;
+        continue;
+      }
+      y++;
+    }
+    return false;
+  },
+  isThereAShip(x, y, length, orient, shipName) {
+    for (let i = 0; i < length; i++) {
+      if (
+        typeof this.board[x][y] === "object" &&
+        this.board[x][y].name !== shipName
+      ) {
+        return true;
+      }
       if (orient === "x") {
         x++;
         continue;
@@ -74,7 +87,6 @@ const proto = {
     return false;
   },
   removeShip(x, y) {
-    // TODO: add compatibility with disabled tile
     let ship = this.board[x][y];
     for (let coord of ship.position.listCoordinate) {
       this.board[coord.x][coord.y] = undefined;
@@ -83,7 +95,6 @@ const proto = {
     this.ships.splice(index, 1);
   },
   isOutside(x, y, length, orient) {
-    console.log(x, y);
     // check if head is outside the board
     if (x < 0 || x > 9 || y < 0 || y > 9) {
       return true;
@@ -109,7 +120,7 @@ const proto = {
       info = "hit";
       this.attack.push({ x, y });
     }
-    if (this.board[x][y] === undefined || this.board[x][y] === "disabled") {
+    if (this.board[x][y] === undefined) {
       info = "missed";
       this.missedAttack.push({ x, y });
     }

@@ -25,12 +25,14 @@ function drop(currentElement, dropPoint, gameboard) {
   let [a, b] = [+dropPoint.dataset.x, +dropPoint.dataset.y];
   let ship = gameboard.board[x][y];
   let length = parseInt(ship.length);
-  let orient = ship.orientation;
+  let orientation = ship.orientation;
   let name = ship.name;
   let from = [parseInt(x), parseInt(y)];
   let to = [a, b];
   // check the dropPoint coordinate
-  if (gameboard.isOutside(a, b, length, orient)) return;
-  if (gameboard.isThereAShip(a, b, length, orient, name)) return;
+  if (gameboard.isOutside(a, b, length, orientation)) return;
+  if (gameboard.isThereAShip(a, b, length, orientation, name)) return;
+  if (gameboard.isTooCloseToOtherShip(a, b, length, orientation, name)) return;
+
   gameboard.moveShip(from, to, ship);
 }
