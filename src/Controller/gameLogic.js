@@ -1,11 +1,13 @@
-import domStuff from "./DOM/dom";
+import render from "./View/dom";
+import updateDom from "../View/updateDom";
 import createGameboard from "./factories/gameboard";
 import { createComputer } from "./factories/player";
 import { initPlaceShip } from "./factories/ship";
-import select from "./DOM/selector";
-import { startDrag } from "./DOM/dragDrop";
-import { rotateShip } from "./DOM/rotateShip";
+import { startDrag } from "./dragDrop";
+import { rotateShip } from "./rotateShip";
+// import select from "./DOM/selector";
 // TODO: make computer smart
+// TODO: Change Dir structure
 export default function game() {
   let playerBoard = createGameboard();
   let computerBoard = createGameboard();
@@ -19,7 +21,7 @@ export default function game() {
   document.addEventListener("click", resetGame);
   document.addEventListener("click", startGame);
   document.addEventListener("mousedown", dragHandler);
-  // TODO: buggy mouseup event
+  // FIX: buggy mouseup event
   document.addEventListener("mouseup", rotateShipHandler);
 
   function rotateShipHandler(e) {
@@ -27,13 +29,13 @@ export default function game() {
       let x = +e.target.dataset.x;
       let y = +e.target.dataset.y;
       if (rotateShip(x, y, playerBoard)) {
-        domStuff.renderBoard(playerBoard, "player");
+        render.board(playerBoard, "player");
       }
     }
   }
   function dragHandler(e) {
     if (e.target.matches('[data-ship="true"]')) {
-      startDrag(e, playerBoard, domStuff.renderBoard);
+      startDrag(e, playerBoard, render.board);
     }
   }
 
@@ -43,7 +45,7 @@ export default function game() {
       document.removeEventListener("mouseup", rotateShipHandler);
       document.addEventListener("click", playRoundHandler);
       e.target.remove();
-      domStuff.renderButton("restart");
+      render.button("restart");
     }
   }
 
@@ -59,8 +61,8 @@ export default function game() {
     // player turn
     const result = computerBoard.receiveAttack([x, y]);
     if (!result) return;
-    paintTile(result, "computer", x, y);
-    domStuff.updateListShip(computerBoard.ships, "computer");
+    updateDom.tile(result, "computer", x, y);
+    updateDom.listOfShips(computerBoard.ships, "computer");
     if (computerBoard.areAllSunk()) {
       stopGame("Player");
       return;
@@ -68,8 +70,8 @@ export default function game() {
     // computer turn
     const coord = computer.chooseCoord();
     const compResult = playerBoard.receiveAttack(coord);
-    paintTile(compResult, "player", ...coord);
-    domStuff.updateListShip(playerBoard.ships, "player");
+    updateDom.tile(compResult, "player", ...coord);
+    updateDom.listOfShips(playerBoard.ships, "player");
     if (playerBoard.areAllSunk()) {
       stopGame("Computer");
       return;
@@ -78,7 +80,7 @@ export default function game() {
 
   function stopGame(user) {
     document.removeEventListener("click", playRoundHandler);
-    domStuff.showWinner(user);
+    render.winner(user);
   }
 
   function resetGame(e) {
@@ -97,17 +99,9 @@ export default function game() {
 }
 
 function renderDom(playerBoard, computerBoard) {
-  domStuff.render();
-  domStuff.renderBoard(playerBoard, "player");
-  domStuff.renderBoard(computerBoard, "computer");
-  domStuff.renderListShip(playerBoard.ships, "player");
-  domStuff.renderListShip(computerBoard.ships, "computer");
-}
-
-function paintTile(result, user, x, y) {
-  if (result === "missed") {
-    domStuff.miss(user, x, y);
-  } else if (result === "hit") {
-    domStuff.hit(user, x, y);
-  }
+  render.html();
+  render.board(playerBoard, "player");
+  render.board(computerBoard, "computer");
+  render.listOfShips(playerBoard.ships, "player");
+  render.listOfShips(computerBoard.ships, "computer");
 }

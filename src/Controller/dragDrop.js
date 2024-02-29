@@ -3,6 +3,7 @@ export function startDrag(e, gameboard, renderBoard) {
   console.log("down");
   let currentElement = e.target;
   // TODO: add animation when dragging
+
   // function moveHandler(e) {}
   // document.addEventListener("mousemove", moveHandler);
   function endDrag(e) {
@@ -10,7 +11,6 @@ export function startDrag(e, gameboard, renderBoard) {
     let dropPoint = document.elementFromPoint(e.pageX, e.pageY);
     if (dropPoint.dataset.drop) {
       drop(currentElement, dropPoint, gameboard);
-      // TODO: there might be a better solution to re-render the board
       renderBoard(gameboard, "player");
     }
     document.removeEventListener("mouseup", endDrag);

@@ -185,6 +185,6 @@
 //
 // showStartMenu();
 
-import game from "./gameLogic";
+import game from "./Controller/gameLogic";
 
 game();

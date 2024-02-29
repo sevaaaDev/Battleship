@@ -1,6 +1,6 @@
 import css from "../style.css";
 
-function render() {
+function html() {
   const body = document.querySelector("body");
   body.innerHTML = `
 <header>
@@ -8,7 +8,7 @@ function render() {
 </header>
 <main class='${css.container}'>
   <p class='sign'></p>
-  <section class='${css.messageInfo}'><p></p></section>
+  <section class='${css.messageInfo}'><p>MOVE/ROTATE SHIP</p></section>
   <section class='${css.boardsContainer}'>
     <section class='${css.mainBoardWrapper}'>
         <div class='${css.listOfShipsLeft}' data-board='player'></div>
@@ -32,7 +32,7 @@ function render() {
 `;
 }
 
-function renderButton(type) {
+function button(type) {
   const container = document.querySelector(`.${css.buttonContainer}`);
   const btn = document.createElement("button");
   btn.setAttribute("type", "button");
@@ -41,7 +41,7 @@ function renderButton(type) {
   container.append(btn);
 }
 
-function renderBoard(gameboard, user) {
+function board(gameboard, user) {
   let domboard = document.querySelector(
     `div[data-board="${user}"].${css.board}`,
   );
@@ -70,28 +70,7 @@ function renderBoard(gameboard, user) {
   }
 }
 
-function hit(user, x, y) {
-  let tile = document.querySelector(
-    `div[data-board='${user}'] div[data-x='${x}'][data-y='${y}']`,
-  );
-  tile.classList.remove(`${css.ship}`);
-  tile.classList.add(`${css.hit}`);
-}
-
-function miss(user, x, y) {
-  let tile = document.querySelector(
-    `div[data-board='${user}'] div[data-x='${x}'][data-y='${y}']`,
-  );
-  tile.classList.remove(`${css.disabled}`);
-  tile.classList.add(`${css.miss}`);
-}
-
-function showWinner(winner) {
-  let sign = document.querySelector(`section.${css.messageInfo} p`);
-  sign.innerText = `${winner} WON`;
-}
-
-function renderListShip(ships, user) {
+function listOfShips(ships, user) {
   const list = document.querySelector(
     `div[data-board='${user}'].${css.listOfShips}`,
   );
@@ -108,24 +87,16 @@ function renderListShip(ships, user) {
   }
 }
 
-function updateListShip(ships, user) {
-  for (let ship of ships) {
-    const divShip = document.querySelector(
-      `div[data-board='${user}'] div[data-ship='${ship.name}']`,
-    );
-    if (ship.isSunk()) {
-      divShip.classList.add(`${css.shipSunk}`);
-    }
-  }
+function winner(winner) {
+  let sign = document.querySelector(`section.${css.messageInfo} p`);
+  sign.innerText = `${winner} WON`;
 }
-let domStuff = {
-  render,
-  renderBoard,
-  hit,
-  miss,
-  showWinner,
-  renderListShip,
-  updateListShip,
-  renderButton,
+
+let render = {
+  html,
+  board,
+  listOfShips,
+  button,
+  winner,
 };
-export default domStuff;
+export default render;
