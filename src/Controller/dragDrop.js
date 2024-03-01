@@ -1,19 +1,21 @@
 export function startDrag(e, gameboard, renderBoard) {
   // e.preventDefault();
-  console.log("down");
   let currentElement = e.target;
-  // TODO: add animation when dragging
-
-  // function moveHandler(e) {}
-  // document.addEventListener("mousemove", moveHandler);
+  let isDragged = false;
+  // TODO: add animation while dragging
+  function dragging(e) {
+    isDragged = true;
+  }
+  document.addEventListener("mouseover", dragging);
   function endDrag(e) {
-    console.log("up");
+    document.removeEventListener("mouseover", dragging);
+    document.removeEventListener("mouseup", endDrag);
     let dropPoint = document.elementFromPoint(e.pageX, e.pageY);
+    if (!isDragged) return;
     if (dropPoint.dataset.drop) {
       drop(currentElement, dropPoint, gameboard);
       renderBoard(gameboard, "player");
     }
-    document.removeEventListener("mouseup", endDrag);
   }
   document.addEventListener("mouseup", endDrag);
   // TODO: support mobile

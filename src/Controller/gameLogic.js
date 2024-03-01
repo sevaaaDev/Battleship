@@ -21,8 +21,7 @@ export default function game() {
   document.addEventListener("click", resetGame);
   document.addEventListener("click", startGame);
   document.addEventListener("mousedown", dragHandler);
-  // FIX: buggy mouseup event
-  document.addEventListener("mouseup", rotateShipHandler);
+  document.addEventListener("click", rotateShipHandler);
 
   function rotateShipHandler(e) {
     if (e.target.matches('[data-ship="true"]')) {
