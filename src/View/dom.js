@@ -1,4 +1,5 @@
 import css from "../style.css";
+// TODO: responsive design
 
 function html() {
   const body = document.querySelector("body");

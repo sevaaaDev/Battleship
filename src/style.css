@@ -51,11 +51,14 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  /* TODO: make start button move to middle on mobile */
+  flex-wrap: wrap;
 }
 
 .buttonContainer {
   display: flex;
   flex-direction: column;
+  flex-shrink: 4;
   gap: 1rem;
 }
 
