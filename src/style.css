@@ -3,10 +3,11 @@
   margin: 0;
   box-sizing: border-box;
 }
+
 .board {
   width: 300px;
   aspect-ratio: 1/1;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   box-shadow: 0.3rem 0.3rem 0 black;
@@ -53,6 +54,18 @@
   justify-content: space-evenly;
   /* TODO: make start button move to middle on mobile */
   flex-wrap: wrap;
+}
+
+/* HACK: fix mobile layout */
+@media (max-width: 820px) {
+  .boardsContainer {
+    gap: 1rem;
+    flex-direction: column;
+  }
+
+  .listOfShips {
+    display: none;
+  }
 }
 
 .buttonContainer {
