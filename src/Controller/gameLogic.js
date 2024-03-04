@@ -18,10 +18,22 @@ export default function game() {
 
   renderDom(playerBoard, computerBoard);
 
+  let playerBoardDom = document.querySelector(
+    'section section section div[data-board="player"]',
+  );
   document.addEventListener("click", resetGame);
   document.addEventListener("click", startGame);
   document.addEventListener("mousedown", dragHandler);
+  document.addEventListener("touchstart", dragHandler, { passive: false });
   document.addEventListener("click", rotateShipHandler);
+  // HACK: disable scroll while dragging
+  // TODO: find a better way to disable scroll
+  playerBoardDom.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+  });
+  // playerBoardDom
+  //   .querySelector("div")
+  //   .addEventListener("touchstart", dragHandler);
 
   function rotateShipHandler(e) {
     if (e.target.matches('[data-ship="true"]')) {
@@ -34,6 +46,8 @@ export default function game() {
   }
   function dragHandler(e) {
     if (e.target.matches('[data-ship="true"]')) {
+      // FIX: rotate ship won't work on mobile, because click event is not fired
+      e.preventDefault();
       startDrag(e, playerBoard, render.board);
     }
   }
@@ -41,7 +55,7 @@ export default function game() {
   function startGame(e) {
     if (e.target.matches('button[data-type="start"]')) {
       document.removeEventListener("mousedown", dragHandler);
-      document.removeEventListener("mouseup", rotateShipHandler);
+      document.removeEventListener("click", rotateShipHandler);
       document.addEventListener("click", playRoundHandler);
       e.target.remove();
       render.button("restart");
@@ -92,7 +106,7 @@ export default function game() {
       renderDom(playerBoard, computerBoard);
       document.removeEventListener("click", playRoundHandler);
       document.addEventListener("mousedown", dragHandler);
-      document.addEventListener("mouseup", rotateShipHandler);
+      document.addEventListener("click", rotateShipHandler);
     }
   }
 }
