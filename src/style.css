@@ -22,6 +22,10 @@
   touch-action: none;
 }
 
+.drag {
+  background-color: grey;
+}
+
 .hit {
   background-color: red;
 }
