@@ -7,7 +7,6 @@ import { startDrag } from "./dragDrop";
 import { rotateShip } from "./rotateShip";
 // import select from "./DOM/selector";
 // TODO: make computer smart
-// TODO: Change Dir structure
 export default function game() {
   let playerBoard = createGameboard();
   let computerBoard = createGameboard();
@@ -23,15 +22,9 @@ export default function game() {
   );
   document.addEventListener("click", resetGame);
   document.addEventListener("click", startGame);
-  document.addEventListener("mousedown", dragHandler);
-  document.addEventListener("touchstart", dragHandler, { passive: false });
+  document.addEventListener("pointerdown", dragHandler, { passive: false });
   document.addEventListener("click", rotateShipHandler);
-  // HACK: disable scroll while dragging
-  // TODO: find a better way to disable scroll
-  playerBoardDom.addEventListener("touchmove", (e) => {
-    e.preventDefault();
-  });
-  // playerBoardDom
+  // playerBoardDo
   //   .querySelector("div")
   //   .addEventListener("touchstart", dragHandler);
 
@@ -46,15 +39,14 @@ export default function game() {
   }
   function dragHandler(e) {
     if (e.target.matches('[data-ship="true"]')) {
-      // FIX: rotate ship won't work on mobile, because click event is not fired
-      e.preventDefault();
+      e.target.releasePointerCapture(e.pointerId);
       startDrag(e, playerBoard, render.board);
     }
   }
 
   function startGame(e) {
     if (e.target.matches('button[data-type="start"]')) {
-      document.removeEventListener("mousedown", dragHandler);
+      document.removeEventListener("pointerdown", dragHandler);
       document.removeEventListener("click", rotateShipHandler);
       document.addEventListener("click", playRoundHandler);
       e.target.remove();
@@ -105,7 +97,7 @@ export default function game() {
       initPlaceShip(computerBoard);
       renderDom(playerBoard, computerBoard);
       document.removeEventListener("click", playRoundHandler);
-      document.addEventListener("mousedown", dragHandler);
+      document.addEventListener("pointerdown", dragHandler);
       document.addEventListener("click", rotateShipHandler);
     }
   }
