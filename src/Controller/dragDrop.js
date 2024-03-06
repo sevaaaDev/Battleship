@@ -3,16 +3,14 @@ export function startDrag(e, gameboard, renderBoard) {
   let currentElement = e.target;
   let isDragged = false;
   let dropPoint;
-  // TODO: add animation while dragging
-
-  function draggingMobile(e) {
+  function dragging(e) {
     e.preventDefault();
-    console.log(e.target);
     isDragged = true;
     animateDrag(e, currentElement, gameboard);
   }
   function endDrag(e) {
-    document.removeEventListener("pointerover", draggingMobile);
+    document.removeEventListener("pointerover", dragging);
+    document.removeEventListener("pointercancel", cancel);
     dropPoint = e.target;
     if (!isDragged) return;
     if (dropPoint.dataset.drop) {
@@ -20,8 +18,13 @@ export function startDrag(e, gameboard, renderBoard) {
       renderBoard(gameboard, "player");
     }
   }
-  document.addEventListener("pointerover", draggingMobile, { passive: false });
+
+  function cancel() {
+    document.removeEventListener("pointerover", dragging);
+  }
+  document.addEventListener("pointerover", dragging, { passive: false });
   document.addEventListener("pointerup", endDrag, { once: true });
+  document.addEventListener("pointercancel", cancel, { once: true });
 }
 
 function animateDrag(e, currentElement, gameboard) {
@@ -92,6 +95,9 @@ function drop(currentElement, dropPoint, gameboard) {
   let { x, y } = currentElement.dataset;
   let [a, b] = [+dropPoint.dataset.x, +dropPoint.dataset.y];
   let ship = gameboard.board[x][y];
+  if (!ship) {
+    return;
+  }
   let length = parseInt(ship.length);
   let orientation = ship.orientation;
   let name = ship.name;
