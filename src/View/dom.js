@@ -1,5 +1,4 @@
 import css from "../style.css";
-// TODO: responsive design
 
 function html() {
   const body = document.querySelector("body");
@@ -9,8 +8,7 @@ function html() {
 </header>
 <main class='${css.container}'>
   <section class='${css.messageInfo}'>
-    <p>Drag ship to move</p>
-    <p>Click ship to rotate</p>
+    <p>Drag ship to move <br> Click ship to rotate</p>
   </section>
   <section class='${css.boardsContainer}'>
     <section class='${css.mainBoardWrapper}'>
@@ -89,16 +87,10 @@ function listOfShips(ships, user) {
   }
 }
 
-function winner(winner) {
-  let sign = document.querySelector(`section.${css.messageInfo} p`);
-  sign.innerText = `${winner} WON`;
-}
-
 let render = {
   html,
   board,
   listOfShips,
   button,
-  winner,
 };
 export default render;
