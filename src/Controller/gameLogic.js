@@ -17,16 +17,10 @@ export default function game() {
 
   renderDom(playerBoard, computerBoard);
 
-  let playerBoardDom = document.querySelector(
-    'section section section div[data-board="player"]',
-  );
   document.addEventListener("click", resetGame);
   document.addEventListener("click", startGame);
   document.addEventListener("pointerdown", dragHandler, { passive: false });
   document.addEventListener("click", rotateShipHandler);
-  // playerBoardDo
-  //   .querySelector("div")
-  //   .addEventListener("touchstart", dragHandler);
 
   function rotateShipHandler(e) {
     if (e.target.matches('[data-ship="true"]')) {
@@ -49,12 +43,15 @@ export default function game() {
       document.removeEventListener("pointerdown", dragHandler);
       document.removeEventListener("click", rotateShipHandler);
       document.addEventListener("click", playRoundHandler);
+      updateDom.removeCursorDrag();
+      updateDom.removeDisplayNone();
       e.target.remove();
       render.button("restart");
     }
   }
 
   function playRoundHandler(e) {
+    console.log("s");
     if (e.target.matches("div[data-board='computer'] div")) {
       let x = e.target.dataset.x;
       let y = e.target.dataset.y;
