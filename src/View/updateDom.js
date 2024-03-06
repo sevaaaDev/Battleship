@@ -32,9 +32,27 @@ function listOfShips(ships, user) {
     }
   }
 }
+
+function removeDisplayNone() {
+  let nones = document.querySelectorAll(`[style='display:none']`);
+  nones.forEach((none) => {
+    none.removeAttribute("style");
+  });
+}
+
+function removeCursorDrag() {
+  let ships = document.querySelectorAll(
+    `div[data-board='player'] div.${css.ship}`,
+  );
+  ships.forEach((ship) => {
+    ship.classList.remove(`${css.allowDrag}`);
+  });
+}
 const updateDom = {
   tile,
   listOfShips,
+  removeCursorDrag,
+  removeDisplayNone,
 };
 
 export default updateDom;
