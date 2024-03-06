@@ -8,26 +8,25 @@ function html() {
   <h1 class='${css.bigTitle}'>Battleship</h1>
 </header>
 <main class='${css.container}'>
-  <p class='sign'></p>
   <section class='${css.messageInfo}'><p>MOVE/ROTATE SHIP</p></section>
   <section class='${css.boardsContainer}'>
     <section class='${css.mainBoardWrapper}'>
-        <div class='${css.listOfShipsLeft}' data-board='player'></div>
+        <div class='${css.listOfShipsLeft}' data-board='player' style='display:none'></div>
       <section class='${css.boardWrapper}'>
         <div class='${css.board}' data-board='player'></div>
         <h3 class='${css.boardName}'>PLAYER</h3>
       </section>
     </section>
-    <section class='${css.buttonContainer}'>
-      <button type='button'data-type='start'>Start</button>
-    </section>
-    <section class='${css.mainBoardWrapper}'>
+    <section class='${css.mainBoardWrapper}' style='display:none'>
       <section class='${css.boardWrapper}'>
         <div class='${css.board}' data-board='computer'></div>
         <h3 class='${css.boardName}'>COMPUTER</h3>
       </section>
-        <div class='${css.listOfShipsRight}' data-board='computer'></div>
+        <div class='${css.listOfShipsRight}' data-board='computer' style='display:none'></div>
     </section>
+  </section>
+  <section class='${css.buttonContainer}'>
+    <button type='button'data-type='start'>Start</button>
   </section>
 </main>
 `;
@@ -55,17 +54,16 @@ function board(gameboard, user) {
       if (user === "player") {
         tile.setAttribute("data-drop", true);
       }
+      // NOTE: uncomment this
+
       //if (user === "player") {
       if (typeof gameboard.board[x][y] === "object") {
         tile.classList.add(`${css.ship}`);
+        tile.classList.add(`${css.allowDrag}`);
         if (user === "player") {
           tile.setAttribute("data-ship", true);
         }
       }
-      // if (board[x][y] === "disabled") {
-      //   tile.classList.add(`${css.disabled}`);
-      // }
-      //}
       domboard.append(tile);
     }
   }
