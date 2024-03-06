@@ -13,7 +13,7 @@ export function rotateShip(x, y, gameboard) {
   if (gameboard.isThereAShip(...coord, length, orientation, ship.name))
     return false;
 
-  if (gameboard.isTooCloseToOtherShip(x, y, length, orientation, ship.name))
+  if (gameboard.isTooCloseToOtherShip(...coord, length, orientation, ship.name))
     return false;
 
   ship.orientation = orientation;
