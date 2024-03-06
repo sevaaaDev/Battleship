@@ -33,6 +33,11 @@ function listOfShips(ships, user) {
   }
 }
 
+function messageInfo(message) {
+  let msgInfo = document.querySelector(`.${css.messageInfo}`);
+  msgInfo.innerText = message;
+}
+
 function removeDisplayNone() {
   let nones = document.querySelectorAll(`[style='display:none']`);
   nones.forEach((none) => {
@@ -53,6 +58,7 @@ const updateDom = {
   listOfShips,
   removeCursorDrag,
   removeDisplayNone,
+  messageInfo,
 };
 
 export default updateDom;

@@ -45,13 +45,13 @@ export default function game() {
       document.addEventListener("click", playRoundHandler);
       updateDom.removeCursorDrag();
       updateDom.removeDisplayNone();
+      updateDom.messageInfo("Your Turn");
       e.target.remove();
       render.button("restart");
     }
   }
 
   function playRoundHandler(e) {
-    console.log("s");
     if (e.target.matches("div[data-board='computer'] div")) {
       let x = e.target.dataset.x;
       let y = e.target.dataset.y;
@@ -60,6 +60,7 @@ export default function game() {
   }
 
   function playRound(x, y) {
+    // TODO: add async effect
     // player turn
     const result = computerBoard.receiveAttack([x, y]);
     if (!result) return;
