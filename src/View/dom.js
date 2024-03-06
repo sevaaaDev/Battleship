@@ -8,7 +8,10 @@ function html() {
   <h1 class='${css.bigTitle}'>Battleship</h1>
 </header>
 <main class='${css.container}'>
-  <section class='${css.messageInfo}'><p>MOVE/ROTATE SHIP</p></section>
+  <section class='${css.messageInfo}'>
+    <p>Drag ship to move</p>
+    <p>Click ship to rotate</p>
+  </section>
   <section class='${css.boardsContainer}'>
     <section class='${css.mainBoardWrapper}'>
         <div class='${css.listOfShipsLeft}' data-board='player' style='display:none'></div>
