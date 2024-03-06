@@ -34,7 +34,7 @@ function listOfShips(ships, user) {
 }
 
 function messageInfo(message) {
-  let msgInfo = document.querySelector(`.${css.messageInfo}`);
+  let msgInfo = document.querySelector(`.${css.messageInfo} p`);
   msgInfo.innerText = message;
 }
 
