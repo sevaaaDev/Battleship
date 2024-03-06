@@ -83,7 +83,7 @@ export default function game() {
 
   function stopGame(user) {
     document.removeEventListener("click", playRoundHandler);
-    render.winner(user);
+    updateDom.messageInfo(`${user} Won`);
   }
 
   function resetGame(e) {
