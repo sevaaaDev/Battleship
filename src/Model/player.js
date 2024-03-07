@@ -46,6 +46,7 @@ let proto = {
   },
   smartAttack() {
     let nextMove = [...this.previousMove];
+    // TODO: create the algorithm
     if (nextMove[0] + 1 <= 9 && nextMove[0] + 1 >= 0) {
       nextMove[0]++;
       let index = this.getCoordinateIndex(...nextMove);
