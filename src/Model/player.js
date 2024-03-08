@@ -3,8 +3,8 @@ import { getAllCoord } from "./gameboard";
 let proto = {
   chooseCoord() {
     let [coordinate, index] = this.attackRandom();
-    if (this.isPreviousMoveHit) {
-      [coordinate, index] = this.smartAttack();
+    if (this.isPreviousMoveHit || this.stack.length !== 0) {
+      [coordinate, index] = this.smartAttack(this.isPreviousMoveHit);
     }
     if (index === -1) {
       [coordinate, index] = this.attackRandom();
@@ -12,6 +12,30 @@ let proto = {
     this.moves.splice(index, 1);
     this.previousMove = coordinate;
     return coordinate;
+  },
+  smartAttack(hit) {
+    // TODO: make the y axis version
+    if (hit === true) {
+      let left = [...this.previousMove];
+      left[0]--;
+      if (left[0] <= 9 && left[0] >= 0) {
+        this.stack.push(left);
+      }
+      let right = [...this.previousMove];
+      right[0]++;
+      if (right[0] <= 9 && right[0] >= 0) {
+        this.stack.push(right);
+      }
+    }
+    let nextMove = this.stack.pop();
+    while (nextMove && !this.checkCoordinate(...nextMove)) {
+      nextMove = this.stack.pop();
+    }
+    if (nextMove === undefined) {
+      return [nextMove, -1];
+    }
+    let index = this.getCoordinateIndex(...nextMove);
+    return [nextMove, index];
   },
   attackRandom() {
     const index = Math.floor(Math.random() * (this.moves.length - 1));
@@ -44,16 +68,6 @@ let proto = {
     });
     return status;
   },
-  smartAttack() {
-    let nextMove = [...this.previousMove];
-    // TODO: create the algorithm
-    if (nextMove[0] + 1 <= 9 && nextMove[0] + 1 >= 0) {
-      nextMove[0]++;
-      let index = this.getCoordinateIndex(...nextMove);
-      return [nextMove, index];
-    }
-    return [undefined, -1];
-  },
 };
 
 export function createComputer() {
@@ -64,6 +78,7 @@ export function createComputer() {
     },
     isPreviousMoveHit: null,
     previousMove: null,
+    stack: [],
     reset() {
       moves = getAllCoord();
     },

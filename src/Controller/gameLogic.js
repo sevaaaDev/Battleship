@@ -73,6 +73,9 @@ export default function game() {
     // computer turn
     const coord = computer.chooseCoord();
     const compResult = playerBoard.receiveAttack(coord);
+    computer.changePreviousMoveStatus(compResult);
+    console.log(computer.isPreviousMoveHit);
+    console.log(coord);
     updateDom.tile(compResult, "player", ...coord);
     updateDom.listOfShips(playerBoard.ships, "player");
     if (playerBoard.areAllSunk()) {
