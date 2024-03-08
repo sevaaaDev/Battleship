@@ -14,13 +14,13 @@ function html() {
     <section class='${css.mainBoardWrapper}'>
         <div class='${css.listOfShipsLeft}' data-board='player' style='display:none'></div>
       <section class='${css.boardWrapper}'>
-        <div class='${css.board}' data-board='player'></div>
+        <div class='${css.board}' data-board='player' ondragstart="() => false"></div>
         <h3 class='${css.boardName}'>PLAYER</h3>
       </section>
     </section>
     <section class='${css.mainBoardWrapper}' style='display:none'>
       <section class='${css.boardWrapper}'>
-        <div class='${css.board}' data-board='computer'></div>
+        <div class='${css.board}' data-board='computer' ondragstart="() => false"></div>
         <h3 class='${css.boardName}'>COMPUTER</h3>
       </section>
         <div class='${css.listOfShipsRight}' data-board='computer' style='display:none'></div>
@@ -52,6 +52,7 @@ function board(gameboard, user) {
       let tile = document.createElement("div");
       tile.setAttribute("data-x", x);
       tile.setAttribute("data-y", y);
+      tile.ondragstart = () => false;
       if (user === "player") {
         tile.setAttribute("data-drop", true);
       }
