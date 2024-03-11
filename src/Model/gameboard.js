@@ -16,7 +16,7 @@ const proto = {
     let name = ship.name;
     let [x, y] = ship.position.head;
     let lsCoord = ship.position.listCoordinate;
-    // FIX: if u move this to init place ship, it broke [
+    // WARN: if u move this to init place ship, it broke [
     if (this.isOutside(x, y, length, orientation)) {
       return;
     }
@@ -128,12 +128,28 @@ const proto = {
     return info;
   },
   areAllSunk() {
-    for (let ship of this.ships) {
-      if (!ship.isSunk()) {
-        return false;
-      }
+    let numOfSunkShip = this.checkShip();
+    if (this.ships.length - numOfSunkShip) {
+      return false;
     }
     return true;
+  },
+  thisShipSunk() {
+    let numOfSunkShip = this.checkShip();
+    if (this.numOfSunkShip !== numOfSunkShip) {
+      this.numOfSunkShip = numOfSunkShip;
+      return true;
+    }
+    return false;
+  },
+  checkShip() {
+    let numOfSunkShip = 0;
+    for (let ship of this.ships) {
+      if (ship.isSunk()) {
+        numOfSunkShip++;
+      }
+    }
+    return numOfSunkShip;
   },
   reset() {
     this.missedAttack = [];
@@ -192,6 +208,7 @@ export default function createGameboard() {
   obj.attack = [];
   obj.board = createBoard();
   obj.ships = [];
+  obj.numOfSunkShip = 0;
   obj.graph = createGraph();
   return obj;
 }
