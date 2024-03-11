@@ -3,8 +3,12 @@ import { getAllCoord } from "./gameboard";
 let proto = {
   chooseCoord() {
     let [coordinate, index] = this.attackRandom();
+    console.log(this.isPreviousShipSunk);
     if (this.isPreviousMoveHit || this.stack.length !== 0) {
-      [coordinate, index] = this.smartAttack(this.isPreviousMoveHit);
+      [coordinate, index] = this.smartAttack(
+        this.isPreviousMoveHit,
+        this.previousMove,
+      );
     }
     if (index === -1) {
       [coordinate, index] = this.attackRandom();
@@ -13,24 +17,26 @@ let proto = {
     this.previousMove = coordinate;
     return coordinate;
   },
-  smartAttack(hit) {
+  smartAttack(hit, previousMove) {
     // TODO: make the y axis version
+    if (this.isPreviousShipSunk) {
+      this.stack = [];
+      return [undefined, -1];
+    }
     if (hit === true) {
-      let left = [...this.previousMove];
+      let left = [...previousMove];
       left[0]--;
-      if (left[0] <= 9 && left[0] >= 0) {
+      if (this.checkCoordinate(...left)) {
         this.stack.push(left);
       }
-      let right = [...this.previousMove];
+      let right = [...previousMove];
       right[0]++;
-      if (right[0] <= 9 && right[0] >= 0) {
+      if (this.checkCoordinate(...right)) {
         this.stack.push(right);
       }
     }
     let nextMove = this.stack.pop();
-    while (nextMove && !this.checkCoordinate(...nextMove)) {
-      nextMove = this.stack.pop();
-    }
+    console.log(this.stack);
     if (nextMove === undefined) {
       return [nextMove, -1];
     }
@@ -68,6 +74,10 @@ let proto = {
     });
     return status;
   },
+
+  changePreviousShipStatus(status) {
+    this.isPreviousShipSunk = status;
+  },
 };
 
 export function createComputer() {
@@ -79,6 +89,7 @@ export function createComputer() {
     isPreviousMoveHit: null,
     previousMove: null,
     stack: [],
+    isPreviousShipSunk: false,
     reset() {
       moves = getAllCoord();
     },
