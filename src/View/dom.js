@@ -58,12 +58,13 @@ function board(gameboard, user) {
       }
       // NOTE: uncomment this
 
-      //if (user === "player") {
-      if (typeof gameboard.board[x][y] === "object") {
-        tile.classList.add(`${css.ship}`);
-        tile.classList.add(`${css.allowDrag}`);
-        if (user === "player") {
-          tile.setAttribute("data-ship", true);
+      if (user === "player") {
+        if (typeof gameboard.board[x][y] === "object") {
+          tile.classList.add(`${css.ship}`);
+          tile.classList.add(`${css.allowDrag}`);
+          if (user === "player") {
+            tile.setAttribute("data-ship", true);
+          }
         }
       }
       domboard.append(tile);
