@@ -3,8 +3,10 @@ import { getAllCoord } from "./gameboard";
 let proto = {
   chooseCoord() {
     let [coordinate, index] = this.attackRandom();
-    console.log(this.isPreviousShipSunk);
-    if (this.isPreviousMoveHit || this.stack.length !== 0) {
+    if (
+      this.isPreviousMoveHit ||
+      this.stack["x"].length + this.stack["y"].length !== 0
+    ) {
       [coordinate, index] = this.smartAttack(
         this.isPreviousMoveHit,
         this.previousMove,
@@ -18,25 +20,41 @@ let proto = {
     return coordinate;
   },
   smartAttack(hit, previousMove) {
-    // TODO: make the y axis version
     if (this.isPreviousShipSunk) {
-      this.stack = [];
+      this.attackDirection = "x";
+      this.stack["x"] = [];
+      this.stack["y"] = [];
       return [undefined, -1];
     }
-    if (hit === true) {
-      let left = [...previousMove];
-      left[0]--;
-      if (this.checkCoordinate(...left)) {
-        this.stack.push(left);
-      }
-      let right = [...previousMove];
-      right[0]++;
-      if (this.checkCoordinate(...right)) {
-        this.stack.push(right);
-      }
+    if (!hit && this.stack["x"].length === 0) {
+      this.attackDirection = "y";
     }
-    let nextMove = this.stack.pop();
-    console.log(this.stack);
+    if (!this.stack["y"].length && this.attackDirection !== "y") {
+      this.fillStackQueue("y", previousMove);
+    }
+    if (hit === true) {
+      this.fillStackQueue(this.attackDirection, previousMove);
+    }
+    return this.getSmartMove(this.attackDirection);
+  },
+  fillStackQueue(direction, previousMove) {
+    let i = 0;
+    if (direction === "y") {
+      i = 1;
+    }
+    let one = [...previousMove];
+    one[i]--;
+    if (this.checkCoordinate(...one)) {
+      this.stack[direction].push(one);
+    }
+    let two = [...previousMove];
+    two[i]++;
+    if (this.checkCoordinate(...two)) {
+      this.stack[direction].push(two);
+    }
+  },
+  getSmartMove(direction) {
+    let nextMove = this.stack[direction].pop();
     if (nextMove === undefined) {
       return [nextMove, -1];
     }
@@ -88,7 +106,8 @@ export function createComputer() {
     },
     isPreviousMoveHit: null,
     previousMove: null,
-    stack: [],
+    stack: { x: [], y: [] },
+    attackDirection: "x",
     isPreviousShipSunk: false,
     reset() {
       moves = getAllCoord();
