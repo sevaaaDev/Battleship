@@ -15,7 +15,7 @@ export function startDrag(e, gameboard, renderBoard) {
     if (!isDragged) return;
     if (dropPoint.dataset.drop) {
       drop(currentElement, dropPoint, gameboard);
-      renderBoard(gameboard, "player");
+      renderBoard(gameboard, "player", true);
     }
   }
 

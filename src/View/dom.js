@@ -42,7 +42,7 @@ function button(type) {
   container.append(btn);
 }
 
-function board(gameboard, user) {
+function board(gameboard, user, showShip) {
   let domboard = document.querySelector(
     `div[data-board="${user}"].${css.board}`,
   );
@@ -56,16 +56,23 @@ function board(gameboard, user) {
       if (user === "player") {
         tile.setAttribute("data-drop", true);
       }
-      // NOTE: uncomment this
-
-      if (user === "player") {
-        if (typeof gameboard.board[x][y] === "object") {
+      if (typeof gameboard.board[x][y] === "object") {
+        if (showShip) {
           tile.classList.add(`${css.ship}`);
+        }
+        if (user === "player") {
           tile.classList.add(`${css.allowDrag}`);
+          // NOTE: dunno why i wrote this
           if (user === "player") {
             tile.setAttribute("data-ship", true);
           }
         }
+      }
+      if (gameboard.board[x][y] === "missed") {
+        tile.classList.add(`${css.miss}`);
+      }
+      if (gameboard.board[x][y] === "hit") {
+        tile.classList.add(`${css.hit}`);
       }
       domboard.append(tile);
     }

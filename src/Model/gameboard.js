@@ -119,12 +119,13 @@ const proto = {
       this.board[x][y].hit();
       info = "hit";
       this.attack.push({ x, y });
+      this.board[x][y] = "hit";
     }
     if (this.board[x][y] === undefined) {
       info = "missed";
       this.missedAttack.push({ x, y });
+      this.board[x][y] = "missed";
     }
-    this.board[x][y] = "hit";
     return info;
   },
   areAllSunk() {
