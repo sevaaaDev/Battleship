@@ -18,8 +18,11 @@ function miss(user, x, y) {
 function tile(result, user, x, y) {
   if (result === "missed") {
     miss(user, x, y);
-  } else if (result === "hit") {
+    return;
+  }
+  if (result === "hit") {
     hit(user, x, y);
+    return;
   }
 }
 function listOfShips(ships, user) {
@@ -33,6 +36,16 @@ function listOfShips(ships, user) {
   }
 }
 
+function info(result) {
+  if (result === "missed") {
+    messageInfo("You fired a shot and misses");
+    return;
+  }
+  if (result === "hit") {
+    messageInfo("You fired a shot and its a hit");
+    return;
+  }
+}
 function messageInfo(message) {
   let msgInfo = document.querySelector(`.${css.messageInfo} p`);
   msgInfo.innerText = message;
@@ -59,6 +72,7 @@ const updateDom = {
   removeCursorDrag,
   removeDisplayNone,
   messageInfo,
+  info,
 };
 
 export default updateDom;

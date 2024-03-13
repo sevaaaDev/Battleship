@@ -7,6 +7,7 @@ import { startDrag } from "./dragDrop";
 import { rotateShip } from "./rotateShip";
 // import select from "./DOM/selector";
 // TODO: make computer smart
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 export default function game() {
   let playerBoard = createGameboard();
   let computerBoard = createGameboard();
@@ -27,7 +28,7 @@ export default function game() {
       let x = +e.target.dataset.x;
       let y = +e.target.dataset.y;
       if (rotateShip(x, y, playerBoard)) {
-        render.board(playerBoard, "player");
+        render.board(playerBoard, "player", true);
       }
     }
   }
@@ -51,41 +52,54 @@ export default function game() {
     }
   }
 
-  function playRoundHandler(e) {
+  async function playRoundHandler(e) {
     if (e.target.matches("div[data-board='computer'] div")) {
       let x = e.target.dataset.x;
       let y = e.target.dataset.y;
-      playRound(x, y);
+      await playRound(x, y);
     }
   }
 
-  function playRound(x, y) {
-    // TODO: add async effect
+  async function playRound(x, y) {
+    // TODO: find a way to tell that a ship has been sunk
     // player turn
     const result = computerBoard.receiveAttack([x, y]);
     if (!result) return;
     updateDom.tile(result, "computer", x, y);
+    if (computerBoard.thisShipSunk()) {
+      updateDom.messageInfo("One of enemy's ship has been sunk");
+    }
     updateDom.listOfShips(computerBoard.ships, "computer");
     if (computerBoard.areAllSunk()) {
       stopGame("Player");
       return;
     }
+
+    document.removeEventListener("click", playRoundHandler);
+    await sleep(500);
     // computer turn
     const coord = computer.chooseCoord();
     const compResult = playerBoard.receiveAttack(coord);
     computer.changePreviousMoveStatus(compResult);
-    computer.changePreviousShipStatus(playerBoard.thisShipSunk());
+    computer.changePreviousShipStatus(false);
+    if (playerBoard.thisShipSunk()) {
+      computer.changePreviousShipStatus(true);
+      updateDom.messageInfo("One of your ship has been sunk");
+    }
+    updateDom.tile("aim", "player", ...coord);
     updateDom.tile(compResult, "player", ...coord);
     updateDom.listOfShips(playerBoard.ships, "player");
     if (playerBoard.areAllSunk()) {
       stopGame("Computer");
       return;
     }
+    document.addEventListener("click", playRoundHandler);
   }
 
   function stopGame(user) {
     document.removeEventListener("click", playRoundHandler);
     updateDom.messageInfo(`${user} Won`);
+    render.board(computerBoard, "computer", true);
   }
 
   function resetGame(e) {
@@ -105,8 +119,8 @@ export default function game() {
 
 function renderDom(playerBoard, computerBoard) {
   render.html();
-  render.board(playerBoard, "player");
-  render.board(computerBoard, "computer");
+  render.board(playerBoard, "player", true);
+  render.board(computerBoard, "computer", false);
   render.listOfShips(playerBoard.ships, "player");
   render.listOfShips(computerBoard.ships, "computer");
 }
