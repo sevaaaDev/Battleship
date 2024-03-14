@@ -11,14 +11,14 @@ function html() {
     <p>Drag ship to move <br> Click ship to rotate</p>
   </section>
   <section class='${css.boardsContainer}'>
-    <section class='${css.mainBoardWrapper}'>
+    <section class='${css.mainBoardWrapper}' data-board='player'>
         <div class='${css.listOfShipsLeft}' data-board='player' style='display:none'></div>
       <section class='${css.boardWrapper}'>
         <div class='${css.board}' data-board='player' ondragstart="() => false"></div>
         <h3 class='${css.boardName}'>PLAYER</h3>
       </section>
     </section>
-    <section class='${css.mainBoardWrapper}' style='display:none'>
+    <section class='${css.mainBoardWrapper}' data-board='computer' style='display:none'>
       <section class='${css.boardWrapper}'>
         <div class='${css.board}' data-board='computer' ondragstart="() => false"></div>
         <h3 class='${css.boardName}'>COMPUTER</h3>

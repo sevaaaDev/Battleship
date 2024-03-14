@@ -54,6 +54,9 @@
   cursor: move;
 }
 
+.dim {
+  opacity: 0.5;
+}
 .drag {
   background-color: grey;
 }
@@ -78,6 +81,7 @@
 .mainBoardWrapper {
   display: flex;
   gap: 1rem;
+  font-family: "Orbitron";
 }
 
 .boardName {
@@ -104,6 +108,7 @@
   margin: 1rem 0;
 }
 .buttonContainer button {
+  font-family: "Orbitron";
   display: inline-block;
   margin-inline: auto;
 }
@@ -151,7 +156,9 @@ button:active {
   border: 2px solid black;
   text-align: center;
   padding: 1rem;
-  margin: 0rem 5rem 2rem;
+  width: 90%;
+  margin: 2rem auto;
+  max-width: 1000px;
 }
 
 .messageInfo p {

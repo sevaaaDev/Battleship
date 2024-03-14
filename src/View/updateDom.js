@@ -36,6 +36,31 @@ function listOfShips(ships, user) {
   }
 }
 
+function toggleDimBoard(name) {
+  let board = document.querySelector(
+    `section[data-board='${name}'].${css.mainBoardWrapper}`,
+  );
+  dimBoard(board);
+  if (name === "player") {
+    let enemyBoard = document.querySelector(
+      `section[data-board='computer'].${css.mainBoardWrapper}`,
+    );
+    undimBoard(enemyBoard);
+    return;
+  }
+  let enemyBoard = document.querySelector(
+    `section[data-board='player'].${css.mainBoardWrapper}`,
+  );
+  undimBoard(enemyBoard);
+}
+
+function dimBoard(board) {
+  board.classList.add(`${css.dim}`);
+}
+function undimBoard(board) {
+  board.classList.remove(`${css.dim}`);
+}
+
 function info(result) {
   if (result === "missed") {
     messageInfo("You fired a shot and misses");
@@ -73,6 +98,7 @@ const updateDom = {
   removeDisplayNone,
   messageInfo,
   info,
+  toggleDimBoard,
 };
 
 export default updateDom;

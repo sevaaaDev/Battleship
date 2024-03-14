@@ -63,11 +63,13 @@ export default function game() {
   async function playRound(x, y) {
     // TODO: find a way to tell that a ship has been sunk
     // player turn
+    document.removeEventListener("click", playRoundHandler);
     const result = computerBoard.receiveAttack([x, y]);
     if (!result) return;
     updateDom.tile(result, "computer", x, y);
     if (computerBoard.thisShipSunk()) {
-      updateDom.messageInfo("One of enemy's ship has been sunk");
+      updateDom.messageInfo("Enemy's ship has been sunk");
+      await sleep(1200);
     }
     updateDom.listOfShips(computerBoard.ships, "computer");
     if (computerBoard.areAllSunk()) {
@@ -75,24 +77,27 @@ export default function game() {
       return;
     }
 
-    document.removeEventListener("click", playRoundHandler);
-    await sleep(500);
+    updateDom.messageInfo("Computer Turn");
+    updateDom.toggleDimBoard("computer");
+    await sleep(1000);
     // computer turn
     const coord = computer.chooseCoord();
     const compResult = playerBoard.receiveAttack(coord);
     computer.changePreviousMoveStatus(compResult);
     computer.changePreviousShipStatus(false);
+    updateDom.tile(compResult, "player", ...coord);
     if (playerBoard.thisShipSunk()) {
       computer.changePreviousShipStatus(true);
-      updateDom.messageInfo("One of your ship has been sunk");
+      updateDom.messageInfo("Your ship has been sunk");
+      await sleep(1200);
     }
-    updateDom.tile("aim", "player", ...coord);
-    updateDom.tile(compResult, "player", ...coord);
     updateDom.listOfShips(playerBoard.ships, "player");
     if (playerBoard.areAllSunk()) {
       stopGame("Computer");
       return;
     }
+    updateDom.messageInfo("Your Turn");
+    updateDom.toggleDimBoard("player");
     document.addEventListener("click", playRoundHandler);
   }
 
