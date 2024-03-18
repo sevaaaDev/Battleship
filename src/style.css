@@ -31,7 +31,6 @@
   width: 80vw;
   max-width: 375px;
   aspect-ratio: 1/1;
-  /* border: 1px solid black; */
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   box-shadow: 0.3rem 0.3rem 0 black;

@@ -20,6 +20,8 @@ let proto = {
     return coordinate;
   },
   smartAttack(hit, previousMove) {
+    // TODO: create the smarter computer
+    // remove ship gaps from moves, so it will never hit it
     if (this.isPreviousShipSunk) {
       this.attackDirection = "x";
       this.stack["x"] = [];
@@ -60,6 +62,10 @@ let proto = {
     }
     let index = this.getCoordinateIndex(...nextMove);
     return [nextMove, index];
+  },
+  removeMove(move) {
+    let index = this.getCoordinateIndex(...move);
+    this.moves.splice(index, 1);
   },
   attackRandom() {
     const index = Math.floor(Math.random() * (this.moves.length - 1));
