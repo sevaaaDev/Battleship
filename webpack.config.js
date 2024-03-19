@@ -1,14 +1,16 @@
 const path = require("path");
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
-  mode: "production",
+  mode: "development",
   entry: "./src/index.js",
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
   },
+  devtool: "inline-source-map",
   devServer: {
     watchFiles: ["dist/**/*"],
   },
@@ -24,7 +26,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          devMode ? "style-loader" : MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
             options: {
