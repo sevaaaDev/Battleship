@@ -1,11 +1,6 @@
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
 /* protest-guerrilla-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: "Protest Guerrilla";
   font-style: normal;
   font-weight: 400;
@@ -20,7 +15,20 @@
   src: url("./fonts/orbitron-v31-latin-500.woff2") format("woff2");
 }
 
-/* TODO: change font family */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --dark-color: #222;
+  --light-color: #eee;
+}
+
+body {
+  background-color: var(--light-color);
+}
 .container {
   width: 90%;
   margin-inline: auto;
@@ -31,9 +39,11 @@
   width: 80vw;
   max-width: 375px;
   aspect-ratio: 1/1;
+  border: 2px solid var(--dark-color);
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  box-shadow: 0.3rem 0.3rem 0 black;
+  gap: 1px;
+  padding: 3px;
 }
 
 .board[data-board="computer"] {
@@ -41,40 +51,7 @@
 }
 
 .board div {
-  border: 1px solid black;
-}
-
-.ship {
-  background: black;
-  touch-action: none;
-}
-
-.allowDrag {
-  cursor: move;
-}
-
-.dim {
-  opacity: 0.5;
-}
-.drag {
-  background-color: grey;
-}
-
-.hit {
-  background-color: red;
-  cursor: not-allowed;
-}
-
-.miss {
-  background-color: blue;
-  cursor: not-allowed;
-}
-
-.bigTitle {
-  font-family: "Protest Guerrilla";
-  font-size: 3.5rem;
-  text-align: center;
-  margin: 1rem;
+  border: 1px solid var(--dark-color);
 }
 
 .mainBoardWrapper {
@@ -114,7 +91,7 @@
 
 button {
   padding: 0.5rem 1rem;
-  box-shadow: 0.3rem 0.3rem black;
+  box-shadow: 0.3rem 0.3rem var(--dark-color);
 }
 
 button:active {
@@ -122,6 +99,7 @@ button:active {
   box-shadow: 0 0;
 }
 
+/* list of ship */
 .listOfShips {
   width: 62px;
 }
@@ -146,20 +124,56 @@ button:active {
 }
 
 .smallTile {
-  background-color: black;
+  background-color: var(--dark-color);
   width: 10px;
 }
 
+/* message */
+
 .messageInfo {
   font-family: Orbitron;
-  border: 2px solid black;
+  border: 2px solid var(--dark-color);
   text-align: center;
   padding: 1rem;
   width: 90%;
-  margin: 2rem auto;
+  margin: 1rem auto 2rem;
   max-width: 1000px;
 }
 
 .messageInfo p {
   font-size: max(0.8rem, min(2vw, 1rem));
+}
+
+/* Looks */
+
+.ship {
+  background: var(--dark-color);
+  touch-action: none;
+}
+
+.allowDrag {
+  cursor: move;
+}
+
+.dim {
+  opacity: 0.5;
+}
+.drag {
+  background-color: grey;
+}
+
+.hit {
+  background-color: red;
+  cursor: not-allowed;
+}
+
+.miss {
+  background-color: blue;
+  cursor: not-allowed;
+}
+.bigTitle {
+  font-family: "Protest Guerrilla";
+  font-size: 3.5rem;
+  text-align: center;
+  margin: 1rem;
 }
