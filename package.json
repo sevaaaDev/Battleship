@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest",
     "build": "webpack",
-    "server": "webpack serve --no-hot"
+    "server": "webpack serve --no-hot",
     "page" : "git subtree push --prefix dist origin gh-pages"
   },
   "keywords": [],
