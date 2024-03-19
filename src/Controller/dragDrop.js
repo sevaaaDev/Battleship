@@ -39,6 +39,8 @@ function animateDrag(e, currentElement, gameboard) {
   let name = ship.name;
   let orientation = ship.orientation;
   // TODO: refactor this mess
+  //
+  // prev coord is outside the board, so technically it doesnt exist
   if (!isNaN(previousX)) {
     if (!gameboard.isOutside(previousX, previousY, length, orientation)) {
       resetTileColor(previousX, previousY, length, orientation);
@@ -57,18 +59,23 @@ function animateDrag(e, currentElement, gameboard) {
       orientation,
       name,
     )
-  )
+  ) {
+    changeTileColor(currentX, currentY, length, orientation, true);
     return;
+  }
 
   changeTileColor(currentX, currentY, length, orientation);
 }
 
-function changeTileColor(x, y, length, orientation) {
+function changeTileColor(x, y, length, orientation, disable) {
   for (let i = 0; i < length; i++) {
     let shipNode = document.querySelector(
       `div[data-board="player"] div[data-x="${x}"][data-y="${y}"]`,
     );
     shipNode.classList.add(`${css.drag}`);
+    if (disable) {
+      shipNode.classList.add(`${css.disable}`);
+    }
     if (orientation === "x") {
       x++;
       continue;
@@ -83,6 +90,7 @@ function resetTileColor(x, y, length, orientation) {
       `div[data-board="player"] div[data-x="${x}"][data-y="${y}"]`,
     );
     shipNode.classList.remove(`${css.drag}`);
+    shipNode.classList.remove(`${css.disable}`);
     if (orientation === "x") {
       x++;
       continue;

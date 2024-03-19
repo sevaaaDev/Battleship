@@ -152,7 +152,7 @@ button:active {
 }
 
 .allowDrag {
-  cursor: move;
+  cursor: grab;
 }
 
 .dim {
@@ -160,6 +160,12 @@ button:active {
 }
 .drag {
   background-color: grey;
+  cursor: grabbing;
+}
+
+.disable {
+  background-color: red;
+  cursor: not-allowed;
 }
 
 .hit {
