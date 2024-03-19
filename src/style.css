@@ -91,11 +91,11 @@ body {
 
 button {
   padding: 0.5rem 1rem;
-  box-shadow: 0.3rem 0.3rem var(--dark-color);
+  box-shadow: 0rem 0.3rem var(--dark-color);
 }
 
 button:active {
-  translate: 0.3rem 0.3rem;
+  translate: 0rem 0.3rem;
   box-shadow: 0 0;
 }
 
