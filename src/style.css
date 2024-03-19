@@ -30,13 +30,12 @@ body {
   background-color: var(--light-color);
 }
 .container {
-  width: 90%;
+  width: 95%;
   margin-inline: auto;
 }
 
 .board {
-  min-width: 300px;
-  width: 80vw;
+  width: 90vw;
   max-width: 375px;
   aspect-ratio: 1/1;
   border: 2px solid var(--dark-color);
@@ -62,7 +61,7 @@ body {
 
 .boardName {
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .boardsContainer {
@@ -134,8 +133,8 @@ button:active {
   font-family: Orbitron;
   border: 2px solid var(--dark-color);
   text-align: center;
-  padding: 1rem;
-  width: 90%;
+  padding: 0.5rem;
+  width: 95%;
   margin: 1rem auto 2rem;
   max-width: 1000px;
 }
