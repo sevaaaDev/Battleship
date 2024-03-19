@@ -63,9 +63,9 @@ export default function game() {
   async function playRound(x, y) {
     // TODO: find a way to tell that a ship has been sunk
     // player turn
-    document.removeEventListener("click", playRoundHandler);
     const result = computerBoard.receiveAttack([x, y]);
     if (!result) return;
+    document.removeEventListener("click", playRoundHandler);
     updateDom.tile(result, "computer", x, y);
     if (computerBoard.thisShipSunk()) {
       updateDom.messageInfo("Enemy's ship has been sunk");
