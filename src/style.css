@@ -22,13 +22,17 @@
 }
 
 :root {
-  --dark-color: #222;
-  --light-color: #eee;
+  --dark-color: #1e1e2e;
+  --light-color: #ddd;
+  --lighter-color: #fff;
+  --missed-color: #89b4fa;
+  --hit-color: #f38ba8;
 }
 
 body {
   background-color: var(--light-color);
 }
+
 .container {
   width: 95%;
   margin-inline: auto;
@@ -85,6 +89,7 @@ body {
 }
 
 button {
+  background-color: var(--lighter-color);
   padding: 0.5rem 1rem;
   box-shadow: 0rem 0.3rem var(--dark-color);
 }
@@ -115,7 +120,7 @@ button:active {
 }
 
 .shipSunk .smallTile {
-  background-color: red;
+  background-color: var(--hit-color);
 }
 
 .smallTile {
@@ -183,12 +188,12 @@ button:active {
 }
 
 .hit {
-  background-color: red;
+  background-color: var(--hit-color);
   cursor: not-allowed;
 }
 
 .miss {
-  background-color: blue;
+  background-color: var(--missed-color);
   cursor: not-allowed;
 }
 
