@@ -15,13 +15,13 @@ function html() {
         <div class='${css.listOfShipsLeft}' data-board='player' style='display:none'></div>
       <section class='${css.boardWrapper}'>
         <div class='${css.board}' data-board='player' ondragstart="() => false"></div>
-        <h3 class='${css.boardName}'>PLAYER</h3>
+        <h3 class='${css.boardName}'>Player's Board</h3>
       </section>
     </section>
     <section class='${css.mainBoardWrapper}' data-board='computer' style='display:none'>
       <section class='${css.boardWrapper}'>
         <div class='${css.board}' data-board='computer' ondragstart="() => false"></div>
-        <h3 class='${css.boardName}'>COMPUTER</h3>
+        <h3 class='${css.boardName}'>Computer's Board</h3>
       </section>
         <div class='${css.listOfShipsRight}' data-board='computer' style='display:none'></div>
     </section>
