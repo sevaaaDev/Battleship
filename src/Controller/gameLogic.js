@@ -85,12 +85,17 @@ export default function game() {
     // computer turn
     const coord = computer.chooseCoord();
     const [compResult, playerShip] = playerBoard.receiveAttack(coord);
+    if (compResult === false)
+      console.error("computer attack the same coordinate twice");
     computer.changePreviousMoveStatus(compResult);
     computer.changePreviousShipStatus(false);
     updateDom.tile(compResult, "player", ...coord);
     updateDom.listOfShips(playerBoard.ships, "player");
     if (playerBoard.thisShipSunk()) {
-      computer.changePreviousShipStatus(true);
+      computer.changePreviousShipStatus(
+        true,
+        playerShip.position.listCoordinate,
+      );
       updateDom.messageInfo("Your ship has been sunk");
       updateDom.sunk("player", playerShip.position.listCoordinate);
       await sleep(800);
