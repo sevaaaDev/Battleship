@@ -113,11 +113,13 @@ const proto = {
   },
   receiveAttack([x, y]) {
     let info;
-    if (this.isOutside(x, y)) return false;
-    if (this.board[x][y] === "hit") return false;
+    let ship;
+    if (this.isOutside(x, y)) return [false, ship];
+    if (this.board[x][y] === "hit") return [false, ship];
     if (typeof this.board[x][y] === "object") {
       this.board[x][y].hit();
       info = "hit";
+      ship = this.board[x][y];
       this.attack.push({ x, y });
       this.board[x][y] = "hit";
     }
@@ -126,7 +128,7 @@ const proto = {
       this.missedAttack.push({ x, y });
       this.board[x][y] = "missed";
     }
-    return info;
+    return [info, ship];
   },
   areAllSunk() {
     let numOfSunkShip = this.checkShip();
