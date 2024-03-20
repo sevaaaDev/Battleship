@@ -50,6 +50,8 @@ function board(gameboard, user, showShip) {
   for (let y = 9; y >= 0; y--) {
     for (let x = 0; x < 10; x++) {
       let tile = document.createElement("div");
+      let tileWrapper = document.createElement("div");
+      tileWrapper.classList.add(`${css.tileWrapper}`);
       tile.setAttribute("data-x", x);
       tile.setAttribute("data-y", y);
       tile.ondragstart = () => false;
@@ -74,7 +76,8 @@ function board(gameboard, user, showShip) {
       if (gameboard.board[x][y] === "hit") {
         tile.classList.add(`${css.hit}`);
       }
-      domboard.append(tile);
+      tileWrapper.append(tile);
+      domboard.append(tileWrapper);
     }
   }
 }
