@@ -49,10 +49,6 @@ body {
   cursor: crosshair;
 }
 
-.board div {
-  border: 1px solid var(--dark-color);
-}
-
 .mainBoardWrapper {
   display: flex;
   gap: 1rem;
@@ -145,9 +141,28 @@ button:active {
 
 /* Looks */
 
+.tileWrapper div {
+  aspect-ratio: 1/1;
+  border: 1px solid var(--dark-color);
+}
+
 .ship {
   background: var(--dark-color);
   touch-action: none;
+}
+
+.hit.sunk {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hit.sunk::after {
+  content: "x";
+  font-family: Orbitron;
+  font-size: 1.2rem;
+  display: block;
+  text-align: center;
 }
 
 .allowDrag {
@@ -176,6 +191,7 @@ button:active {
   background-color: blue;
   cursor: not-allowed;
 }
+
 .bigTitle {
   font-family: "Protest Guerrilla";
   font-size: 3.5rem;

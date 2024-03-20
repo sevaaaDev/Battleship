@@ -61,17 +61,19 @@ export default function game() {
   }
 
   async function playRound(x, y) {
-    // TODO: find a way to tell that a ship has been sunk
+    // TODO: low: refactor playRound()
+
     // player turn
-    const result = computerBoard.receiveAttack([x, y]);
+    const [result, compShip] = computerBoard.receiveAttack([x, y]);
     if (!result) return;
     document.removeEventListener("click", playRoundHandler);
     updateDom.tile(result, "computer", x, y);
     if (computerBoard.thisShipSunk()) {
+      updateDom.listOfShips(computerBoard.ships, "computer");
       updateDom.messageInfo("Enemy's ship has been sunk");
-      await sleep(1200);
+      updateDom.sunk("computer", compShip.position.listCoordinate);
+      await sleep(800);
     }
-    updateDom.listOfShips(computerBoard.ships, "computer");
     if (computerBoard.areAllSunk()) {
       stopGame("Player");
       return;
@@ -82,16 +84,17 @@ export default function game() {
     await sleep(1000);
     // computer turn
     const coord = computer.chooseCoord();
-    const compResult = playerBoard.receiveAttack(coord);
+    const [compResult, playerShip] = playerBoard.receiveAttack(coord);
     computer.changePreviousMoveStatus(compResult);
     computer.changePreviousShipStatus(false);
     updateDom.tile(compResult, "player", ...coord);
+    updateDom.listOfShips(playerBoard.ships, "player");
     if (playerBoard.thisShipSunk()) {
       computer.changePreviousShipStatus(true);
       updateDom.messageInfo("Your ship has been sunk");
-      await sleep(1200);
+      updateDom.sunk("player", playerShip.position.listCoordinate);
+      await sleep(800);
     }
-    updateDom.listOfShips(playerBoard.ships, "player");
     if (playerBoard.areAllSunk()) {
       stopGame("Computer");
       return;
@@ -104,6 +107,7 @@ export default function game() {
   function stopGame(user) {
     document.removeEventListener("click", playRoundHandler);
     updateDom.messageInfo(`${user} Won`);
+    if (user === "Player") return;
     render.board(computerBoard, "computer", true);
   }
 
