@@ -15,13 +15,13 @@ function html() {
         <div class='${css.listOfShipsLeft}' data-board='player' style='display:none'></div>
       <section class='${css.boardWrapper}'>
         <div class='${css.board}' data-board='player' ondragstart="() => false"></div>
-        <h3 class='${css.boardName}'>PLAYER</h3>
+        <h3 class='${css.boardName}'>Player's Board</h3>
       </section>
     </section>
     <section class='${css.mainBoardWrapper}' data-board='computer' style='display:none'>
       <section class='${css.boardWrapper}'>
         <div class='${css.board}' data-board='computer' ondragstart="() => false"></div>
-        <h3 class='${css.boardName}'>COMPUTER</h3>
+        <h3 class='${css.boardName}'>Computer's Board</h3>
       </section>
         <div class='${css.listOfShipsRight}' data-board='computer' style='display:none'></div>
     </section>
@@ -50,6 +50,8 @@ function board(gameboard, user, showShip) {
   for (let y = 9; y >= 0; y--) {
     for (let x = 0; x < 10; x++) {
       let tile = document.createElement("div");
+      let tileWrapper = document.createElement("div");
+      tileWrapper.classList.add(`${css.tileWrapper}`);
       tile.setAttribute("data-x", x);
       tile.setAttribute("data-y", y);
       tile.ondragstart = () => false;
@@ -74,7 +76,8 @@ function board(gameboard, user, showShip) {
       if (gameboard.board[x][y] === "hit") {
         tile.classList.add(`${css.hit}`);
       }
-      domboard.append(tile);
+      tileWrapper.append(tile);
+      domboard.append(tileWrapper);
     }
   }
 }

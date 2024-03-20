@@ -15,6 +15,15 @@ function miss(user, x, y) {
   tile.classList.add(`${css.miss}`);
 }
 
+function sunk(user, coordinates) {
+  for (let coord of coordinates) {
+    let { x, y } = coord;
+    let tile = document.querySelector(
+      `div[data-board='${user}'] div[data-x='${x}'][data-y='${y}']`,
+    );
+    tile.classList.add(`${css.sunk}`);
+  }
+}
 function tile(result, user, x, y) {
   if (result === "missed") {
     miss(user, x, y);
@@ -99,6 +108,7 @@ const updateDom = {
   messageInfo,
   info,
   toggleDimBoard,
+  sunk,
 };
 
 export default updateDom;

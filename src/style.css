@@ -1,11 +1,6 @@
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
 /* protest-guerrilla-regular - latin */
 @font-face {
-  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-display: swap;
   font-family: "Protest Guerrilla";
   font-style: normal;
   font-weight: 400;
@@ -20,61 +15,42 @@
   src: url("./fonts/orbitron-v31-latin-500.woff2") format("woff2");
 }
 
-/* TODO: change font family */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --dark-color: #1e1e2e;
+  --light-color: #ddd;
+  --lighter-color: #fff;
+  --missed-color: #89b4fa;
+  --hit-color: #f38ba8;
+}
+
+body {
+  background-color: var(--light-color);
+}
+
 .container {
-  width: 90%;
+  width: 95%;
   margin-inline: auto;
 }
 
 .board {
-  min-width: 300px;
-  width: 80vw;
+  width: 90vw;
   max-width: 375px;
   aspect-ratio: 1/1;
+  border: 2px solid var(--dark-color);
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  box-shadow: 0.3rem 0.3rem 0 black;
+  gap: 1px;
+  padding: 3px;
 }
 
 .board[data-board="computer"] {
   cursor: crosshair;
-}
-
-.board div {
-  border: 1px solid black;
-}
-
-.ship {
-  background: black;
-  touch-action: none;
-}
-
-.allowDrag {
-  cursor: move;
-}
-
-.dim {
-  opacity: 0.5;
-}
-.drag {
-  background-color: grey;
-}
-
-.hit {
-  background-color: red;
-  cursor: not-allowed;
-}
-
-.miss {
-  background-color: blue;
-  cursor: not-allowed;
-}
-
-.bigTitle {
-  font-family: "Protest Guerrilla";
-  font-size: 3.5rem;
-  text-align: center;
-  margin: 1rem;
 }
 
 .mainBoardWrapper {
@@ -85,7 +61,8 @@
 
 .boardName {
   text-align: center;
-  margin-top: 1rem;
+  font-size: max(0.9rem, min(2vw, 1.1rem));
+  margin-top: 0.5rem;
 }
 
 .boardsContainer {
@@ -113,15 +90,17 @@
 }
 
 button {
+  background-color: var(--lighter-color);
   padding: 0.5rem 1rem;
-  box-shadow: 0.3rem 0.3rem black;
+  box-shadow: 0rem 0.3rem var(--dark-color);
 }
 
 button:active {
-  translate: 0.3rem 0.3rem;
+  translate: 0rem 0.3rem;
   box-shadow: 0 0;
 }
 
+/* list of ship */
 .listOfShips {
   width: 62px;
 }
@@ -142,24 +121,86 @@ button:active {
 }
 
 .shipSunk .smallTile {
-  background-color: red;
+  background-color: var(--hit-color);
 }
 
 .smallTile {
-  background-color: black;
+  background-color: var(--dark-color);
   width: 10px;
 }
 
+/* message */
+
 .messageInfo {
   font-family: Orbitron;
-  border: 2px solid black;
+  border: 2px solid var(--dark-color);
   text-align: center;
-  padding: 1rem;
-  width: 90%;
-  margin: 2rem auto;
+  padding: 0.5rem;
+  width: 95%;
+  margin: 1rem auto 2rem;
   max-width: 1000px;
 }
 
 .messageInfo p {
   font-size: max(0.8rem, min(2vw, 1rem));
+}
+
+/* Looks */
+
+.tileWrapper div {
+  aspect-ratio: 1/1;
+  border: 1px solid var(--dark-color);
+}
+
+.ship {
+  background: var(--dark-color);
+  touch-action: none;
+}
+
+.hit.sunk {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hit.sunk::after {
+  content: "x";
+  font-family: Orbitron;
+  font-size: 1.2rem;
+  display: block;
+  text-align: center;
+}
+
+.allowDrag {
+  cursor: grab;
+}
+
+.dim {
+  opacity: 0.4;
+}
+.drag {
+  background-color: grey;
+  cursor: grabbing;
+}
+
+.disable {
+  background-color: red;
+  cursor: not-allowed;
+}
+
+.hit {
+  background-color: var(--hit-color);
+  cursor: not-allowed;
+}
+
+.miss {
+  background-color: var(--missed-color);
+  cursor: not-allowed;
+}
+
+.bigTitle {
+  font-family: "Protest Guerrilla";
+  font-size: 3.5rem;
+  text-align: center;
+  margin: 1rem;
 }
