@@ -20,8 +20,6 @@ let proto = {
     return coordinate;
   },
   smartAttack(hit, previousMove) {
-    // TODO: create the smarter computer
-    // remove ship gaps from moves, so it will never hit it
     if (this.isPreviousShipSunk) {
       this.attackDirection = "x";
       this.removeMove(this.previousShipCoordinates);

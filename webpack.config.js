@@ -1,7 +1,7 @@
 const path = require("path");
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const mode = "development";
+const mode = "production";
 process.env.NODE_ENV = mode;
 const devMode = process.env.NODE_ENV !== "production";
 
@@ -12,7 +12,7 @@ module.exports = {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
   },
-  devtool: "inline-source-map",
+  // devtool: "inline-source-map",
   devServer: {
     watchFiles: ["dist/**/*"],
   },
