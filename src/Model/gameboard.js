@@ -163,7 +163,7 @@ const proto = {
   },
 };
 
-function createGraph() {
+export function createGraph() {
   let graph = {};
   for (let x = 0; x < 10; x++) {
     for (let y = 0; y < 10; y++) {

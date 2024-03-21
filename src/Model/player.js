@@ -1,4 +1,4 @@
-import { getAllCoord } from "./gameboard";
+import { getAllCoord, createGraph } from "./gameboard";
 
 let proto = {
   chooseCoord() {
@@ -20,10 +20,9 @@ let proto = {
     return coordinate;
   },
   smartAttack(hit, previousMove) {
-    // TODO: create the smarter computer
-    // remove ship gaps from moves, so it will never hit it
     if (this.isPreviousShipSunk) {
       this.attackDirection = "x";
+      this.removeMove(this.previousShipCoordinates);
       this.stack["x"] = [];
       this.stack["y"] = [];
       return [undefined, -1];
@@ -63,9 +62,15 @@ let proto = {
     let index = this.getCoordinateIndex(...nextMove);
     return [nextMove, index];
   },
-  removeMove(move) {
-    let index = this.getCoordinateIndex(...move);
-    this.moves.splice(index, 1);
+  removeMove(coordinates) {
+    coordinates.forEach(({ x, y }) => {
+      this.graph[`${x},${y}`].forEach((move) => {
+        let [moveX, moveY] = move.split(",");
+        let index = this.getCoordinateIndex(+moveX, +moveY);
+        if (index === -1) return;
+        this.moves.splice(index, 1);
+      });
+    });
   },
   attackRandom() {
     const index = Math.floor(Math.random() * (this.moves.length - 1));
@@ -99,19 +104,25 @@ let proto = {
     return status;
   },
 
-  changePreviousShipStatus(status) {
+  changePreviousShipStatus(status, ship) {
     this.isPreviousShipSunk = status;
+    this.previousShipCoordinates = ship;
   },
 };
 
 export function createComputer() {
   let moves = getAllCoord();
+  let graph = createGraph();
   const obj = {
     get moves() {
       return moves;
     },
+    get graph() {
+      return graph;
+    },
     isPreviousMoveHit: null,
     previousMove: null,
+    previousShipCoordinates: null,
     stack: { x: [], y: [] },
     attackDirection: "x",
     isPreviousShipSunk: false,
